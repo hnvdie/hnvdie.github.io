@@ -1,4 +1,4 @@
-baseURL = "hnvdie.github.io"
+baseURL = "https://hnvdie.github.io/"
 languageCode = "id"
 title = "Hnvdi3"
 disableKinds = ["section"] #categories
