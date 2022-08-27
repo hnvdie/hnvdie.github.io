@@ -1,6 +1,6 @@
 baseURL = "https://hnvdie.github.io/"
 languageCode = "id"
-title = "Hnvdi3"
+title = "HnvDie"
 disableKinds = ["section"] #categories
 disqusShortname = ""
 pygmentsCodeFences = false
@@ -36,7 +36,7 @@ publishDir = "docs"
 [params]
   description = "wannabe hacker"
   author = "Ardho Ainullah"
-  copyright = "Hnvdi3"
+  copyright = "HnvDie"
   logo = ""
 
 [frontmatter]

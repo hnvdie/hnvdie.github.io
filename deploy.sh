@@ -1,6 +1,7 @@
 
 
 hugo
+rm -rf resources
 
 git add .
 git commit -m "-"
