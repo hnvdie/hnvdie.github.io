@@ -1,4 +1,55 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>HnvDie</title><description>wannabe hacker</description><link>https://hnvdie.github.io/</link><language>en</language><copyright>Copyright 2022, Ronalds Vilcins</copyright><lastBuildDate>Fri, 26 Aug 2022 00:00:00 +0000</lastBuildDate><generator>Hugo - gohugo.io</generator><docs>http://cyber.harvard.edu/rss/rss.html</docs><atom:link href="https://ronaldsvilcins.com/atom.xml" rel="self" type="application/atom+xml"/><item><title>summary of reconnaissance for web application bug hunting 🕷</title><link>https://hnvdie.github.io/reconnaissance-summary/</link><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>HnvDie</title><description>wannabe hacker</description><link>https://hnvdie.github.io/</link><language>en</language><copyright>Copyright 2022, Ronalds Vilcins</copyright><lastBuildDate>Sat, 27 Aug 2022 00:00:00 +0000</lastBuildDate><generator>Hugo - gohugo.io</generator><docs>http://cyber.harvard.edu/rss/rss.html</docs><atom:link href="https://ronaldsvilcins.com/atom.xml" rel="self" type="application/atom+xml"/><item><title>Bypass IP restriction at sfile.mobi - writeup</title><link>https://hnvdie.github.io/bypass-ip-restriction-at-sfile.mobi/</link><description>&lt;p>
+&lt;a href="https://www.indiedb.com/groups/tanks/images/girls-und-panzer-gif" title="Girls und Panzer GIF - Indie DB" target="_blank">&lt;img src="https://media.indiedb.com/cache/images/groups/1/3/2074/thumb_620x2000/maus_gif.gif" alt="Girls und Panzer GIF" />&lt;/a>
+write up sederhana tentang bagaimana saya bisa menemukan bug IP restriction bypass di situs sfile.mobi.&lt;/p>
+&lt;p>dan mendapatkan reward yang lumayan, hanya karena laporan bug sepele ini.&lt;/p>
+&lt;h3 id="fyi-for-you-information">FYI (For you information) &lt;a href="#fyi-for-you-information" class="hash">#&lt;/a>&lt;/h3>
+&lt;p>jadi sebelumnya saya menemukan data leakage dari salah satu website yang tidak bisa saya sebutkan. karena ini privasi web diluar sfile.mobi. yang mana
+data tersebut berisi informasi seperti username, password dan email. dikarenakan situs yang terdapat data leakage tersebut adalah situs yang memiliki latar belakang seperti sfile.mobi juga. yaitu service &lt;strong>free cloud sharing&lt;/strong>. jadinya saya mempunyai ide yang cukup cemerlang.&lt;/p>
+&lt;p>karena saya sering mengunjungi situs sfile.mobi buat download config :/&amp;lt;
+terlintas dalam pikiran saya.&lt;/p>
+&lt;p>&amp;ldquo;&lt;em>apa para pengguna didata yang saya miliki ini, juga login disitus sfile.mobi?&lt;/em>&amp;rdquo;&lt;/p>
+&lt;p>dan yap tercetus lah ide untuk melakukan brute-forcing.&lt;/p>
+&lt;h1 id="step-to-produce">step to produce &lt;a href="#step-to-produce" class="hash">#&lt;/a>&lt;/h1>
+&lt;p>awalnya saya mencoba mengunjungi halaman sfile.mobi dan ke halaman loginnya untuk melakukan web scraping.
+yang URL nya berada disini.&lt;/p>
+&lt;p>&lt;code>https://sfile.mobi/login.php&lt;/code>&lt;/p>
+&lt;p>dengan tujuan membuat tool atau bot otomatisasi login dengan ribuan data yang saya punya
+diatas tadi. awalnya saya hanya menulis program sederhana untuk mencobanya. dan ini hasil yang
+saya temukan.&lt;/p>
+&lt;img src="https://hnvdie.github.io/images/pp1.jpg" >
+source code: &lt;a href=" https://pastebin.com/raw/Kg3p0XKx">pastebin&lt;/a>
+&lt;p>terlihat disana menunjukan status kode 401 dan programnya crash (stuck) tidak jalan lagi.
+dikarenakan halaman loginnya sudah tidak bisa diakses atau terkena limit IP.
+sama hal ketika saya kunjungi melalui browser, IP saya pun sudah terbanned.&lt;/p>
+&lt;img src="https://hnvdie.github.io/images/pp2.jpg" >
+&lt;p>lantas saya mencoba alternatif lain untuk melakukan brute-force tanpa harus terkena limit IP.&lt;/p>
+&lt;p>yang pertama saya mencoba dengan proxy namun tetap saja gagal, tidak bisa ditembus.
+langkah kedua saya mencoba melakukan injeksi terhadap headers ketika melakukan POST
+request.yaitu melakukan bypass IP source restrictions dengan HTTP headers.&lt;/p>
+&lt;p>disini saya hanya memodifikasi header nya dengan menambahkan nilai.&lt;/p>
+&lt;pre>&lt;code class="language-shell">&amp;quot;X-Forwarded-For&amp;quot;: IP SPOOF / FAKE IP
+&lt;/code>&lt;/pre>
+&lt;p>untuk fake IP saya hanya membuat alamat ip random, asal-asalan saja.
+dengan syntax python seperti ini atau bisa lihat lengkap disource code bawah.&lt;/p>
+&lt;pre>&lt;code class="language-python">ip = &amp;quot;.&amp;quot;.join(map(str, (random.randint(0, 255) for _ in range(4))))
+&lt;/code>&lt;/pre>
+source code: &lt;a href="https://pastebin.com/raw/Z8nG0T7s">pastebin&lt;/a>
+&lt;p>ketika saya jalankan programnya, ternyata IP limit bypassed. saya mencoba ngeload sekitar
+ribuan akun ternyata bisa dan mendapatkan banyak akun yang online (registered) di platform
+sfile.mobi.&lt;/p>
+&lt;img src="https://hnvdie.github.io/images/pp3.jpg" >
+&lt;ul>
+&lt;li>status bug: &lt;code>patched&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h1 id="referensi-tentang-ip-restriction-bypass">Referensi tentang IP restriction bypass &lt;a href="#referensi-tentang-ip-restriction-bypass" class="hash">#&lt;/a>&lt;/h1>
+&lt;ul>
+&lt;li>403/401 Bypasses
+&lt;a href="https://book.hacktricks.xyz/network-services-pentesting/pentesting-web/403-and-401-bypasses">https://book.hacktricks.xyz/network-services-pentesting/pentesting-web/403-and-401-bypasses&lt;/a>&lt;/li>
+&lt;li>403/401 bypass hackerone report
+&lt;a href="https://hackerone.com/reports/991717">https://hackerone.com/reports/991717&lt;/a>&lt;/li>
+&lt;li>IP restriction (root-me CTF)
+&lt;a href="https://archiko.my.id/archives/root-me-writeup-ip-restriction-bypass/">https://archiko.my.id/archives/root-me-writeup-ip-restriction-bypass/&lt;/a>&lt;/li>
+&lt;/ul></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://hnvdie.github.io/bypass-ip-restriction-at-sfile.mobi/</guid><pubDate>Sat, 27 Aug 2022 00:00:00 +0000</pubDate></item><item><title>summary of reconnaissance for web application bug hunting 🕷</title><link>https://hnvdie.github.io/reconnaissance-summary/</link><description>
 &lt;img src="https://images.unsplash.com/photo-1562813733-b31f71025d54?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=869&amp;q=80">
 &lt;p>&lt;strong>notes&lt;/strong>: in this article if you found text like this &lt;code>here&lt;/code> is a tools or platforms. you just search that on google or other search engines.&lt;/p>
 &lt;h1 id="base">base &lt;a href="#base" class="hash">#&lt;/a>&lt;/h1>

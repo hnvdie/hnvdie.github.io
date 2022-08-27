@@ -4,6 +4,9 @@ title: About
 ---
 
 # Tentang
+{{< raw >}}
+<img src="/images/kuromorimine.gif">
+{{< /raw >}}
 
 halaman web ini bertujuan untuk mendokumentasikan apa saja yang sudah saya pelajari 
 agar bisa dibaca ulang dimasa akan datang. dikarenakan saya adalah orang
@@ -14,7 +17,11 @@ saya harap tulisan saya disini bisa bermanfaat bagi kalian
 yang entah darimana datangnya dan bisa mampir kesini.
 
 # Author
-kenalin, ardho ainullah. saya cuman sampah masyarakat yang suka sama panzer.
+{{< raw >}}
+<img src="/images/wtf.gif">
+{{< /raw >}}
+kenalin, ardho ainullah. saya cuman sampah masyarakat yang suka sama hal yang berbau ww1-ww2 🛩️
+
 selebihnya gada hal yang menarik lagi. saya suka dengan kegiatan hacking dan beberapa sub-bidang dalam dunia programming seperti
 
 - web scraping
