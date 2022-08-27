@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  {{ partial "head.html" . }}
+<body>
+  <main>
+    {{ partial "header.html" . }}
+    <section style="color:white">
+
+
+      <ul class="posts" style="color:white">
+  {{ range .Data.Pages }}
+    <li>
+      <a href="{{.RelPermalink}}" style="color:white">{{ .Title }} </a>
+      <time datetime="{{ dateFormat "2006-01-02" .Date }}">{{ dateFormat "2006-01-02" .Date }}</time>
+    </li>
+  {{ end }}
+</ul>
+
+
+
+    </section>
+    {{ partial "footer.html" . }}
+  </main>
+</body>
+</html>

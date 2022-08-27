@@ -1,0 +1,92 @@
+baseURL = "hnvdie.github.io"
+languageCode = "id"
+title = "Hnvdi3"
+disableKinds = ["section"] #categories
+disqusShortname = ""
+pygmentsCodeFences = false
+pygmentsUseClasses = false
+paginate = 999
+minify = true
+
+
+[markup]
+  [markup.highlight]
+    noclasses = false
+
+[taxonomies]
+  tag = "tags"
+
+[privacy]
+  [privacy.disqus]
+    disable = true
+  [privacy.googleAnalytics]
+    disable = true
+  [privacy.instagram]
+    disable = true
+  [privacy.twitter]
+    disable = true
+  [privacy.vimeo]
+    disable = true
+  [privacy.youtube]
+    disable = true
+
+[Author]
+  name = "Ardho Ainullah"
+
+[params]
+  description = "wannabe hacker"
+  author = "Ardho Ainullah"
+  copyright = "Hnvdi3"
+  logo = ""
+
+[frontmatter]
+  date  = [":filename", ":default"]
+  author = "Ardho Ainullah"
+  github = ""
+  facebook = ""
+  og_image = ""
+  sitename = ""
+  twitter = "hnvdie"
+
+[permalinks]
+#  posts = "/:year/:month/:day/:filename"
+  posts = "/:filename"
+  pages = "/:slug"
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+  section = ["HTML"]
+
+[outputFormats.RSS]
+  mediatype = "application/rss"
+  baseName = "atom"
+
+[outputFormats.JSON]
+  mediatype = "application/json"
+  baseName = "feed"
+
+[sitemap]
+  changefreq = "monthly"
+  filename = "sitemap.xml"
+  priority = 0.5
+
+[menu]
+  [[menu.main]]
+    identifier = "index"
+    name       = "Index"
+    url        = "/"
+    weight     = -111
+
+
+  [[menu.main]]
+    identifier = "about"
+    name       = "About"
+    url        = "/about/"
+    weight     = -100
+    
+
+  [[menu.main]]
+    identifier = "rss"
+    name       = "RSS"
+    url        = "/atom.xml"
+    weight     = -10

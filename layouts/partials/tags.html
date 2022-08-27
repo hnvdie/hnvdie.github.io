@@ -1,0 +1,8 @@
+{{ range $i, $e := .Params.tags -}}
+    {{- if $i -}} {{ end -}}
+
+    <small>
+<a style="color:#80ED99;text-decoration:none" class="badge" href='{{ "/tags/" | relLangURL }}{{ . | urlize }}'>{{ $e }}</a>
+</small>
+
+{{- end -}}
