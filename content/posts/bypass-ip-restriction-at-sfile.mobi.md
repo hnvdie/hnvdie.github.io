@@ -24,7 +24,7 @@ terlintas dalam pikiran saya.
 
 dan yap tercetus lah ide untuk melakukan brute-forcing.
 
-# step to produce
+# Proof OF Concept 
 
 awalnya saya mencoba mengunjungi halaman sfile.mobi dan ke halaman loginnya untuk melakukan web scraping.
 yang URL nya berada disini. 
