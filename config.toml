@@ -7,7 +7,7 @@ pygmentsCodeFences = false
 pygmentsUseClasses = false
 paginate = 999
 minify = true
-
+publishDir = "docs"
 
 [markup]
   [markup.highlight]
