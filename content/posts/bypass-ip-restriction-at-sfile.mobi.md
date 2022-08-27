@@ -15,7 +15,7 @@ dan mendapatkan reward yang lumayan, hanya karena laporan bug sepele ini.
 ### FYI (For you information)
 
 jadi sebelumnya saya menemukan data leakage dari salah satu website yang tidak bisa saya sebutkan. karena ini privasi web diluar sfile.mobi. yang mana
-data tersebut berisi informasi seperti username, password dan email. dikarenakan situs yang terdapat data leakage tersebut adalah situs yang memiliki latar belakang seperti sfile.mobi juga. yaitu service **free cloud sharing**. jadinya saya mempunyai ide yang cukup cemerlang.
+data tersebut berisi informasi seperti username, password dan email. dikarenakan situs yang terdapat data leakage tersebut adalah situs yang memiliki latar belakang seperti sfile.mobi juga. yaitu service **free file sharing service**. jadinya saya mempunyai ide yang cukup cemerlang.
 
 karena saya sering mengunjungi situs sfile.mobi buat download config :/<
 terlintas dalam pikiran saya.
