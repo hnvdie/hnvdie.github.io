@@ -63,7 +63,7 @@ $ nmap -iL subdolist.txt -Pn -sV -n -T4 -v -d  --script vuln -oN output.txt
 
 # Content discovery
 
-- fuzzing
+- fuzzing, `wfuzz`
   - get error like sql inject, system crash, dos, etc.
 
 - `ffuf` 

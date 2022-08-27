@@ -85,7 +85,7 @@ sfile.mobi.&lt;/p>
 &lt;h1 id="content-discovery">Content discovery &lt;a href="#content-discovery" class="hash">#&lt;/a>&lt;/h1>
 &lt;ul>
 &lt;li>
-&lt;p>fuzzing&lt;/p>
+&lt;p>fuzzing, &lt;code>wfuzz&lt;/code>&lt;/p>
 &lt;ul>
 &lt;li>get error like sql inject, system crash, dos, etc.&lt;/li>
 &lt;/ul>
