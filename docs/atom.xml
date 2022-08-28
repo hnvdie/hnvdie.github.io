@@ -40,6 +40,12 @@ seperti CMS detector beserta pemeriksaan kerentanan apa saja didalam CMS tersebu
 &lt;h1 id="tools-for-vulnerability-scanning">Tools for vulnerability scanning &lt;a href="#tools-for-vulnerability-scanning" class="hash">#&lt;/a>&lt;/h1>
 &lt;h3 id="vulnerability-scanner-for-web-application">vulnerability scanner for web application &lt;a href="#vulnerability-scanner-for-web-application" class="hash">#&lt;/a>&lt;/h3>
 &lt;ul>
+&lt;li>&lt;code>nuclei&lt;/code> Fast and customizable vulnerability scanner based on simple YAML based DSL.&lt;/li>
+&lt;/ul>
+&lt;p>Nuclei is used to send requests across targets based on a template, leading to zero false positives and providing fast scanning on a large number of hosts. Nuclei offers scanning for a variety of protocols, including TCP, DNS, HTTP, SSL, File, Whois, Websocket, Headless etc. With powerful and flexible templating, Nuclei can be used to model all kinds of security checks.&lt;/p>
+&lt;p>We have a dedicated repository that houses various type of vulnerability templates contributed by more than 300 security researchers and engineers.&lt;/p>
+&lt;p>&lt;a href="https://github.com/projectdiscovery/nuclei">https://github.com/projectdiscovery/nuclei&lt;/a>&lt;/p>
+&lt;ul>
 &lt;li>&lt;code>nikto:&lt;/code> a web server scanner&lt;/li>
 &lt;/ul>
 &lt;p>Nikto is an Open Source (GPL) web server scanner which performs comprehensive tests against web servers for multiple items, including over 6700 potentially dangerous files/programs, checks for outdated versions of over 1250 servers, and version specific problems on over 270 servers. It also checks for server configuration items such as the presence of multiple index files, HTTP server options, and will attempt to identify installed web servers and software. Scan items and plugins are frequently updated and can be automatically updated.&lt;/p>
