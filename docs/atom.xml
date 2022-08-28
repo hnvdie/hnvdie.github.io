@@ -1,4 +1,97 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>HnvDie</title><description>wannabe hacker</description><link>https://hnvdie.github.io/</link><language>en</language><copyright>Copyright 2022, Ronalds Vilcins</copyright><lastBuildDate>Sat, 27 Aug 2022 00:00:00 +0000</lastBuildDate><generator>Hugo - gohugo.io</generator><docs>http://cyber.harvard.edu/rss/rss.html</docs><atom:link href="https://ronaldsvilcins.com/atom.xml" rel="self" type="application/atom+xml"/><item><title>Bypass IP restriction at sfile.mobi - writeup</title><link>https://hnvdie.github.io/bypass-ip-restriction-at-sfile.mobi/</link><description>&lt;p>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>HnvDie</title><description>wannabe hacker</description><link>https://hnvdie.github.io/</link><language>en</language><copyright>Copyright 2022, Ronalds Vilcins</copyright><lastBuildDate>Sun, 28 Aug 2022 00:00:00 +0000</lastBuildDate><generator>Hugo - gohugo.io</generator><docs>http://cyber.harvard.edu/rss/rss.html</docs><atom:link href="https://ronaldsvilcins.com/atom.xml" rel="self" type="application/atom+xml"/><item><title>vulnerability scanning for webapp (bahasa)</title><link>https://hnvdie.github.io/vulnerability-scanning-summdary/</link><description>
+&lt;img src="https://image.myanimelist.net/ui/_3fYL8i6Q-n-155t3dn_4ibmr7CXmsW3cHWcNJqvO8noUaDtFFkNFgKso3Kx7XLC">
+&lt;p>vulnerability scanning adalah fase selanjutnya sesudah melakukan reconnaissance.
+difase ini kita diharuskan mencari kerentanan apa saja dari target, agar bisa lanjut
+ke tahap post-exploitation atau gaining access nantinya.&lt;/p>
+&lt;p>menurut saya pribadi melakukan vulnerability scanning itu terbagi kepada 2 cara.&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>automated scanning&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;p>secara garis besar disini kita memeriksa kerentanan pada target dengan
+menggunakan tools yang ada diluar sana. bisa dibilang mencari kerentanan dengan
+otomatis. seperti menggunakan &lt;code>nessus&lt;/code>,&lt;code>nmap&lt;/code>, &lt;code>nikto&lt;/code> dll.&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>manual scanning&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;p>mencari atau memeriksa kerentanan target dengan manual. seperti memeriksa
+kerentanan serangan terhadap &lt;code>SQL Injection&lt;/code>, &lt;code>LFI&lt;/code>, &lt;code>PHP Code Injection&lt;/code>, dll.&lt;/p>
+&lt;h1 id="types-of-vulnerability-scanning">Types of vulnerability scanning &lt;a href="#types-of-vulnerability-scanning" class="hash">#&lt;/a>&lt;/h1>
+&lt;p>Jika diatas adalah bahagian cara untuk melakukan scanning maka untuk tipe-tipe vulnerability
+scanning itu ada 2 kalo menurut saya pribadi lagi. karena saya juga tidak tahu apakah ada lagi selain ini.&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>network vulnerability scanning&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;p>seperti memeriksa webserver, sistem operasi, daemon dan service lainnya yang berjalan
+ditarget seperti &lt;code>SSH&lt;/code>,&lt;code>FTP&lt;/code>, dll.&lt;/p>
+&lt;p>yang mana nantinya kita bisa melakukan pencarian
+apakah webserver, sistem operasi dan service lainnya yang digunakan target
+punya kerentanan. kita bisa mengidentifikasinya melalui
+Common Vulnerabilities and Exposures (CVE). platform &lt;code>exploit-db&lt;/code> salah satunya.&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>web application scanning&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;p>sama dengan poin &lt;code>manual scanning&lt;/code> diatas. namun disini tidak hanya secara manual
+melainkan menggunakan tools scanner seperti &lt;code>w3af&lt;/code>, &lt;code>grabber&lt;/code>, dll.&lt;/p>
+&lt;p>Jika ditahap information-gathering kalian sudah mengetahui jika target menggukan
+CMS. semisal &lt;code>wordpress&lt;/code> maka kalian bisa melakukan scanning menggunakan tool &lt;code>wpscan&lt;/code>
+untuk menemukan kerentanan.&lt;/p>
+&lt;p>biasanya untuk masalah CMS ada tool yang menyediakan all in one.
+seperti CMS detector beserta pemeriksaan kerentanan apa saja didalam CMS tersebut.&lt;/p>
+&lt;h1 id="tools-for-vulnerability-scanning">Tools for vulnerability scanning &lt;a href="#tools-for-vulnerability-scanning" class="hash">#&lt;/a>&lt;/h1>
+&lt;h3 id="vulnerability-scanner-for-web-application">vulnerability scanner for web application &lt;a href="#vulnerability-scanner-for-web-application" class="hash">#&lt;/a>&lt;/h3>
+&lt;ul>
+&lt;li>&lt;code>nikto:&lt;/code> a web server scanner&lt;/li>
+&lt;/ul>
+&lt;p>Nikto is an Open Source (GPL) web server scanner which performs comprehensive tests against web servers for multiple items, including over 6700 potentially dangerous files/programs, checks for outdated versions of over 1250 servers, and version specific problems on over 270 servers. It also checks for server configuration items such as the presence of multiple index files, HTTP server options, and will attempt to identify installed web servers and software. Scan items and plugins are frequently updated and can be automatically updated.&lt;/p>
+&lt;p>&lt;a href="https://github.com/sullo/nikto">https://github.com/sullo/nikto&lt;/a>&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>w3af:&lt;/code> web application attack and audit framework, the open source web vulnerability scanner.&lt;/li>
+&lt;/ul>
+&lt;p>w3af is an open source web application security scanner which helps developers and penetration testers identify and exploit vulnerabilities in their web applications.&lt;/p>
+&lt;p>The scanner is able to identify 200+ vulnerabilities, including Cross-Site Scripting, SQL injection and OS commanding.&lt;/p>
+&lt;p>&lt;a href="https://github.com/andresriancho/w3af">https://github.com/andresriancho/w3af&lt;/a>&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>grabber:&lt;/code> Do not use this tool, it&amp;rsquo;s an artifact from the past. Use Burp or w3af! 😭&lt;/li>
+&lt;/ul>
+&lt;p>Grabber is a web application scanner. Basically it detects some kind of vulnerabilities in your website.
+Grabber is simple, not fast but portable and really adaptable. This software is designed to scan small websites such as personals, forums etc. absolutely not big application: it would take too long time and flood your network.&lt;/p>
+&lt;p>Because it&amp;rsquo;s a small tool, the set of vulnerabilities is small&amp;hellip;&lt;/p>
+&lt;ul>
+&lt;li>Cross-Site Scripting&lt;/li>
+&lt;li>SQL Injection (there is also a special Blind SQL Injection module)&lt;/li>
+&lt;li>File Inclusion&lt;/li>
+&lt;li>Backup files check&lt;/li>
+&lt;li>Simple AJAX check (parse every JavaScript and get the URL and try to get the parameters)&lt;/li>
+&lt;li>Hybrid analysis/Crystal ball testing for PHP application using PHP-SAT&lt;/li>
+&lt;li>JavaScript source code analyzer: Evaluation of the quality/correctness of the JavaScript with JavaScript Lint&lt;/li>
+&lt;li>Generation of a file [session_id, time(t)] for next stats analysis.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;a href="https://github.com/neuroo/grabber">https://github.com/neuroo/grabber&lt;/a>&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>burp&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;p>Burp Scanner is a tool for performing automated scans of web sites, to discover content and audit for vulnerabilities.&lt;/p>
+&lt;p>&lt;a href="https://portswigger.net/burp/vulnerability-scanner">https://portswigger.net/burp/vulnerability-scanner&lt;/a>&lt;/p>
+&lt;h3 id="vulnerability-scanner-for-network-infrastructure">vulnerability scanner for network infrastructure &lt;a href="#vulnerability-scanner-for-network-infrastructure" class="hash">#&lt;/a>&lt;/h3>
+&lt;ul>
+&lt;li>&lt;code>nmap:&lt;/code> the Network Mapper.&lt;/li>
+&lt;/ul>
+&lt;p>Nmap (Network Mapper) is a network scanner created by Gordon Lyon (also known by his pseudonym Fyodor Vaskovich). Nmap is used to discover hosts and services on a computer network by sending packets and analyzing the responses.&lt;/p>
+&lt;p>&lt;a href="https://nmap.org">https://nmap.org&lt;/a>&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>metasploit: &lt;/code> The world’s most used penetration testing framework&lt;/li>
+&lt;/ul>
+&lt;p>The Metasploit Project is a computer security project that provides information about security vulnerabilities and aids in penetration testing and IDS signature development. It is owned by Boston, Massachusetts-based security company Rapid7.&lt;/p>
+&lt;p>&lt;a href="https://www.metasploit.com">https://www.metasploit.com&lt;/a>&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>openvas:&lt;/code> Open Vulnerability Assessment Scanner&lt;/li>
+&lt;/ul>
+&lt;p>can perform vulnerability scans on web applications, networks and databases. It shines in the ability it has to quickly scan and accurately identify vulnerabilities hidden safely on the network.&lt;/p>
+&lt;p>&lt;a href="https://www.openvas.org">https://www.openvas.org&lt;/a>&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>Netcat:&lt;/code> The TCP/IP swiss army&lt;/li>
+&lt;/ul>
+&lt;p>Netcat uses TCP and UDP connections to write data to and read data from the networked devices within your environment. Like many of the tools that we have looked at, it can be integrated into scripts or run as a standalone tool.&lt;/p></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://hnvdie.github.io/vulnerability-scanning-summdary/</guid><pubDate>Sun, 28 Aug 2022 00:00:00 +0000</pubDate></item><item><title>Bypass IP restriction at sfile.mobi - writeup</title><link>https://hnvdie.github.io/bypass-ip-restriction-at-sfile.mobi/</link><description>&lt;p>
 &lt;a href="https://www.indiedb.com/groups/tanks/images/girls-und-panzer-gif" title="Girls und Panzer GIF - Indie DB" target="_blank">&lt;img src="https://media.indiedb.com/cache/images/groups/1/3/2074/thumb_620x2000/maus_gif.gif" alt="Girls und Panzer GIF" />&lt;/a>
 write up sederhana tentang bagaimana saya bisa menemukan bug IP restriction bypass di situs sfile.mobi.&lt;/p>
 &lt;p>dan mendapatkan reward yang lumayan, hanya karena laporan bug sepele ini.&lt;/p>
