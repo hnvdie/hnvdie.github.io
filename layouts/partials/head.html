@@ -4,12 +4,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="Ronalds Vilcins - {{ .Site.BaseURL }}">
   <title>{{ if eq .IsHome true }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
-  <meta name="description" content="{{ if ne .Description "" }}{{ .Description }}{{ else }}{{ .Site.Params.description }}{{ end }}">.
-  <meta name="description" content="wannabe hacker">
+  <meta name="description" content="{{ if ne .Description "" }}{{ .Description }}{{ else }}{{ .Site.Params.description }}{{ end }}"/>.
+  <meta name="description" content="wannabe hacker"/>
 {{ template "_internal/twitter_cards.html" . }}
 {{ template "_internal/opengraph.html" . }}
 {{ template "_internal/schema.html" . }}
-  <link rel="canonical" href="{{ .Permalink | absURL }}">
+  <link rel="canonical" href="{{ .Permalink | absURL }}"/>
   <link rel="dns-prefetch" href="https://www.google-analytics.com">
   <meta name="google-site-verification" content="Qp5jGmRPPR2vF_-gFcaAbaXuaRxxkJSvXCBRUjM_gs4" />
   <link href="https://www.google-analytics.com" rel="preconnect" crossorigin>
