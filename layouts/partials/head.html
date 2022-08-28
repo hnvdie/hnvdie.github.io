@@ -4,7 +4,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="Ronalds Vilcins - {{ .Site.BaseURL }}">
   <title>{{ if eq .IsHome true }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
-  <meta name="description" content="{{ if ne .Description "" }}{{ .Description }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+  <meta name="description" content="{{ if ne .Description "" }}{{ .Description }}{{ else }}{{ .Site.Params.description }}{{ end }}">.
+  <meta name="description" content="wannabe hacker">
 {{ template "_internal/twitter_cards.html" . }}
 {{ template "_internal/opengraph.html" . }}
 {{ template "_internal/schema.html" . }}
