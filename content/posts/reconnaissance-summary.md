@@ -11,7 +11,10 @@ tags: ['hacking']
 {{< /raw >}}
 
 
-**notes**: in this article if you found text like this `here` is a tools or platforms. you just search that on google or other search engines.
+`**notes**: `
+
+- in this article if you found text like this `here` is a tools or platforms. you just search that on google or other search engines.
+- this article will be to always updated if me found new techniques or methods.
 
 
 # base
@@ -90,7 +93,7 @@ $ nmap -iL subdolist.txt -Pn -sV -n -T4 -v -d  --script vuln -oN output.txt
 
 
 
-# TIPS
+# Tips
 • always see web source code because sometimes you can found somethink interesting which not found or not gained in your tool recon.
 
 • if you found admin path like admin/. fuzzing again with ffuf like admin/FUZZ. you can find somethink interesting files or dir again if lucky.
@@ -99,3 +102,8 @@ $ nmap -iL subdolist.txt -Pn -sV -n -T4 -v -d  --script vuln -oN output.txt
 
 
 
+# Extra resources for you :3
+
+- Cool Recon techniques every hacker misses! 🔥🔥
+
+https://infosecwriteups.com/cool-recon-techniques-every-hacker-misses-1c5e0e294e89
