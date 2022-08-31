@@ -20,6 +20,7 @@ tags: ['hacking']
 # base
 
 - whois: `whois`
+- ssl information: `sslscan`
 - dns enum: `dnsrecon` `nslookup` `dnsx` `dnsenum`
 
 https://www.geeksforgeeks.org/dnsx-dns-toolkit-allow-to-run-multiple-dns-queries/amp/
@@ -29,7 +30,7 @@ https://medium.com/geekculture/dns-enumeration-3dc90ca1f670
 https://book.hacktricks.xyz/network-services-pentesting/pentesting-dns
 
 
-- identify web technology: `whatweb` `w3techs` `wappalyzer`
+- identify web technology: `whatweb` `w3techs` `wappalyzer` `cmsmap`
 - check webapp firewall: `wafw00f`
 - check security headers: `shcheck`
 - subdo enum: `subfinder` `sublist3r`
