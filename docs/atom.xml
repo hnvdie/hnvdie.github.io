@@ -158,13 +158,14 @@ sfile.mobi.&lt;/p>
 &lt;h1 id="base">base &lt;a href="#base" class="hash">#&lt;/a>&lt;/h1>
 &lt;ul>
 &lt;li>whois: &lt;code>whois&lt;/code>&lt;/li>
+&lt;li>ssl information: &lt;code>sslscan&lt;/code>&lt;/li>
 &lt;li>dns enum: &lt;code>dnsrecon&lt;/code> &lt;code>nslookup&lt;/code> &lt;code>dnsx&lt;/code> &lt;code>dnsenum&lt;/code>&lt;/li>
 &lt;/ul>
 &lt;p>&lt;a href="https://www.geeksforgeeks.org/dnsx-dns-toolkit-allow-to-run-multiple-dns-queries/amp/">https://www.geeksforgeeks.org/dnsx-dns-toolkit-allow-to-run-multiple-dns-queries/amp/&lt;/a>&lt;/p>
 &lt;p>&lt;a href="https://medium.com/geekculture/dns-enumeration-3dc90ca1f670">https://medium.com/geekculture/dns-enumeration-3dc90ca1f670&lt;/a>&lt;/p>
 &lt;p>&lt;a href="https://book.hacktricks.xyz/network-services-pentesting/pentesting-dns">https://book.hacktricks.xyz/network-services-pentesting/pentesting-dns&lt;/a>&lt;/p>
 &lt;ul>
-&lt;li>identify web technology: &lt;code>whatweb&lt;/code> &lt;code>w3techs&lt;/code> &lt;code>wappalyzer&lt;/code>&lt;/li>
+&lt;li>identify web technology: &lt;code>whatweb&lt;/code> &lt;code>w3techs&lt;/code> &lt;code>wappalyzer&lt;/code> &lt;code>cmsmap&lt;/code>&lt;/li>
 &lt;li>check webapp firewall: &lt;code>wafw00f&lt;/code>&lt;/li>
 &lt;li>check security headers: &lt;code>shcheck&lt;/code>&lt;/li>
 &lt;li>subdo enum: &lt;code>subfinder&lt;/code> &lt;code>sublist3r&lt;/code>&lt;/li>
