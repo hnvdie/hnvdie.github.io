@@ -1,4 +1,68 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>HnvDie</title><description>wannabe hacker</description><link>https://hnvdie.github.io/</link><language>en</language><copyright>Copyright 2022, Ronalds Vilcins</copyright><lastBuildDate>Sun, 28 Aug 2022 00:00:00 +0000</lastBuildDate><generator>Hugo - gohugo.io</generator><docs>http://cyber.harvard.edu/rss/rss.html</docs><atom:link href="https://ronaldsvilcins.com/atom.xml" rel="self" type="application/atom+xml"/><item><title>vulnerability scanning for webapp (bahasa)</title><link>https://hnvdie.github.io/vulnerability-scanning-for-webapp/</link><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>HnvDie</title><description>wannabe hacker</description><link>https://hnvdie.github.io/</link><language>en</language><copyright>Copyright 2022, Ronalds Vilcins</copyright><lastBuildDate>Thu, 01 Sep 2022 00:00:00 +0000</lastBuildDate><generator>Hugo - gohugo.io</generator><docs>http://cyber.harvard.edu/rss/rss.html</docs><atom:link href="https://ronaldsvilcins.com/atom.xml" rel="self" type="application/atom+xml"/><item><title>os command injection</title><link>https://hnvdie.github.io/os-command-injection/</link><description>
+&lt;img src="https://hnvdie.github.io/images/cuteheker.jpeg">
+&lt;!-- raw HTML omitted -->
+&lt;p>os command injection biasanya terjadi ketika seorang web developer keliru
+dalam mengatur penerimaan input didalam situsnya. biasanya terjadi ketika
+form input yang dibuat menggunakan fungsi seperti &lt;code>exec()&lt;/code>, &lt;code>system()&lt;/code>, dll.
+tergantung fungsi tersebut berasal dari bahasa pemogramman apa. jika python
+biasanya menggunakan &lt;code>os.system()&lt;/code> atau &lt;code>eval()&lt;/code>, etc.&lt;/p>
+&lt;p>tentu saja ini jadi sesuatu yang sangat berbahaya dikarenakan attacker dapat
+memasukan perintah berbahaya kedalam shell sistem operasi yang ada disitus tersebut.&lt;/p>
+&lt;blockquote>
+&lt;p>Serangan command injection bisa terjadi ketika sebuah aplikasi
+(forms, cookies, HTTP headers, dll) bisa menjalankan perintah yang
+tidak aman dari inputan user ke sistem shell.
+&lt;a href="https://crashtest-security.com/command-injection/">crashtest security&lt;/a>
+&lt;/p>
+&lt;/blockquote>
+&lt;p>menurut crashtest security, os command injection tidak hanya bisa terjadi
+di forms melainkan bisa saja ditempat lain seperti diatas.&lt;/p>
+&lt;h1 id="demonstrasi">demonstrasi &lt;a href="#demonstrasi" class="hash">#&lt;/a>&lt;/h1>
+&lt;p>contoh kode php yang rentan dengan os command injection karena ketiadaan
+validasi input ataupun proses filtering.&lt;/p>
+&lt;pre>&lt;code class="language-shell">&amp;lt;?php
+$ip = $_GET['ip'];
+$cmd = system('ping '.$ip);
+echo $cmd
+?&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;ul>
+&lt;li>buat file &lt;code>ping.php&lt;/code> &amp;amp; jalankan diterminal kalian&lt;/li>
+&lt;/ul>
+&lt;p>&lt;code>$ php -S 127.0.0.1:8000 -t .&lt;/code>&lt;/p>
+&lt;p>kunjungi dan cobalah masukan input seperti ini&lt;/p>
+&lt;p>&lt;strong>http://127.0.0.1:8000/ping.php?ip=cat%20/etc/passwd&lt;/strong>&lt;/p>
+&lt;p>maka jika dibrowser saya, ini tidak menghasilkan apa-apa. dikarenakan perintah
+&lt;strong>cat /etc/passwd&lt;/strong> masih dianggap sebagai argumen untuk ping.&lt;/p>
+&lt;pre>&lt;code class="language-shell">[Thu Sep 1 18:16:34 2022] 127.0.0.1:41126 Accepted
+ping: unknown host cat
+[Thu Sep 1 18:16:34 2022] 127.0.0.1:41125 [200]: GET /ping.php?ip=cat%20/etc/passwd
+[Thu Sep 1 18:16:34 2022] 127.0.0.1:41125 Closing
+&lt;/code>&lt;/pre>
+&lt;p>bisa dilihat disana ada pesan &lt;strong>uknown host cat&lt;/strong>. yang menandakan perintah cat
+kita dianggap destination dari ping. nah kalian bisa mencoba nya lagi
+dengan membatalkan perintah ping dengan shell escapes.&lt;/p>
+&lt;pre>&lt;code>;
+|
+||
+&amp;lt;
+&amp;amp;
+&amp;amp;&amp;amp;
+$()
+&lt;/code>&lt;/pre>
+&lt;p>let&amp;rsquo;s try again&lt;/p>
+&lt;p>&lt;strong>http://127.0.0.1:8000/ping.php?ip=;cat /etc/passwd&lt;/strong>&lt;/p>
+&lt;p>maka kalian bisa melihat bahwa disini kita berhasil untuk melakukan perintah cat
+terhadap file passwd.&lt;/p>
+&lt;img src="https://hnvdie.github.io/images/oci.jpg">
+&lt;p>btw saya ngejalanin file php nya di termux, jadi output dari &lt;strong>/etc/passwd&lt;/strong> nya
+agak aneh hhe.&lt;/p>
+&lt;h1 id="other-references">other references &lt;a href="#other-references" class="hash">#&lt;/a>&lt;/h1>
+&lt;p>beberapa referensi lain yang membahas command injection lebih detail.&lt;/p>
+&lt;ul>
+&lt;li>command injection
+&lt;a href="https://book.hacktricks.xyz/pentesting-web/command-injection">https://book.hacktricks.xyz/pentesting-web/command-injection&lt;/a>&lt;/li>
+&lt;/ul></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://hnvdie.github.io/os-command-injection/</guid><pubDate>Thu, 01 Sep 2022 00:00:00 +0000</pubDate></item><item><title>vulnerability scanning for webapp (bahasa)</title><link>https://hnvdie.github.io/vulnerability-scanning-for-webapp/</link><description>
 &lt;img src="https://image.myanimelist.net/ui/_3fYL8i6Q-n-155t3dn_4ibmr7CXmsW3cHWcNJqvO8noUaDtFFkNFgKso3Kx7XLC">
 &lt;p>vulnerability scanning adalah fase selanjutnya sesudah melakukan reconnaissance.
 difase ini kita diharuskan mencari kerentanan apa saja dari target, agar bisa lanjut
