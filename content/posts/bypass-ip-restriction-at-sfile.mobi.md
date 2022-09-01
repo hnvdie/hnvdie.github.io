@@ -92,4 +92,5 @@ https://book.hacktricks.xyz/network-services-pentesting/pentesting-web/403-and-4
 https://hackerone.com/reports/991717
 - IP restriction (root-me CTF)
 https://archiko.my.id/archives/root-me-writeup-ip-restriction-bypass/
-
+- 403 bypass - medium 
+https://sapt.medium.com/bypassing-403-protection-to-get-pagespeed-admin-access-822fab64c0b3
