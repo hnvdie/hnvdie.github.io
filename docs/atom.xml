@@ -127,27 +127,12 @@ sfile.mobi.&lt;/p>
 &lt;li>whois: &lt;code>whois&lt;/code>&lt;/li>
 &lt;li>ssl information: &lt;code>sslscan&lt;/code>&lt;/li>
 &lt;li>dns enum: &lt;code>dnsrecon&lt;/code> &lt;code>nslookup&lt;/code> &lt;code>dnsx&lt;/code> &lt;code>dnsenum&lt;/code>&lt;/li>
-&lt;/ul>
-&lt;p>&lt;a href="https://www.geeksforgeeks.org/dnsx-dns-toolkit-allow-to-run-multiple-dns-queries/amp/">https://www.geeksforgeeks.org/dnsx-dns-toolkit-allow-to-run-multiple-dns-queries/amp/&lt;/a>&lt;/p>
-&lt;p>&lt;a href="https://medium.com/geekculture/dns-enumeration-3dc90ca1f670">https://medium.com/geekculture/dns-enumeration-3dc90ca1f670&lt;/a>&lt;/p>
-&lt;p>&lt;a href="https://book.hacktricks.xyz/network-services-pentesting/pentesting-dns">https://book.hacktricks.xyz/network-services-pentesting/pentesting-dns&lt;/a>&lt;/p>
-&lt;ul>
 &lt;li>identify web technology: &lt;code>whatweb&lt;/code> &lt;code>w3techs&lt;/code> &lt;code>wappalyzer&lt;/code> &lt;code>cmsmap&lt;/code>&lt;/li>
 &lt;li>check webapp firewall: &lt;code>wafw00f&lt;/code>&lt;/li>
 &lt;li>check security headers: &lt;code>shcheck&lt;/code>&lt;/li>
-&lt;li>subdo enum: &lt;code>subfinder&lt;/code> &lt;code>sublist3r&lt;/code>&lt;/li>
+&lt;li>subdo enum: &lt;code>subfinder&lt;/code> &lt;code>sublist3r&lt;/code> &lt;code>knock&lt;/code>&lt;/li>
 &lt;li>extracting all IP from collected subdo&lt;/li>
-&lt;li>port scanning &amp;amp; banner grabbing: &lt;code>nmap&lt;/code> &lt;code>amass&lt;/code> &lt;code>aquatone&lt;/code>&lt;/li>
-&lt;/ul>
-&lt;p>Using Nmap Scripts: Nmap Banner Grab
-&lt;a href="https://linuxhint.com/nmap_banner_grab">https://linuxhint.com/nmap_banner_grab&lt;/a>&lt;/p>
-&lt;p>&lt;strong>mass ports scanning with nmap&lt;/strong>&lt;/p>
-&lt;pre>&lt;code class="language-shell">$ nmap -iL subdolist.txt -Pn -sV -n -T4 -v -oN output.txt
-&lt;/code>&lt;/pre>
-&lt;p>&lt;strong>vuln scan + banner grabbing&lt;/strong>&lt;/p>
-&lt;pre>&lt;code class="language-shell">$ nmap -iL subdolist.txt -Pn -sV -n -T4 -v -d --script vuln -oN output.txt
-&lt;/code>&lt;/pre>
-&lt;ul>
+&lt;li>port scanning &amp;amp; banner grabbing: &lt;code>nmap&lt;/code> &lt;code>amass&lt;/code> &lt;code>aquatone&lt;/code> &lt;code>naabu&lt;/code>&lt;/li>
 &lt;li>check domain takeoverv: &lt;code>subzy&lt;/code>&lt;/li>
 &lt;li>domain &amp;amp; subdo osint: &lt;code>shodan&lt;/code> &lt;code>censys&lt;/code>&lt;/li>
 &lt;li>check http(s) 80/443 &amp;gt; &lt;code>httpx&lt;/code> &amp;gt; &lt;code>altdns&lt;/code> &amp;gt; &lt;code>nuclei&lt;/code>&lt;/li>
@@ -191,9 +176,9 @@ for getting vulnerability like sqli.&lt;/li>
 &lt;/ul>
 &lt;img src="https://i.ibb.co/Hx6whny/IMG-20220824-153323.jpg">
 &lt;ul>
-&lt;li>google dorking
+&lt;li>google hacking
 &lt;ul>
-&lt;li>content discovery with &lt;code>google hacking&lt;/code>&lt;/li>
+&lt;li>content discovery with &lt;code>google dork&lt;/code>&lt;/li>
 &lt;/ul>
 &lt;/li>
 &lt;/ul>

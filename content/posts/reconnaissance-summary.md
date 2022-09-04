@@ -22,42 +22,12 @@ tags: ['hacking']
 - whois: `whois`
 - ssl information: `sslscan`
 - dns enum: `dnsrecon` `nslookup` `dnsx` `dnsenum`
-
-https://www.geeksforgeeks.org/dnsx-dns-toolkit-allow-to-run-multiple-dns-queries/amp/
-
-https://medium.com/geekculture/dns-enumeration-3dc90ca1f670
-
-https://book.hacktricks.xyz/network-services-pentesting/pentesting-dns
-
-
 - identify web technology: `whatweb` `w3techs` `wappalyzer` `cmsmap`
 - check webapp firewall: `wafw00f`
 - check security headers: `shcheck`
-- subdo enum: `subfinder` `sublist3r`
+- subdo enum: `subfinder` `sublist3r` `knock`
 - extracting all IP from collected subdo
-- port scanning & banner grabbing: `nmap` `amass` `aquatone`
-
-
-
-Using Nmap Scripts: Nmap Banner Grab
-https://linuxhint.com/nmap_banner_grab
-
-
-
-
-**mass ports scanning with nmap**
-```shell
-$ nmap -iL subdolist.txt -Pn -sV -n -T4 -v  -oN output.txt
-```
-
-
-**vuln scan + banner grabbing**
-```shell
-$ nmap -iL subdolist.txt -Pn -sV -n -T4 -v -d  --script vuln -oN output.txt
-```
-
-
-
+- port scanning & banner grabbing: `nmap` `amass` `aquatone` `naabu`
 - check domain takeoverv: `subzy`
 - domain & subdo osint: `shodan` `censys`
 - check http(s) 80/443 > `httpx` > `altdns` > `nuclei`
@@ -89,8 +59,8 @@ $ nmap -iL subdolist.txt -Pn -sV -n -T4 -v -d  --script vuln -oN output.txt
 <img src="https://i.ibb.co/Hx6whny/IMG-20220824-153323.jpg">
 {{< /raw >}}
 
-- google dorking
-  - content discovery with `google hacking`
+- google hacking
+  - content discovery with `google dork`
 
 
 
@@ -98,8 +68,6 @@ $ nmap -iL subdolist.txt -Pn -sV -n -T4 -v -d  --script vuln -oN output.txt
 • always see web source code because sometimes you can found somethink interesting which not found or not gained in your tool recon.
 
 • if you found admin path like admin/. fuzzing again with ffuf like admin/FUZZ. you can find somethink interesting files or dir again if lucky.
-
-
 
 
 
