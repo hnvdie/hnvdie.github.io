@@ -33,14 +33,12 @@ tags: ['hacking']
 - check http(s) 80/443 > `httpx` > `altdns` > `nuclei`
 - reverse IP lookup `hackertarget` `googledork` `bing`
 
-
-
 # Content discovery
 
-- fuzzing, `wfuzz`
+- fuzzing, `wfuzz`, `ffuf`
   - get error like sql inject, system crash, dos, etc.
 
-- `ffuf` 
+- `ffuf`, `gospider`
   - search directory, sensitive data, etc.
   - find API path / Endpoint
 

@@ -141,13 +141,13 @@ sfile.mobi.&lt;/p>
 &lt;h1 id="content-discovery">Content discovery &lt;a href="#content-discovery" class="hash">#&lt;/a>&lt;/h1>
 &lt;ul>
 &lt;li>
-&lt;p>fuzzing, &lt;code>wfuzz&lt;/code>&lt;/p>
+&lt;p>fuzzing, &lt;code>wfuzz&lt;/code>, &lt;code>ffuf&lt;/code>&lt;/p>
 &lt;ul>
 &lt;li>get error like sql inject, system crash, dos, etc.&lt;/li>
 &lt;/ul>
 &lt;/li>
 &lt;li>
-&lt;p>&lt;code>ffuf&lt;/code>&lt;/p>
+&lt;p>&lt;code>ffuf&lt;/code>, &lt;code>gospider&lt;/code>&lt;/p>
 &lt;ul>
 &lt;li>search directory, sensitive data, etc.&lt;/li>
 &lt;li>find API path / Endpoint&lt;/li>
