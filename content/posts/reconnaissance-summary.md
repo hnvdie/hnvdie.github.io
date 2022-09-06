@@ -35,29 +35,10 @@ tags: ['hacking']
 
 # Content discovery
 
-get error like sql injection, system crash. search directory,
-sensitive data, endpoint, API path, etc.
+- directory
+- links
 
-- `wfuzz`
-- `ffuf`
-- `gospider`
-
-grab links for get files like js, php, aspx, etc. 
-
-- `waybackurls`
-- `gau`
-
-
-search leaked credential, tokens, etc.
-
-- `githound` 
-
-{{< raw >}}
-<img src="https://i.ibb.co/Hx6whny/IMG-20220824-153323.jpg">
-{{< /raw >}}
-
-- google dorking
-
+not yet
 
 
 # Extra resources for you :3

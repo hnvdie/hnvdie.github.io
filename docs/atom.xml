@@ -139,26 +139,11 @@ sfile.mobi.&lt;/p>
 &lt;li>reverse IP lookup &lt;code>hackertarget&lt;/code> &lt;code>googledork&lt;/code> &lt;code>bing&lt;/code>&lt;/li>
 &lt;/ul>
 &lt;h1 id="content-discovery">Content discovery &lt;a href="#content-discovery" class="hash">#&lt;/a>&lt;/h1>
-&lt;p>get error like sql injection, system crash. search directory,
-sensitive data, endpoint, API path, etc.&lt;/p>
 &lt;ul>
-&lt;li>&lt;code>wfuzz&lt;/code>&lt;/li>
-&lt;li>&lt;code>ffuf&lt;/code>&lt;/li>
-&lt;li>&lt;code>gospider&lt;/code>&lt;/li>
+&lt;li>directory&lt;/li>
+&lt;li>links&lt;/li>
 &lt;/ul>
-&lt;p>grab links for get files like js, php, aspx, etc.&lt;/p>
-&lt;ul>
-&lt;li>&lt;code>waybackurls&lt;/code>&lt;/li>
-&lt;li>&lt;code>gau&lt;/code>&lt;/li>
-&lt;/ul>
-&lt;p>search leaked credential, tokens, etc.&lt;/p>
-&lt;ul>
-&lt;li>&lt;code>githound&lt;/code>&lt;/li>
-&lt;/ul>
-&lt;img src="https://i.ibb.co/Hx6whny/IMG-20220824-153323.jpg">
-&lt;ul>
-&lt;li>google dorking&lt;/li>
-&lt;/ul>
+&lt;p>not yet&lt;/p>
 &lt;h1 id="extra-resources-for-you-3">Extra resources for you :3 &lt;a href="#extra-resources-for-you-3" class="hash">#&lt;/a>&lt;/h1>
 &lt;ul>
 &lt;li>Cool Recon techniques every hacker misses! 🔥🔥&lt;/li>
