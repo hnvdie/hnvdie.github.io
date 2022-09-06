@@ -11,7 +11,7 @@ tags: ['hacking']
 {{< /raw >}}
 
 
-`**notes**: `
+`notes: `
 
 - in this article if you found text like this `here` is a tools or platforms. you just search that on google or other search engines.
 - this article will be to always updated if me found new techniques or methods.
@@ -21,8 +21,8 @@ tags: ['hacking']
 
 - whois: `whois`
 - ssl information: `sslscan`
-- dns enum: `dnsrecon` `nslookup` `dnsx` `dnsenum`
-- identify web technology: `whatweb` `w3techs` `wappalyzer` `cmsmap`
+- dns enumeration: `dnsrecon` `nslookup` `dnsx` `dnsenum`
+- identify web technology: `whatweb` `wappalyzer` `cmsmap`
 - check webapp firewall: `wafw00f`
 - check security headers: `shcheck`
 - subdo enum: `subfinder` `sublist3r` `knock`
@@ -35,37 +35,28 @@ tags: ['hacking']
 
 # Content discovery
 
-- fuzzing, `wfuzz`, `ffuf`
-  - get error like sql inject, system crash, dos, etc.
+get error like sql injection, system crash. search directory,
+sensitive data, endpoint, API path, etc.
 
-- `ffuf`, `gospider`
-  - search directory, sensitive data, etc.
-  - find API path / Endpoint
+- `wfuzz`
+- `ffuf`
+- `gospider`
+
+grab links for get files like js, php, aspx, etc. 
 
 - `waybackurls`
-  - if link possible to vuln. scanning with `nuclei` or fuzzing again with `ffuf`
-  for getting vulnerability like sqli.
-  - get files from target like php, aspx, etc.
+- `gau`
 
-- extract js files 
-  - scan endpoint, API, etc.
 
-- github dorking > `githound` 
-  - checking leaked credential, tokens, etc.
+search leaked credential, tokens, etc.
+
+- `githound` 
 
 {{< raw >}}
 <img src="https://i.ibb.co/Hx6whny/IMG-20220824-153323.jpg">
 {{< /raw >}}
 
-- google hacking
-  - content discovery with `google dork`
-
-
-
-# Tips
-• always see web source code because sometimes you can found somethink interesting which not found or not gained in your tool recon.
-
-• if you found admin path like admin/. fuzzing again with ffuf like admin/FUZZ. you can find somethink interesting files or dir again if lucky.
+- google dorking
 
 
 

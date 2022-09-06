@@ -117,7 +117,7 @@ sfile.mobi.&lt;/p>
 &lt;a href="https://sapt.medium.com/bypassing-403-protection-to-get-pagespeed-admin-access-822fab64c0b3">https://sapt.medium.com/bypassing-403-protection-to-get-pagespeed-admin-access-822fab64c0b3&lt;/a>&lt;/li>
 &lt;/ul></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://hnvdie.github.io/bypass-ip-restriction-at-sfile.mobi/</guid><pubDate>Sat, 27 Aug 2022 00:00:00 +0000</pubDate></item><item><title>summary of reconnaissance for web application bug hunting 🕷</title><link>https://hnvdie.github.io/reconnaissance-summary/</link><description>
 &lt;img src="https://images.unsplash.com/photo-1562813733-b31f71025d54?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=869&amp;q=80">
-&lt;p>&lt;code>**notes**: &lt;/code>&lt;/p>
+&lt;p>&lt;code>notes: &lt;/code>&lt;/p>
 &lt;ul>
 &lt;li>in this article if you found text like this &lt;code>here&lt;/code> is a tools or platforms. you just search that on google or other search engines.&lt;/li>
 &lt;li>this article will be to always updated if me found new techniques or methods.&lt;/li>
@@ -126,8 +126,8 @@ sfile.mobi.&lt;/p>
 &lt;ul>
 &lt;li>whois: &lt;code>whois&lt;/code>&lt;/li>
 &lt;li>ssl information: &lt;code>sslscan&lt;/code>&lt;/li>
-&lt;li>dns enum: &lt;code>dnsrecon&lt;/code> &lt;code>nslookup&lt;/code> &lt;code>dnsx&lt;/code> &lt;code>dnsenum&lt;/code>&lt;/li>
-&lt;li>identify web technology: &lt;code>whatweb&lt;/code> &lt;code>w3techs&lt;/code> &lt;code>wappalyzer&lt;/code> &lt;code>cmsmap&lt;/code>&lt;/li>
+&lt;li>dns enumeration: &lt;code>dnsrecon&lt;/code> &lt;code>nslookup&lt;/code> &lt;code>dnsx&lt;/code> &lt;code>dnsenum&lt;/code>&lt;/li>
+&lt;li>identify web technology: &lt;code>whatweb&lt;/code> &lt;code>wappalyzer&lt;/code> &lt;code>cmsmap&lt;/code>&lt;/li>
 &lt;li>check webapp firewall: &lt;code>wafw00f&lt;/code>&lt;/li>
 &lt;li>check security headers: &lt;code>shcheck&lt;/code>&lt;/li>
 &lt;li>subdo enum: &lt;code>subfinder&lt;/code> &lt;code>sublist3r&lt;/code> &lt;code>knock&lt;/code>&lt;/li>
@@ -139,52 +139,26 @@ sfile.mobi.&lt;/p>
 &lt;li>reverse IP lookup &lt;code>hackertarget&lt;/code> &lt;code>googledork&lt;/code> &lt;code>bing&lt;/code>&lt;/li>
 &lt;/ul>
 &lt;h1 id="content-discovery">Content discovery &lt;a href="#content-discovery" class="hash">#&lt;/a>&lt;/h1>
+&lt;p>get error like sql injection, system crash. search directory,
+sensitive data, endpoint, API path, etc.&lt;/p>
 &lt;ul>
-&lt;li>
-&lt;p>fuzzing, &lt;code>wfuzz&lt;/code>, &lt;code>ffuf&lt;/code>&lt;/p>
-&lt;ul>
-&lt;li>get error like sql inject, system crash, dos, etc.&lt;/li>
+&lt;li>&lt;code>wfuzz&lt;/code>&lt;/li>
+&lt;li>&lt;code>ffuf&lt;/code>&lt;/li>
+&lt;li>&lt;code>gospider&lt;/code>&lt;/li>
 &lt;/ul>
-&lt;/li>
-&lt;li>
-&lt;p>&lt;code>ffuf&lt;/code>, &lt;code>gospider&lt;/code>&lt;/p>
+&lt;p>grab links for get files like js, php, aspx, etc.&lt;/p>
 &lt;ul>
-&lt;li>search directory, sensitive data, etc.&lt;/li>
-&lt;li>find API path / Endpoint&lt;/li>
+&lt;li>&lt;code>waybackurls&lt;/code>&lt;/li>
+&lt;li>&lt;code>gau&lt;/code>&lt;/li>
 &lt;/ul>
-&lt;/li>
-&lt;li>
-&lt;p>&lt;code>waybackurls&lt;/code>&lt;/p>
+&lt;p>search leaked credential, tokens, etc.&lt;/p>
 &lt;ul>
-&lt;li>if link possible to vuln. scanning with &lt;code>nuclei&lt;/code> or fuzzing again with &lt;code>ffuf&lt;/code>
-for getting vulnerability like sqli.&lt;/li>
-&lt;li>get files from target like php, aspx, etc.&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>
-&lt;p>extract js files&lt;/p>
-&lt;ul>
-&lt;li>scan endpoint, API, etc.&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>
-&lt;p>github dorking &amp;gt; &lt;code>githound&lt;/code>&lt;/p>
-&lt;ul>
-&lt;li>checking leaked credential, tokens, etc.&lt;/li>
-&lt;/ul>
-&lt;/li>
+&lt;li>&lt;code>githound&lt;/code>&lt;/li>
 &lt;/ul>
 &lt;img src="https://i.ibb.co/Hx6whny/IMG-20220824-153323.jpg">
 &lt;ul>
-&lt;li>google hacking
-&lt;ul>
-&lt;li>content discovery with &lt;code>google dork&lt;/code>&lt;/li>
+&lt;li>google dorking&lt;/li>
 &lt;/ul>
-&lt;/li>
-&lt;/ul>
-&lt;h1 id="tips">Tips &lt;a href="#tips" class="hash">#&lt;/a>&lt;/h1>
-&lt;p>• always see web source code because sometimes you can found somethink interesting which not found or not gained in your tool recon.&lt;/p>
-&lt;p>• if you found admin path like admin/. fuzzing again with ffuf like admin/FUZZ. you can find somethink interesting files or dir again if lucky.&lt;/p>
 &lt;h1 id="extra-resources-for-you-3">Extra resources for you :3 &lt;a href="#extra-resources-for-you-3" class="hash">#&lt;/a>&lt;/h1>
 &lt;ul>
 &lt;li>Cool Recon techniques every hacker misses! 🔥🔥&lt;/li>
