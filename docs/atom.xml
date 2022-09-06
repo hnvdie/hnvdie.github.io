@@ -130,20 +130,50 @@ sfile.mobi.&lt;/p>
 &lt;li>identify web technology: &lt;code>whatweb&lt;/code> &lt;code>wappalyzer&lt;/code> &lt;code>cmsmap&lt;/code>&lt;/li>
 &lt;li>check webapp firewall: &lt;code>wafw00f&lt;/code>&lt;/li>
 &lt;li>check security headers: &lt;code>shcheck&lt;/code>&lt;/li>
-&lt;li>subdo enum: &lt;code>subfinder&lt;/code> &lt;code>sublist3r&lt;/code> &lt;code>knock&lt;/code>&lt;/li>
-&lt;li>extracting all IP from collected subdo&lt;/li>
+&lt;li>subdo enumeration: &lt;code>subfinder&lt;/code> &lt;code>sublist3r&lt;/code> &lt;code>knock&lt;/code>&lt;/li>
+&lt;li>extracting all IP from collected subdodomain&lt;/li>
 &lt;li>port scanning &amp;amp; banner grabbing: &lt;code>nmap&lt;/code> &lt;code>amass&lt;/code> &lt;code>aquatone&lt;/code> &lt;code>naabu&lt;/code>&lt;/li>
-&lt;li>check domain takeoverv: &lt;code>subzy&lt;/code>&lt;/li>
+&lt;li>check domain takeover: &lt;code>subzy&lt;/code>&lt;/li>
 &lt;li>domain &amp;amp; subdo osint: &lt;code>shodan&lt;/code> &lt;code>censys&lt;/code>&lt;/li>
-&lt;li>check http(s) 80/443 &amp;gt; &lt;code>httpx&lt;/code> &amp;gt; &lt;code>altdns&lt;/code> &amp;gt; &lt;code>nuclei&lt;/code>&lt;/li>
+&lt;li>check http(s) 80/443: &lt;code>httpx&lt;/code> &amp;gt; &lt;code>altdns&lt;/code> &amp;gt; &lt;code>nuclei&lt;/code>&lt;/li>
 &lt;li>reverse IP lookup &lt;code>hackertarget&lt;/code> &lt;code>googledork&lt;/code> &lt;code>bing&lt;/code>&lt;/li>
 &lt;/ul>
 &lt;h1 id="content-discovery">Content discovery &lt;a href="#content-discovery" class="hash">#&lt;/a>&lt;/h1>
+&lt;p>&lt;strong>Fuzzing&lt;/strong>&lt;/p>
+&lt;blockquote>
+&lt;p>getting directory, files, sensitive data.
+scan error like system crash, sql injection, etc.
+with fuzzing technique&lt;/p>
+&lt;/blockquote>
 &lt;ul>
-&lt;li>directory&lt;/li>
-&lt;li>links&lt;/li>
+&lt;li>&lt;code>wfuzz:&lt;/code> Web application fuzzer&lt;/li>
+&lt;li>&lt;code>ffuf:&lt;/code> Fast web fuzzer written in Go&lt;/li>
+&lt;li>&lt;code>fuzzdb&lt;/code> Dictionary of attack patterns and primitives for black-box application fault injection and resource discovery.&lt;/li>
 &lt;/ul>
-&lt;p>not yet&lt;/p>
+&lt;p>&lt;strong>links and urls&lt;/strong>&lt;/p>
+&lt;blockquote>
+&lt;p>getting js files, php, aspx and other interesting files or urls.
+for scanning endpoint, API path, etc.&lt;/p>
+&lt;/blockquote>
+&lt;ul>
+&lt;li>&lt;code>gau:&lt;/code> Fetch known URLs from AlienVault&amp;rsquo;s Open Threat Exchange, the Wayback Machine, and Common Crawl.&lt;/li>
+&lt;li>&lt;code>waybackurls:&lt;/code> Fetch all the URLs that the Wayback Machine knows about for a domain&lt;/li>
+&lt;li>&lt;code>getJS:&lt;/code> A tool to fastly get all javascript sources/files&lt;/li>
+&lt;li>&lt;code>LinkFinder:&lt;/code> A python script that finds endpoints in JavaScript files&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>Parameters&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>parameth:&lt;/code> This tool can be used to brute discover GET and POST parameters&lt;/li>
+&lt;li>&lt;code>ParamSpider:&lt;/code> Mining parameters from dark corners of Web Archives&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>Other helper&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>gobuster:&lt;/code> Directory/File, DNS and VHost busting tool written in Go&lt;/li>
+&lt;li>&lt;code>gospider:&lt;/code> Gospider - Fast web spider written in Go&lt;/li>
+&lt;li>&lt;code>hakrawler:&lt;/code> Simple, fast web crawler designed for easy, quick discovery of endpoints and assets within a web application&lt;/li>
+&lt;li>&lt;code>git-hound:&lt;/code> Reconnaissance tool for GitHub code search. Finds exposed API keys using pattern matching, commit history searching, and a unique result scoring system.&lt;/li>
+&lt;li>&lt;code>pagodo:&lt;/code> pagodo (Passive Google Dork) - Automate Google Hacking Database scraping and searching&lt;/li>
+&lt;/ul>
 &lt;h1 id="extra-resources-for-you-3">Extra resources for you :3 &lt;a href="#extra-resources-for-you-3" class="hash">#&lt;/a>&lt;/h1>
 &lt;ul>
 &lt;li>Cool Recon techniques every hacker misses! 🔥🔥&lt;/li>

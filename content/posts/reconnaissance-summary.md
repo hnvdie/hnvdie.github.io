@@ -25,20 +25,49 @@ tags: ['hacking']
 - identify web technology: `whatweb` `wappalyzer` `cmsmap`
 - check webapp firewall: `wafw00f`
 - check security headers: `shcheck`
-- subdo enum: `subfinder` `sublist3r` `knock`
-- extracting all IP from collected subdo
+- subdo enumeration: `subfinder` `sublist3r` `knock`
+- extracting all IP from collected subdodomain
 - port scanning & banner grabbing: `nmap` `amass` `aquatone` `naabu`
-- check domain takeoverv: `subzy`
+- check domain takeover: `subzy`
 - domain & subdo osint: `shodan` `censys`
-- check http(s) 80/443 > `httpx` > `altdns` > `nuclei`
+- check http(s) 80/443: `httpx` > `altdns` > `nuclei`
 - reverse IP lookup `hackertarget` `googledork` `bing`
 
 # Content discovery
 
-- directory
-- links
+**Fuzzing**
 
-not yet
+> getting directory, files, sensitive data.
+> scan error like system crash, sql injection, etc.
+> with fuzzing technique
+
+- `wfuzz:` Web application fuzzer
+- `ffuf:` Fast web fuzzer written in Go
+- `fuzzdb` Dictionary of attack patterns and primitives for black-box application fault injection and resource discovery.
+
+**links and urls**
+
+> getting js files, php, aspx and other interesting files or urls.
+> for scanning endpoint, API path, etc.
+
+- `gau:` Fetch known URLs from AlienVault's Open Threat Exchange, the Wayback Machine, and Common Crawl.
+- `waybackurls:` Fetch all the URLs that the Wayback Machine knows about for a domain
+- `getJS:` A tool to fastly get all javascript sources/files
+- `LinkFinder:` A python script that finds endpoints in JavaScript files
+
+
+**Parameters**
+
+- `parameth:` This tool can be used to brute discover GET and POST parameters
+- `ParamSpider:` Mining parameters from dark corners of Web Archives
+
+**Other helper**
+
+- `gobuster:` Directory/File, DNS and VHost busting tool written in Go
+- `gospider:` Gospider - Fast web spider written in Go
+- `hakrawler:` Simple, fast web crawler designed for easy, quick discovery of endpoints and assets within a web application
+- `git-hound:` Reconnaissance tool for GitHub code search. Finds exposed API keys using pattern matching, commit history searching, and a unique result scoring system.
+- `pagodo:` pagodo (Passive Google Dork) - Automate Google Hacking Database scraping and searching
 
 
 # Extra resources for you :3
