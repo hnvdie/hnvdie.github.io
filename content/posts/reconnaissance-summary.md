@@ -53,7 +53,8 @@ tags: ['hacking']
 - `gau:` Fetch known URLs from AlienVault's Open Threat Exchange, the Wayback Machine, and Common Crawl.
 - `waybackurls:` Fetch all the URLs that the Wayback Machine knows about for a domain
 - `getJS:` A tool to fastly get all javascript sources/files
-- `LinkFinder:` A python script that finds endpoints in JavaScript files
+- `linkfinder:` A python script that finds endpoints in JavaScript files
+- `assetfinder:` Find domains and subdomains related to a given domain
 
 
 **Parameters**
