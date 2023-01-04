@@ -1,4 +1,4 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>HnvDie</title><description>wannabe hacker</description><link>https://hnvdie.github.io/</link><language>en</language><copyright>Copyright 2022, Ronalds Vilcins</copyright><lastBuildDate>Thu, 01 Sep 2022 00:00:00 +0000</lastBuildDate><generator>Hugo - gohugo.io</generator><docs>http://cyber.harvard.edu/rss/rss.html</docs><atom:link href="https://ronaldsvilcins.com/atom.xml" rel="self" type="application/atom+xml"/><item><title>os command injection</title><link>https://hnvdie.github.io/os-command-injection/</link><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>HnvDie</title><description>wannabe hacker</description><link>https://hnvdie.github.io/</link><language>en</language><copyright>Copyright 2023, Ronalds Vilcins</copyright><lastBuildDate>Thu, 01 Sep 2022 00:00:00 +0000</lastBuildDate><generator>Hugo - gohugo.io</generator><docs>http://cyber.harvard.edu/rss/rss.html</docs><atom:link href="https://ronaldsvilcins.com/atom.xml" rel="self" type="application/atom+xml"/><item><title>os command injection</title><link>https://hnvdie.github.io/os-command-injection/</link><description>
 &lt;img src="https://hnvdie.github.io/images/cuteheker.jpeg">
 &lt;!-- raw HTML omitted -->
 &lt;p>os command injection biasanya terjadi ketika seorang web developer keliru
@@ -159,7 +159,8 @@ for scanning endpoint, API path, etc.&lt;/p>
 &lt;li>&lt;code>gau:&lt;/code> Fetch known URLs from AlienVault&amp;rsquo;s Open Threat Exchange, the Wayback Machine, and Common Crawl.&lt;/li>
 &lt;li>&lt;code>waybackurls:&lt;/code> Fetch all the URLs that the Wayback Machine knows about for a domain&lt;/li>
 &lt;li>&lt;code>getJS:&lt;/code> A tool to fastly get all javascript sources/files&lt;/li>
-&lt;li>&lt;code>LinkFinder:&lt;/code> A python script that finds endpoints in JavaScript files&lt;/li>
+&lt;li>&lt;code>linkfinder:&lt;/code> A python script that finds endpoints in JavaScript files&lt;/li>
+&lt;li>&lt;code>assetfinder:&lt;/code> Find domains and subdomains related to a given domain&lt;/li>
 &lt;/ul>
 &lt;p>&lt;strong>Parameters&lt;/strong>&lt;/p>
 &lt;ul>
