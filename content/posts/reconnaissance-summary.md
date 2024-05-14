@@ -61,7 +61,8 @@ tags: ['hacking']
 
 - `parameth:` This tool can be used to brute discover GET and POST parameters
 - `ParamSpider:` Mining parameters from dark corners of Web Archives
-
+- `ffuf`
+- `commix`
 **Other helper**
 
 - `gobuster:` Directory/File, DNS and VHost busting tool written in Go
