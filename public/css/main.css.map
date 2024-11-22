@@ -1,7 +1,7 @@
 {
 	"version": 3,
 	"file": "main.css",
-	"sourceRoot": "/data/data/com.termux/files/home/projects/hugo-theme-nostyleplease/hnvdie.github.io",
+	"sourceRoot": "/data/data/com.termux/files/home/projects/hnvdie.github.io",
 	"sources": [
 		"assets/css/main.scss"
 	],
