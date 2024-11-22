@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Projects on </title>
+    <link>/tags/projects/</link>
+    <description>Recent content in Projects on </description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 22 Nov 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/tags/projects/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Membuat Program Pengingat Investasi Crypto Sederhana Dengan Python</title>
+      <link>/posts/make-project-invest-tracker/</link>
+      <pubDate>Fri, 22 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>/posts/make-project-invest-tracker/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;/images/ghostecho.jpg&#34; alt=&#34;pic&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;GhostNet adalah sebuah alat pengelola investasi crypto yang saya buat untuk membantu kamu dalam melacak nilai investasi dan return dari berbagai mata uang kripto. Dengan antarmuka yang sederhana, program ini dapat membantu kamu mengatur dan memantau aset crypto dengan lebih terstruktur.&lt;/p&gt;&#xA;&lt;h2 id=&#34;fitur-utama&#34;&gt;Fitur Utama&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Tambah Investasi &amp;amp; Return&lt;/strong&gt;: Menambahkan nilai investasi dan return untuk setiap mata uang kripto yang kamu pilih.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Edit Data&lt;/strong&gt;: Mengubah data investasi dan return jika terjadi perubahan nilai.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Hapus Data&lt;/strong&gt;: Menghapus data untuk mata uang kripto yang sudah tidak kamu perhatikan.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Statistik Lengkap&lt;/strong&gt;: Menampilkan total investasi, return, serta keuntungan atau kerugian secara keseluruhan.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Desain Sederhana&lt;/strong&gt;: Tampilan yang bersih dan mudah dipahami, cocok untuk pengguna pemula hingga yang sudah berpengalaman.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;penjelasan-kode-program&#34;&gt;Penjelasan Kode Program&lt;/h2&gt;&#xA;&lt;p&gt;Di bawah ini adalah penjelasan mengenai bagian-bagian kode &lt;strong&gt;GhostNet&lt;/strong&gt; yang saya buat, serta bagaimana setiap fungsi berperan dalam program.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

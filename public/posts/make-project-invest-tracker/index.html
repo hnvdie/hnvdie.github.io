@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+        body {
+            background-color: black;
+            color:#c7c5c5;
+        }
+    </style>
+
+  <style>
+         
+        a {
+            color: #48a874;  
+            text-decoration: none;  
+        }
+
+         
+        a:hover {
+            color: darkgray;
+        }
+
+         
+        a:visited {
+            color: #48a874;  
+        }
+    </style>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+       style>
+        body {
+            font-family: 'Mono', sans-serif;  
+        }
+
+        .fa {
+            font-family: "Font Awesome 6 Free", sans-serif;  
+            font-weight: 30px;  
+        }
+    </style>
+
+   <meta name="description" content="
+GhostNet adalah sebuah alat pengelola investasi crypto yang saya buat untuk membantu kamu dalam melacak nilai investasi dan return dari berbagai mata uang kripto. Dengan antarmuka yang sederhana, program ini dapat membantu kamu mengatur dan memantau aset crypto dengan lebih terstruktur.
+Fitur Utama
+
+Tambah Investasi &amp; Return: Menambahkan nilai investasi dan return untuk setiap mata uang kripto yang kamu pilih.
+Edit Data: Mengubah data investasi dan return jika terjadi perubahan nilai.
+Hapus Data: Menghapus data untuk mata uang kripto yang sudah tidak kamu perhatikan.
+Statistik Lengkap: Menampilkan total investasi, return, serta keuntungan atau kerugian secara keseluruhan.
+Desain Sederhana: Tampilan yang bersih dan mudah dipahami, cocok untuk pengguna pemula hingga yang sudah berpengalaman.
+
+Penjelasan Kode Program
+Di bawah ini adalah penjelasan mengenai bagian-bagian kode GhostNet yang saya buat, serta bagaimana setiap fungsi berperan dalam program.">  
+
+  <title>
+    
+      Membuat Program Pengingat Investasi Crypto Sederhana Dengan Python
+    
+  </title>
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.08c29b7fac4a11577526584dfb08a52aee38883feba037f71d08cbe4ffde4eaffda104424494fea30b877bcb2969fe832338da1ea7b583435ce50fe3edae4777.css" integrity="sha512-CMKbf6xKEVd1JlhN&#43;wilKu44iD/roDf3HQjL5P/eTq/9oQRCRJT&#43;owuHe8spaf6DIzjaHqe1g0Nc5Q/j7a5Hdw==" />
+  
+</head>
+<body a="black">
+
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">~ $ cd /home</a>
+
+
+<article>
+    <p class="post-meta">
+    </p>
+
+<h1>Membuat Program Pengingat Investasi Crypto Sederhana Dengan Python<br><br>
+    <small datetime="2024-11-22 00:00:00 &#43;0000 UTC" style="font-size: 10px; display: inline-flex; align-items: center;">
+        <img src="https://avatars.githubusercontent.com/u/51517043?v=4" alt="GitHub Profile" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover; margin-right: 8px;">
+        2024-11-22 - Rainhynn
+    </small>
+</h1>
+
+    
+
+    <p><img src="/images/ghostecho.jpg" alt="pic"></p>
+<p>GhostNet adalah sebuah alat pengelola investasi crypto yang saya buat untuk membantu kamu dalam melacak nilai investasi dan return dari berbagai mata uang kripto. Dengan antarmuka yang sederhana, program ini dapat membantu kamu mengatur dan memantau aset crypto dengan lebih terstruktur.</p>
+<h2 id="fitur-utama">Fitur Utama</h2>
+<ul>
+<li><strong>Tambah Investasi &amp; Return</strong>: Menambahkan nilai investasi dan return untuk setiap mata uang kripto yang kamu pilih.</li>
+<li><strong>Edit Data</strong>: Mengubah data investasi dan return jika terjadi perubahan nilai.</li>
+<li><strong>Hapus Data</strong>: Menghapus data untuk mata uang kripto yang sudah tidak kamu perhatikan.</li>
+<li><strong>Statistik Lengkap</strong>: Menampilkan total investasi, return, serta keuntungan atau kerugian secara keseluruhan.</li>
+<li><strong>Desain Sederhana</strong>: Tampilan yang bersih dan mudah dipahami, cocok untuk pengguna pemula hingga yang sudah berpengalaman.</li>
+</ul>
+<h2 id="penjelasan-kode-program">Penjelasan Kode Program</h2>
+<p>Di bawah ini adalah penjelasan mengenai bagian-bagian kode <strong>GhostNet</strong> yang saya buat, serta bagaimana setiap fungsi berperan dalam program.</p>
+<h3 id="1-fungsi-read_data">1. <strong>Fungsi <code>read_data</code></strong></h3>
+<p>Fungsi ini digunakan untuk membaca file yang berisi data investasi dan return. Jika file tidak ditemukan, maka fungsi ini akan membuat file baru dengan header yang sudah ditentukan.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f00">def</span> <span style="color:#ff0">read_data</span>(filename):
+</span></span><span style="display:flex;"><span>    data = {}
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">if</span> not os.path.exists(filename):
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">with</span> open(filename, <span style="color:#87ceeb">&#39;w&#39;</span>) <span style="color:#f00">as</span> f:
+</span></span><span style="display:flex;"><span>            f.write(<span style="color:#87ceeb">&#34;@ currency, invest, return</span><span style="color:#87ceeb">\n</span><span style="color:#87ceeb">&#34;</span>)  <span style="color:#0f0"># Header file</span>
+</span></span><span style="display:flex;"><span>        print(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;info: create new </span><span style="color:#87ceeb">{</span>filename<span style="color:#87ceeb">}</span><span style="color:#87ceeb">&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">else</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">with</span> open(filename, <span style="color:#87ceeb">&#39;r&#39;</span>) <span style="color:#f00">as</span> f:
+</span></span><span style="display:flex;"><span>            lines = f.readlines()[<span style="color:#f60">1</span>:]  <span style="color:#0f0"># Skip header line</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">for</span> line in lines:
+</span></span><span style="display:flex;"><span>                parts = line.strip().split(<span style="color:#87ceeb">&#39;, &#39;</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#f00">if</span> len(parts) == <span style="color:#f60">3</span>:
+</span></span><span style="display:flex;"><span>                    currency = parts[<span style="color:#f60">0</span>].strip().lower()
+</span></span><span style="display:flex;"><span>                    invest = int(parts[<span style="color:#f60">1</span>])
+</span></span><span style="display:flex;"><span>                    return_value = int(parts[<span style="color:#f60">2</span>])
+</span></span><span style="display:flex;"><span>                    data[currency] = {<span style="color:#87ceeb">&#39;invest&#39;</span>: invest, <span style="color:#87ceeb">&#39;return&#39;</span>: return_value}
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">return</span> data
+</span></span></code></pre></div><ol start="2">
+<li>Fungsi write_data</li>
+</ol>
+<p>Fungsi ini digunakan untuk menulis data ke dalam file setelah terjadi perubahan, seperti menambah atau mengedit nilai investasi dan return.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f00">def</span> <span style="color:#ff0">write_data</span>(filename, data):
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">with</span> open(filename, <span style="color:#87ceeb">&#39;w&#39;</span>) <span style="color:#f00">as</span> f:
+</span></span><span style="display:flex;"><span>        f.write(<span style="color:#87ceeb">&#34;@ currency, invest, return</span><span style="color:#87ceeb">\n</span><span style="color:#87ceeb">&#34;</span>)  <span style="color:#0f0"># Header file</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">for</span> currency, values in data.items():
+</span></span><span style="display:flex;"><span>            f.write(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;</span><span style="color:#87ceeb">{</span>currency.upper()<span style="color:#87ceeb">}</span><span style="color:#87ceeb">, </span><span style="color:#87ceeb">{</span>values[<span style="color:#87ceeb">&#39;invest&#39;</span>]<span style="color:#87ceeb">}</span><span style="color:#87ceeb">, </span><span style="color:#87ceeb">{</span>values[<span style="color:#87ceeb">&#39;return&#39;</span>]<span style="color:#87ceeb">}</span><span style="color:#87ceeb">\n</span><span style="color:#87ceeb">&#34;</span>)
+</span></span></code></pre></div><ol start="3">
+<li>Fungsi add_investment</li>
+</ol>
+<p>Fungsi ini digunakan untuk menambah jumlah investasi pada mata uang kripto tertentu. Jika mata uang belum ada dalam data, fungsi ini akan menambahkannya.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f00">def</span> <span style="color:#ff0">add_investment</span>(data, currency, invest_amount):
+</span></span><span style="display:flex;"><span>    currency = currency.lower()
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">if</span> currency in data:
+</span></span><span style="display:flex;"><span>        data[currency][<span style="color:#87ceeb">&#39;invest&#39;</span>] += invest_amount
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">else</span>:
+</span></span><span style="display:flex;"><span>        data[currency] = {<span style="color:#87ceeb">&#39;invest&#39;</span>: invest_amount, <span style="color:#87ceeb">&#39;return&#39;</span>: <span style="color:#f60">0</span>}
+</span></span><span style="display:flex;"><span>    print(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;Investment added: </span><span style="color:#87ceeb">{</span>currency.upper()<span style="color:#87ceeb">}</span><span style="color:#87ceeb"> with </span><span style="color:#87ceeb">{</span>format_currency(invest_amount)<span style="color:#87ceeb">}</span><span style="color:#87ceeb">&#34;</span>)
+</span></span></code></pre></div><ol start="4">
+<li>Fungsi add_return</li>
+</ol>
+<p>Fungsi ini digunakan untuk menambahkan return yang diperoleh dari investasi pada mata uang kripto tertentu.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f00">def</span> <span style="color:#ff0">add_return</span>(data, currency, return_amount):
+</span></span><span style="display:flex;"><span>    currency = currency.lower()
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">if</span> currency in data:
+</span></span><span style="display:flex;"><span>        data[currency][<span style="color:#87ceeb">&#39;return&#39;</span>] += return_amount
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">else</span>:
+</span></span><span style="display:flex;"><span>        data[currency] = {<span style="color:#87ceeb">&#39;invest&#39;</span>: <span style="color:#f60">0</span>, <span style="color:#87ceeb">&#39;return&#39;</span>: return_amount}
+</span></span><span style="display:flex;"><span>    print(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;Return added: </span><span style="color:#87ceeb">{</span>currency.upper()<span style="color:#87ceeb">}</span><span style="color:#87ceeb"> with </span><span style="color:#87ceeb">{</span>format_currency(return_amount)<span style="color:#87ceeb">}</span><span style="color:#87ceeb">&#34;</span>)
+</span></span></code></pre></div><ol start="5">
+<li>Fungsi edit_data</li>
+</ol>
+<p>Fungsi ini memungkinkan kamu untuk mengubah nilai investasi dan return dari mata uang kripto yang ada.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f00">def</span> <span style="color:#ff0">edit_data</span>(data, currency, invest=<span style="color:#f00">None</span>, return_value=<span style="color:#f00">None</span>):
+</span></span><span style="display:flex;"><span>    currency = currency.lower()
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">if</span> currency in data:
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">if</span> invest is not <span style="color:#f00">None</span>:
+</span></span><span style="display:flex;"><span>            data[currency][<span style="color:#87ceeb">&#39;invest&#39;</span>] = invest
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">if</span> return_value is not <span style="color:#f00">None</span>:
+</span></span><span style="display:flex;"><span>            data[currency][<span style="color:#87ceeb">&#39;return&#39;</span>] = return_value
+</span></span><span style="display:flex;"><span>        print(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;Data edited for </span><span style="color:#87ceeb">{</span>currency.upper()<span style="color:#87ceeb">}</span><span style="color:#87ceeb">&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">else</span>:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;Currency </span><span style="color:#87ceeb">{</span>currency<span style="color:#87ceeb">}</span><span style="color:#87ceeb"> not found.&#34;</span>)
+</span></span></code></pre></div><ol start="6">
+<li>Fungsi delete_data</li>
+</ol>
+<p>Fungsi ini digunakan untuk menghapus data untuk mata uang yang sudah tidak lagi kamu perhatikan. Fungsi ini menjaga agar data tetap terorganisir.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f00">def</span> <span style="color:#ff0">delete_data</span>(data, currency):
+</span></span><span style="display:flex;"><span>    currency = currency.lower()
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">if</span> currency in data:
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">del</span> data[currency]
+</span></span><span style="display:flex;"><span>        print(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;</span><span style="color:#87ceeb">{</span>currency.upper()<span style="color:#87ceeb">}</span><span style="color:#87ceeb"> data has been deleted.&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">else</span>:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;Currency </span><span style="color:#87ceeb">{</span>currency<span style="color:#87ceeb">}</span><span style="color:#87ceeb"> not found.&#34;</span>)
+</span></span></code></pre></div><ol start="7">
+<li>Fungsi display_statistics</li>
+</ol>
+<p>Fungsi ini akan menampilkan statistik total investasi, return, serta keuntungan atau kerugian dari seluruh data mata uang kripto yang tercatat.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f00">def</span> <span style="color:#ff0">display_statistics</span>(data):
+</span></span><span style="display:flex;"><span>    total_investment = sum([values[<span style="color:#87ceeb">&#39;invest&#39;</span>] <span style="color:#f00">for</span> values in data.values()])
+</span></span><span style="display:flex;"><span>    total_return = sum([values[<span style="color:#87ceeb">&#39;return&#39;</span>] <span style="color:#f00">for</span> values in data.values()])
+</span></span><span style="display:flex;"><span>    total_profit_loss = total_return - total_investment
+</span></span><span style="display:flex;"><span>    print(<span style="color:#87ceeb">&#34;-&#34;</span>*<span style="color:#f60">100</span>)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#87ceeb">&#34;Statistics:&#34;</span>)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;Total Investment: </span><span style="color:#87ceeb">{</span>format_currency(total_investment)<span style="color:#87ceeb">}</span><span style="color:#87ceeb">&#34;</span>)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;Total Return: </span><span style="color:#87ceeb">{</span>format_currency(total_return)<span style="color:#87ceeb">}</span><span style="color:#87ceeb">&#34;</span>)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;Total Profit/Loss: </span><span style="color:#87ceeb">{</span>format_currency(total_profit_loss)<span style="color:#87ceeb">}</span><span style="color:#87ceeb">&#34;</span>)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#87ceeb">&#34;</span><span style="color:#87ceeb">\n</span><span style="color:#87ceeb">Currency Breakdown:&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">for</span> currency, values in data.items():
+</span></span><span style="display:flex;"><span>        print(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;</span><span style="color:#87ceeb">{</span>currency.upper()<span style="color:#87ceeb">}</span><span style="color:#87ceeb">: Invest = </span><span style="color:#87ceeb">{</span>format_currency(values[<span style="color:#87ceeb">&#39;invest&#39;</span>])<span style="color:#87ceeb">}</span><span style="color:#87ceeb">, Return = </span><span style="color:#87ceeb">{</span>format_currency(values[<span style="color:#87ceeb">&#39;return&#39;</span>])<span style="color:#87ceeb">}</span><span style="color:#87ceeb">&#34;</span>)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#87ceeb">&#34;-&#34;</span>*<span style="color:#f60">100</span>)
+</span></span><span style="display:flex;"><span>    print()
+</span></span></code></pre></div><ol start="8">
+<li>Fungsi format_currency</li>
+</ol>
+<p>Fungsi ini digunakan untuk memformat nilai investasi atau return menjadi lebih mudah dibaca, dengan menambahkan simbol mata uang dan memisahkan angka dengan titik.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f00">def</span> <span style="color:#ff0">format_currency</span>(amount, symbol=<span style="color:#87ceeb">&#34;USD&#34;</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">return</span> <span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;</span><span style="color:#87ceeb">{</span>symbol<span style="color:#87ceeb">}</span><span style="color:#87ceeb"> </span><span style="color:#87ceeb">{</span>amount<span style="color:#87ceeb">:</span><span style="color:#87ceeb">,</span><span style="color:#87ceeb">}</span><span style="color:#87ceeb">&#34;</span>.replace(<span style="color:#87ceeb">&#34;,&#34;</span>, <span style="color:#87ceeb">&#34;.&#34;</span>)
+</span></span></code></pre></div><h2 id="cara-penggunaan">Cara Penggunaan</h2>
+<ol>
+<li>
+<p>Menambahkan Investasi
+Kamu bisa menambahkan investasi dengan memilih menu &ldquo;Tambah Investasi&rdquo; dan memasukkan jumlah dana yang kamu investasikan dalam mata uang crypto pilihanmu.</p>
+</li>
+<li>
+<p>Menambahkan Return
+Untuk menambah return, pilih menu &ldquo;Tambah Return&rdquo; dan masukkan jumlah return yang kamu peroleh.</p>
+</li>
+<li>
+<p>Mengedit Data
+Jika ada perubahan, misalnya karena investasi atau return berubah, kamu bisa mengeditnya melalui menu &ldquo;Edit Data&rdquo;.</p>
+</li>
+<li>
+<p>Menghapus Data
+Jika ada mata uang kripto yang sudah tidak kamu perhatikan, kamu bisa menghapusnya dengan memilih &ldquo;Hapus Data&rdquo;.</p>
+</li>
+<li>
+<p>Melihat Statistik
+Menu &ldquo;Statistik&rdquo; akan menunjukkan gambaran umum tentang total investasi, return, serta profit atau kerugian yang kamu peroleh.</p>
+</li>
+</ol>
+<h2 id="pengembangan-lebih-lanjut">Pengembangan Lebih Lanjut</h2>
+<p>Program ini masih dapat dikembangkan lebih lanjut, seperti penambahan fitur-fitur baru, integrasi dengan API untuk mengupdate data harga cryptocurrency secara otomatis, dan lainnya.</p>
+<p>Kamu bisa mengakses GhostNet di <a href="https://github.com/hnvdie/ghostnet">Github</a>.</p>
+
+</article>
+<hr>
+
+<p>© 2021-2024 HnvDie</p>
+<p>Powered By Hugo ᯓᡣ𐭩</p>
+
+
+
+            </div>
+        </main>
+    </body></html>

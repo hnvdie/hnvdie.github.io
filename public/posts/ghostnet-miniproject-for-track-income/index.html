@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+        body {
+            background-color: black;
+            color:#c7c5c5;
+        }
+    </style>
+
+  <style>
+         
+        a {
+            color: #48a874;  
+            text-decoration: none;  
+        }
+
+         
+        a:hover {
+            color: darkgray;
+        }
+
+         
+        a:visited {
+            color: #48a874;  
+        }
+    </style>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+       style>
+        body {
+            font-family: 'Mono', sans-serif;  
+        }
+
+        .fa {
+            font-family: "Font Awesome 6 Free", sans-serif;  
+            font-weight: 30px;  
+        }
+    </style>
+
+   <meta name="description" content="GhostNet: A Python-Based Stock Reminder for Cryptocurrencies and Investments
+GhostNet is a simple yet powerful Python application designed to track investments and returns for various cryptocurrencies or assets. Whether you&rsquo;re a cryptocurrency enthusiast or an investor in other assets, GhostNet allows you to manage your financial data efficiently by providing an easy-to-use interface to record investments, track returns, and display overall statistics.
+This project is open-source and available on GitHub.
+Features of GhostNet
+
+Investment and Return Management: Users can add, edit, or delete investment and return data for any currency or asset.
+Data Persistence: The application saves all data to a file (data.dat), ensuring that your data remains intact even after the program exits.
+Statistics Display: GhostNet calculates and displays total investments, returns, and profit/loss statistics.
+Simple and Intuitive Interface: With a text-based interface, the program is user-friendly, even for those who are new to programming.
+
+How It Works
+GhostNet operates by reading and writing data to a file, and it uses a simple command-line interface (CLI) for interaction. Here is an overview of the main functionality of the code:">  
+
+  <title>
+    
+      
+    
+  </title>
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="//localhost:1313/css/main.b3f3f10b76da53cb419a1c5b31ac9aa19368c212bd657c216cb741770676d110e21001bc85bb2527dd4e537a4c34b5333eda55e587f77769df67bb48cca62337.css" integrity="sha512-s/PxC3baU8tBmhxbMayaoZNowhK9ZXwhbLdBdwZ20RDiEAG8hbslJ91OU3pMNLUzPtpV5Yf3d2nfZ7tIzKYjNw==" />
+  
+</head>
+<body a="black">
+
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">~ $ cd /home</a>
+
+
+<article>
+    <p class="post-meta">
+    </p>
+
+<h1><br><br>
+    <small datetime="0001-01-01 00:00:00 &#43;0000 UTC" style="font-size: 10px; display: inline-flex; align-items: center;">
+        <img src="https://avatars.githubusercontent.com/u/51517043?v=4" alt="GitHub Profile" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover; margin-right: 8px;">
+        0001-01-01 - Rainhynn
+    </small>
+</h1>
+
+    
+
+    <h1 id="ghostnet-a-python-based-stock-reminder-for-cryptocurrencies-and-investments">GhostNet: A Python-Based Stock Reminder for Cryptocurrencies and Investments</h1>
+<p>GhostNet is a simple yet powerful Python application designed to track investments and returns for various cryptocurrencies or assets. Whether you&rsquo;re a cryptocurrency enthusiast or an investor in other assets, GhostNet allows you to manage your financial data efficiently by providing an easy-to-use interface to record investments, track returns, and display overall statistics.</p>
+<p>This project is open-source and available on <a href="https://github.com/hnvdie/ghostnet">GitHub</a>.</p>
+<h2 id="features-of-ghostnet">Features of GhostNet</h2>
+<ul>
+<li><strong>Investment and Return Management</strong>: Users can add, edit, or delete investment and return data for any currency or asset.</li>
+<li><strong>Data Persistence</strong>: The application saves all data to a file (<code>data.dat</code>), ensuring that your data remains intact even after the program exits.</li>
+<li><strong>Statistics Display</strong>: GhostNet calculates and displays total investments, returns, and profit/loss statistics.</li>
+<li><strong>Simple and Intuitive Interface</strong>: With a text-based interface, the program is user-friendly, even for those who are new to programming.</li>
+</ul>
+<h2 id="how-it-works">How It Works</h2>
+<p>GhostNet operates by reading and writing data to a file, and it uses a simple command-line interface (CLI) for interaction. Here is an overview of the main functionality of the code:</p>
+<ol>
+<li>
+<p><strong>Reading Data</strong>: The <code>read_data</code> function loads the investment and return data from a file. If the file does not exist, it creates a new one with a header line for currency, investment, and return values.</p>
+</li>
+<li>
+<p><strong>Writing Data</strong>: The <code>write_data</code> function saves the current state of the data to the file, ensuring that updates such as new investments or changes in return values are preserved.</p>
+</li>
+<li>
+<p><strong>Adding Investment and Return</strong>: Users can add investment and return amounts for any currency using the <code>add_investment</code> and <code>add_return</code> functions. These functions automatically update the data and display a message with the new values.</p>
+</li>
+<li>
+<p><strong>Editing Data</strong>: The <code>edit_data</code> function allows users to modify the investment and return values for a specific currency.</p>
+</li>
+<li>
+<p><strong>Deleting Data</strong>: The <code>delete_data</code> function deletes the data for a specific currency, ensuring that outdated or incorrect information can be removed.</p>
+</li>
+<li>
+<p><strong>Displaying Statistics</strong>: The <code>display_statistics</code> function provides an overview of total investments, returns, and profit/loss for all currencies. It also shows a breakdown of each currency&rsquo;s investment and return.</p>
+</li>
+<li>
+<p><strong>Formatting</strong>: The <code>format_currency</code> function ensures that all currency values are displayed in a readable format with commas and a specified currency symbol.</p>
+</li>
+</ol>
+<h2 id="how-to-use-ghostnet">How to Use GhostNet</h2>
+<p>To get started with GhostNet, follow these steps:</p>
+<h3 id="step-1-clone-the-repository">Step 1: Clone the Repository</h3>
+<p>Clone the repository from GitHub to your local machine:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git clone https://github.com/hnvdie/ghostnet
+</span></span></code></pre></div><h3 id="step-2-install-python">Step 2: Install Python</h3>
+<p>Ensure that Python is installed on your system. You can check if Python is installed by running:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>python --version
+</span></span></code></pre></div><p>If Python is not installed, you can download it from the official <a href="https://www.python.org/downloads/">Python website</a>.</p>
+<h3 id="step-3-run-the-program">Step 3: Run the Program</h3>
+<p>Navigate to the directory where you cloned the repository and run the program:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd ghostnet
+</span></span><span style="display:flex;"><span>python ghostnet.py
+</span></span></code></pre></div><h3 id="step-4-interact-with-the-application">Step 4: Interact with the Application</h3>
+<p>Once the program is running, you will be presented with a menu to choose from the following options:</p>
+<ol>
+<li><strong>Add Investment</strong>: Add investment for a currency.</li>
+<li><strong>Add Return</strong>: Add return for a currency.</li>
+<li><strong>Edit Data</strong>: Edit existing investment and return values for a currency.</li>
+<li><strong>Delete Data</strong>: Delete a currency’s data from the record.</li>
+<li><strong>Display Statistics</strong>: View an overview of all investments, returns, and profit/loss.</li>
+<li><strong>Quit</strong>: Exit the program.</li>
+</ol>
+<p>You can enter your choice by typing the corresponding number.</p>
+<h3 id="example-interaction">Example Interaction:</h3>
+<pre tabindex="0"><code>1. Add Investment
+2. Add Return
+3. Edit Data
+4. Delete Data
+5. Display Statistics
+6. Quit
+
+Choose an option :&gt; 1
+Enter the currency token (e.g DOGE): doge
+Enter the investment amount for doge: 1000000
+Investment added: DOGE with USD 1.000.000
+</code></pre><h2 id="code-overview">Code Overview</h2>
+<h3 id="file-structure">File Structure</h3>
+<p>The project consists of the following main components:</p>
+<ul>
+<li><code>ghostnet.py</code>: The main Python file that runs the application.</li>
+<li><code>data.dat</code>: The file where investment and return data is stored.</li>
+</ul>
+<h3 id="code-breakdown">Code Breakdown</h3>
+<ol>
+<li>
+<p><strong>Reading and Writing Data</strong>: The functions <code>read_data</code> and <code>write_data</code> handle reading from and writing to the <code>data.dat</code> file. The file is formatted with a header that labels each column (currency, investment, return).</p>
+</li>
+<li>
+<p><strong>Adding, Editing, and Deleting Data</strong>: Functions like <code>add_investment</code>, <code>add_return</code>, <code>edit_data</code>, and <code>delete_data</code> manipulate the data stored in memory. The changes are then written back to the <code>data.dat</code> file to persist the updates.</p>
+</li>
+<li>
+<p><strong>Displaying Statistics</strong>: The <code>display_statistics</code> function calculates the total investment, total return, and the overall profit or loss from all the currencies, helping you track your financial performance.</p>
+</li>
+<li>
+<p><strong>Currency Formatting</strong>: The <code>format_currency</code> function formats numbers in a user-friendly way, adding commas for thousands and appending a currency symbol.</p>
+</li>
+</ol>
+<h2 id="seo-keywords">SEO Keywords</h2>
+<ul>
+<li>Python project for cryptocurrency management</li>
+<li>Cryptocurrency investment tracker in Python</li>
+<li>Stock reminder Python app</li>
+<li>Python investment statistics application</li>
+<li>Open-source Python investment tracker</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>GhostNet is a simple yet effective solution for tracking investments and returns. Whether you&rsquo;re managing cryptocurrency portfolios or other types of investments, this Python-based application provides a straightforward way to keep track of your financial data. The project is open-source, so you can contribute or modify the code according to your needs. Check out the <a href="https://github.com/hnvdie/ghostnet">GitHub repository</a> for more details.</p>
+<hr>
+<p>Feel free to clone the repository and start managing your investments today!</p>
+
+</article>
+<hr>
+
+<p>© 2021-2024 HnvDie</p>
+<p>Powered By Hugo ᯓᡣ𐭩</p>
+
+
+
+            </div>
+        </main>
+    </body></html>
