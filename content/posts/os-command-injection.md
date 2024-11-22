@@ -1,7 +1,7 @@
 ---
-title: os command injection 
+title: tentang vulnerability os-command injection 
 date: 2022-09-01
-tags: ["exploitation"]
+tags: ["pentest"]
 ---
 {{< raw >}}
 <img src="/images/cuteheker.jpeg">

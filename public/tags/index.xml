@@ -16,10 +16,10 @@
       <description></description>
     </item>
     <item>
-      <title>Exploitation</title>
-      <link>/tags/exploitation/</link>
+      <title>Pentest</title>
+      <link>/tags/pentest/</link>
       <pubDate>Thu, 01 Sep 2022 00:00:00 +0000</pubDate>
-      <guid>/tags/exploitation/</guid>
+      <guid>/tags/pentest/</guid>
       <description></description>
     </item>
     <item>
@@ -27,13 +27,6 @@
       <link>/tags/writeups/</link>
       <pubDate>Sat, 27 Aug 2022 00:00:00 +0000</pubDate>
       <guid>/tags/writeups/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Hacking</title>
-      <link>/tags/hacking/</link>
-      <pubDate>Fri, 26 Aug 2022 00:00:00 +0000</pubDate>
-      <guid>/tags/hacking/</guid>
       <description></description>
     </item>
   </channel>

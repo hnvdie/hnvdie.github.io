@@ -14,7 +14,7 @@
     <loc>/tags/</loc>
     <lastmod>2024-11-22T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tags/exploitation/</loc>
+    <loc>/tags/pentest/</loc>
     <lastmod>2022-09-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/posts/os-command-injection/</loc>
@@ -25,9 +25,6 @@
   </url><url>
     <loc>/tags/writeups/</loc>
     <lastmod>2022-08-27T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tags/hacking/</loc>
-    <lastmod>2022-08-26T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/posts/reconnaissance-summary/</loc>
     <lastmod>2022-08-26T00:00:00+00:00</lastmod>

@@ -2,7 +2,7 @@
 title: summary of reconnaissance for web application bug hunting 🕷 
 date: 2022-08-26
 description: panduan dasar untuk melakukan information gathering terhadap web application sebagai awalan untuk melakukan bug hunting
-tags: ['hacking']
+tags: ['Pentest']
 ---
 
 {{< raw >}}
