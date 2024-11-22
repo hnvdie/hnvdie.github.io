@@ -1,92 +1,41 @@
-baseURL = "https://hnvdie.github.io/"
-languageCode = "id"
-title = "HnvDie"
-disableKinds = ["section"] #categories
-disqusShortname = ""
-pygmentsCodeFences = false
-pygmentsUseClasses = false
-paginate = 999
-minify = true
-publishDir = "docs"
+[module]
+  [module.hugoVersion]
+    extended=true
+    min = "0.41.0"
 
 [markup]
+  [markup.goldmark]
+    [markup.goldmark.parser]
+      [markup.goldmark.parser.attribute]
+        block = true
+        title = true
   [markup.highlight]
-    noclasses = false
+    anchorLineNos = false
+    codeFences = true
+    guessSyntax = false
+    hl_Lines = ''
+    hl_inline = false
+    lineAnchors = ''
+    lineNoStart = 1
+    lineNos = false
+    lineNumbersInTable = true
+    noClasses = true
+    noHl = false
+    style = 'rrt'
+    tabWidth = 4
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 3
+    ordered = false
+
+[params]
+  [params.theme_config]
+    appearance = "black"
+    back_home_text = "~ $ cd /home"
+    date_format = "2006-01-02"
+    isListGroupByDate = false
+
 
 [taxonomies]
   tag = "tags"
 
-[privacy]
-  [privacy.disqus]
-    disable = true
-  [privacy.googleAnalytics]
-    disable = true
-  [privacy.instagram]
-    disable = true
-  [privacy.twitter]
-    disable = true
-  [privacy.vimeo]
-    disable = true
-  [privacy.youtube]
-    disable = true
-
-[Author]
-  name = "Ardho Ainullah"
-
-[params]
-  description = "wannabe hacker"
-  author = "Ardho Ainullah"
-  copyright = "HnvDie"
-  logo = ""
-
-[frontmatter]
-  date  = [":filename", ":default"]
-  author = "Ardho Ainullah"
-  github = ""
-  facebook = ""
-  og_image = ""
-  sitename = ""
-  twitter = "hnvdie"
-
-[permalinks]
-#  posts = "/:year/:month/:day/:filename"
-  posts = "/:filename"
-  pages = "/:slug"
-
-[outputs]
-  home = ["HTML", "RSS", "JSON"]
-  section = ["HTML"]
-
-[outputFormats.RSS]
-  mediatype = "application/rss"
-  baseName = "atom"
-
-[outputFormats.JSON]
-  mediatype = "application/json"
-  baseName = "feed"
-
-[sitemap]
-  changefreq = "monthly"
-  filename = "sitemap.xml"
-  priority = 0.5
-
-[menu]
-  [[menu.main]]
-    identifier = "index"
-    name       = "Index"
-    url        = "/"
-    weight     = -111
-
-
-  [[menu.main]]
-    identifier = "about"
-    name       = "About"
-    url        = "/about/"
-    weight     = -100
-    
-
-  [[menu.main]]
-    identifier = "rss"
-    name       = "RSS"
-    url        = "/atom.xml"
-    weight     = -10

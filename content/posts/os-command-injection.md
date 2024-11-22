@@ -1,7 +1,6 @@
 ---
 title: os command injection 
 date: 2022-09-01
-author: Ardho Ainullah
 tags: ["exploitation"]
 ---
 {{< raw >}}
@@ -10,7 +9,6 @@ tags: ["exploitation"]
 
 <br>
 <br>
-
 
 os command injection biasanya terjadi ketika seorang web developer keliru
 dalam mengatur penerimaan input didalam situsnya. biasanya terjadi ketika

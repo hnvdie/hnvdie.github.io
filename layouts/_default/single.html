@@ -1,27 +1,21 @@
-<!doctype html>
-<html lang="en">
-  {{ partial "head.html" . }}
-<body>
-<main>
-    {{ partial "header.html" . }}
-  <section style="color:white">
+{{ define "main" }}
+{{ partial "back_link.html" .}}
 
-      {{ if eq .Type "posts" }}
+<article>
+    <p class="post-meta">
+        <time datetime="{{ .Date }}"> 
+            {{ .Date | time.Format site.Params.theme_config.date_format }}
+        </time>
+    </p>
 
-      <h2 itemprop="name headline">{{ .Title }}</h2>
-      <p class="meta" >
-        <time itemprop="datePublished" datetime="{{ dateFormat "2006-01-02" .Date }}">{{ dateFormat " January 02, 2006" .Date }}</time> &bull; 
-        {{ partial "tags.html" .}}
-        </p>
-      {{ end }}
+    <h1>{{ .Title }} </h1>
 
-      <span itemprop="articleBody">
-      {{ .Content }}
-      </span>
-       
+    {{ if .Params.toc }}
+        <aside {{ if .Params.tocBorder }} class="toc" {{ end }}>
+            {{ .TableOfContents }}
+        </aside>
+    {{ end }}
 
-    </section>
-    {{ partial "footer.html" . }}
-  </main>
-</body>
-</html>
+    {{ .Content }}
+</article>
+{{ end }}

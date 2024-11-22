@@ -1,7 +1,6 @@
 ---
 title: Bypass IP restriction at sfile.mobi - writeup
 date: 2022-08-27
-author: Ardho Ainullah
 tags: [writeups]
 ---
 

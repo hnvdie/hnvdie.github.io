@@ -1,0 +1,38 @@
+{{ define "main" }}
+
+<header>
+    <pre>
+⠀⠀⠀⠀⠀⢀⣴⣿⣿⣿⣦⠀
+⠀⠀⠀⠀⣰⣿⡟⢻⣿⡟⢻⣧
+⠀⠀⠀⣰⣿⣿⣇⣸⣿⣇⣸⣿
+⠀⠀⣴⣿⣿⣿⣿⠟⢻⣿⣿⣿
+⣠⣾⣿⣿⣿⣿⣿⣤⣼⣿⣿⠇ Boo  
+⢿⡿⢿⣿⣿⣿⣿⣿⣿⣿⡿
+⠀⠀⠈⠿⠿⠋⠙⢿⣿⡿⠁⠀
+</pre>
+       <h1>{{ $.Site.Title }}  </h1>
+    {{- if $.Site.Params.theme_config.show_description -}}
+        <p>{{ $.Site.Params.description }}</p>
+    {{- end -}}
+
+</header>
+
+
+{{ .Content }}
+{{ partial "menu_item.html" (dict "context" . "collection" $.Site.Data.menu.entries) }}
+
+
+<h3>#Hastags</h3> <!-- DISPLAY TAGGING -->
+<ul>
+  {{ range .Site.Taxonomies.tags }}
+    <li>
+      <a href="{{ .Page.RelPermalink }}">{{ .Page.Title }}</a> ({{ .Count }})
+    </li>
+  {{ else }}
+    <li>No tags found.</li>
+  {{ end }}
+   <li><a href="{{ .Site.BaseURL }}index.xml">RSS</a></li>
+</ul>
+<br>
+{{ end }}
+

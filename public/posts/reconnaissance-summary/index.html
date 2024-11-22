@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+        body {
+            background-color: black;
+            color: white;
+        }
+    </style>
+
+  <style>
+         
+        a {
+            color: #42f5d4;  
+            text-decoration: none;  
+        }
+
+         
+        a:hover {
+            color: darkgray;
+        }
+
+         
+        a:visited {
+            color: #42f5d4;  
+        }
+    </style>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+       style>
+        body {
+            font-family: 'Inter', sans-serif;  
+        }
+
+        .fa {
+            font-family: "Font Awesome 6 Free", sans-serif;  
+            font-weight: 900;  
+        }
+    </style>
+
+   <meta name="description" content="
+
+
+notes: 
+
+in this article if you found text like this here is a tools or platforms. you just search that on google or other search engines.
+this article will be to always updated if me found new techniques or methods.
+
+base
+
+whois: whois
+ssl information: sslscan
+dns enumeration: dnsrecon nslookup dnsx dnsenum
+identify web technology: whatweb wappalyzer cmsmap
+check webapp firewall: wafw00f
+check security headers: shcheck
+subdo enumeration: subfinder sublist3r knock
+extracting all IP from collected subdodomain
+port scanning &amp; banner grabbing: nmap amass aquatone naabu
+check domain takeover: subzy
+domain &amp; subdo osint: shodan censys
+check http(s) 80/443: httpx &gt; altdns &gt; nuclei
+reverse IP lookup hackertarget googledork bing
+
+Content discovery
+Fuzzing">  
+
+  <title>
+    
+      summary of reconnaissance for web application bug hunting 🕷
+    
+  </title>
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.08c29b7fac4a11577526584dfb08a52aee38883feba037f71d08cbe4ffde4eaffda104424494fea30b877bcb2969fe832338da1ea7b583435ce50fe3edae4777.css" integrity="sha512-CMKbf6xKEVd1JlhN&#43;wilKu44iD/roDf3HQjL5P/eTq/9oQRCRJT&#43;owuHe8spaf6DIzjaHqe1g0Nc5Q/j7a5Hdw==" />
+  
+</head>
+<body a="black">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">~ $ cd /home</a>
+
+
+<article>
+    <p class="post-meta">
+    </p>
+
+<h1>summary of reconnaissance for web application bug hunting 🕷<br><br>
+    <small datetime="2022-08-26 00:00:00 &#43;0000 UTC" style="font-size: 10px; display: inline-flex; align-items: center;">
+        <img src="https://avatars.githubusercontent.com/u/51517043?v=4" alt="GitHub Profile" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover; margin-right: 8px;">
+        2022-08-26 - Rainhynn
+    </small>
+</h1>
+
+    
+
+    
+<img src="https://images.unsplash.com/photo-1562813733-b31f71025d54?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80">
+
+
+<p><code>notes: </code></p>
+<ul>
+<li>in this article if you found text like this <code>here</code> is a tools or platforms. you just search that on google or other search engines.</li>
+<li>this article will be to always updated if me found new techniques or methods.</li>
+</ul>
+<h1 id="base">base</h1>
+<ul>
+<li>whois: <code>whois</code></li>
+<li>ssl information: <code>sslscan</code></li>
+<li>dns enumeration: <code>dnsrecon</code> <code>nslookup</code> <code>dnsx</code> <code>dnsenum</code></li>
+<li>identify web technology: <code>whatweb</code> <code>wappalyzer</code> <code>cmsmap</code></li>
+<li>check webapp firewall: <code>wafw00f</code></li>
+<li>check security headers: <code>shcheck</code></li>
+<li>subdo enumeration: <code>subfinder</code> <code>sublist3r</code> <code>knock</code></li>
+<li>extracting all IP from collected subdodomain</li>
+<li>port scanning &amp; banner grabbing: <code>nmap</code> <code>amass</code> <code>aquatone</code> <code>naabu</code></li>
+<li>check domain takeover: <code>subzy</code></li>
+<li>domain &amp; subdo osint: <code>shodan</code> <code>censys</code></li>
+<li>check http(s) 80/443: <code>httpx</code> &gt; <code>altdns</code> &gt; <code>nuclei</code></li>
+<li>reverse IP lookup <code>hackertarget</code> <code>googledork</code> <code>bing</code></li>
+</ul>
+<h1 id="content-discovery">Content discovery</h1>
+<p><strong>Fuzzing</strong></p>
+<blockquote>
+<p>getting directory, files, sensitive data.
+scan error like system crash, sql injection, etc.
+with fuzzing technique</p>
+</blockquote>
+<ul>
+<li><code>wfuzz:</code> Web application fuzzer</li>
+<li><code>ffuf:</code> Fast web fuzzer written in Go</li>
+<li><code>fuzzdb</code> Dictionary of attack patterns and primitives for black-box application fault injection and resource discovery.</li>
+</ul>
+<p><strong>links and urls</strong></p>
+<blockquote>
+<p>getting js files, php, aspx and other interesting files or urls.
+for scanning endpoint, API path, etc.</p>
+</blockquote>
+<ul>
+<li><code>gau:</code> Fetch known URLs from AlienVault&rsquo;s Open Threat Exchange, the Wayback Machine, and Common Crawl.</li>
+<li><code>waybackurls:</code> Fetch all the URLs that the Wayback Machine knows about for a domain</li>
+<li><code>getJS:</code> A tool to fastly get all javascript sources/files</li>
+<li><code>linkfinder:</code> A python script that finds endpoints in JavaScript files</li>
+<li><code>assetfinder:</code> Find domains and subdomains related to a given domain</li>
+</ul>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>parameth:</code> This tool can be used to brute discover GET and POST parameters</p>
+</li>
+<li>
+<p><code>ParamSpider:</code> Mining parameters from dark corners of Web Archives</p>
+</li>
+<li>
+<p><code>ffuf</code></p>
+</li>
+<li>
+<p><code>commix</code>
+<strong>Other helper</strong></p>
+</li>
+<li>
+<p><code>gobuster:</code> Directory/File, DNS and VHost busting tool written in Go</p>
+</li>
+<li>
+<p><code>gospider:</code> Gospider - Fast web spider written in Go</p>
+</li>
+<li>
+<p><code>hakrawler:</code> Simple, fast web crawler designed for easy, quick discovery of endpoints and assets within a web application</p>
+</li>
+<li>
+<p><code>git-hound:</code> Reconnaissance tool for GitHub code search. Finds exposed API keys using pattern matching, commit history searching, and a unique result scoring system.</p>
+</li>
+<li>
+<p><code>pagodo:</code> pagodo (Passive Google Dork) - Automate Google Hacking Database scraping and searching</p>
+</li>
+</ul>
+<h1 id="extra-resources-for-you-3">Extra resources for you :3</h1>
+<ul>
+<li>Cool Recon techniques every hacker misses! 🔥🔥</li>
+</ul>
+<p><a href="https://infosecwriteups.com/cool-recon-techniques-every-hacker-misses-1c5e0e294e89">https://infosecwriteups.com/cool-recon-techniques-every-hacker-misses-1c5e0e294e89</a></p>
+
+</article>
+<hr>
+
+<p>© 2021-2024 HnvDie</p>
+<p>Powered By Hugo ᯓᡣ𐭩</p>
+
+
+
+            </div>
+        </main>
+    </body></html>

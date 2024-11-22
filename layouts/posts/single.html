@@ -1,0 +1,25 @@
+{{ define "main" }}
+{{ partial "back_link.html" .}}
+
+<article>
+    <p class="post-meta">
+    </p>
+
+<h1>{{ .Title }}<br><br>
+    <small datetime="{{ .Date }}" style="font-size: 10px; display: inline-flex; align-items: center;">
+        <img src="https://avatars.githubusercontent.com/u/51517043?v=4" alt="GitHub Profile" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover; margin-right: 8px;">
+        {{ .Date | time.Format site.Params.theme_config.date_format }} - Rainhynn
+    </small>
+</h1>
+
+    {{ if .Params.toc }}
+        <aside {{ if .Params.tocBorder }} class="toc" {{ end }}>
+            {{ .TableOfContents }}
+        </aside>
+    {{ end }}
+
+    {{ .Content }}
+</article>
+{{ partial "footer.html" }}
+{{ end }}
+

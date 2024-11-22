@@ -1,0 +1,51 @@
+[[entries]]
+title = "about"
+
+  [[entries.entries]]
+  title = "Just a writer, i'm share about programming, penetration testing and technical analysis"
+
+  [[entries.entries]]
+  title = "instagram"
+  url = "https://instagram.com/hnvdie"
+
+
+[[entries]]
+title = "Latest"
+
+  [entries.post_list]
+  limit = 5
+  show_more = true
+  show_more_text = "See archive..."
+  show_more_url = "posts"
+
+#[[entries]]
+#title = "<br>posts by tags"
+#
+#  [entries.post_list]
+#  section = "posts"
+#  show_more = true
+#  show_more_text = "See more posts..."
+#  show_more_url = "posts"
+
+#[[entries]]
+#title = "rss"
+#url = "index.xml"
+
+#[[entries]]
+#title = "another list"
+
+#  [[entries.entries]]
+#  title = "with subitems"
+
+#    [[entries.entries.entries]]
+#    title = "with subsubitems"
+
+#    [[entries.entries.entries]]
+#    title = "example page"
+#    url = "about"
+
+#[[entries]]
+#title = "PRO TIP"
+#entries = [
+#   { title = "to edit this menu, edit data/menu.toml file" }
+#  ]

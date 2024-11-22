@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Writeups on HnvDie</title><link>https://hnvdie.github.io/tags/writeups/</link><description>Recent content in Writeups on HnvDie</description><generator>Hugo</generator><language>id</language><lastBuildDate>Sat, 27 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://hnvdie.github.io/tags/writeups/atom.xml" rel="self" type="application/rss+xml"/><item><title>Bypass IP restriction at sfile.mobi - writeup</title><link>https://hnvdie.github.io/bypass-ip-restriction-at-sfile.mobi/</link><pubDate>Sat, 27 Aug 2022 00:00:00 +0000</pubDate><guid>https://hnvdie.github.io/bypass-ip-restriction-at-sfile.mobi/</guid><description>&lt;p>
-&lt;a href="https://www.indiedb.com/groups/tanks/images/girls-und-panzer-gif" title="Girls und Panzer GIF - Indie DB" target="_blank">&lt;img src="https://media.indiedb.com/cache/images/groups/1/3/2074/thumb_620x2000/maus_gif.gif" alt="Girls und Panzer GIF" />&lt;/a>
-
-
-write up sederhana tentang bagaimana saya bisa menemukan bug IP restriction bypass di situs sfile.mobi.&lt;/p>
-&lt;p>dan mendapatkan reward yang lumayan, hanya karena laporan bug sepele ini.&lt;/p>
-&lt;h3 id="fyi-for-you-information">FYI (For you information) &lt;a href="#fyi-for-you-information" class="hash">#&lt;/a>&lt;/h3>
-&lt;p>jadi sebelumnya saya menemukan data leakage dari salah satu website yang tidak bisa saya sebutkan. karena ini privasi web diluar sfile.mobi. yang mana
-data tersebut berisi informasi seperti username, password dan email. dikarenakan situs yang terdapat data leakage tersebut adalah situs yang memiliki latar belakang seperti sfile.mobi juga. yaitu service &lt;strong>free file sharing service&lt;/strong>. jadinya saya mempunyai ide yang cukup cemerlang.&lt;/p></description></item></channel></rss>

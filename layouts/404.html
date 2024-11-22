@@ -1,24 +1,8 @@
-<!doctype html>
-<html lang="en">
-  {{ partial "head.html" . }}
-<body>
+{{ define "main" }}
 
+{{- partial "back_link.html" . -}}
 
-  <main id="main" role="main">
-
-    {{ partial "header.html" . }}
-
-    <!-- post -->
-    <section>
-      <h2>Error 404</h2>
-
-      <p>The page you requested doesn't exist.</p>
-
-    </section>
-    <!-- / post -->
-{{ partial "footer.html" . }}
-  </main>
-
-</body>
-</html>
-
+<header>
+    <h1>404 Not Found</h1>
+</header>
+{{ end }}
