@@ -1,5 +1,6 @@
 {{ define "main" }}
 
+
 <header>
     <pre>
 ⠀⠀⠀⠀⠀⢀⣴⣿⣿⣿⣦⠀
@@ -10,6 +11,7 @@
 ⢿⡿⢿⣿⣿⣿⣿⣿⣿⣿⡿
 ⠀⠀⠈⠿⠿⠋⠙⢿⣿⡿⠁⠀
 </pre>
+{{ partial "searchbox.html" }}
        <h1>{{ $.Site.Title }}  </h1>
     {{- if $.Site.Params.theme_config.show_description -}}
         <p>{{ $.Site.Params.description }}</p>

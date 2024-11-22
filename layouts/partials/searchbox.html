@@ -1,0 +1,75 @@
+<div style="width: 50%; max-width: 500px; margin: 30px auto; position: relative; margin-left:-1px">
+  <!-- Input untuk pencarian -->
+  <input
+    type="text"
+    id="search-input"
+    placeholder="Find Anything.."
+    style="
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 2px solid #6a6a6a; /* Warna abu-abu lebih soft */
+      border-radius: 10px;
+      outline: none;
+      background: #333; /* Background lebih gelap */
+      color: #fff;
+      box-shadow: 0 4px 10px rgba(106, 106, 106, 0.5); /* Box shadow lebih soft */
+      transition: 0.3s ease-in-out;
+    "
+    onfocus="this.style.borderColor='rgba(255, 255, 255, 0.9)'; this.style.boxShadow='0 4px 20px rgba(255, 255, 255, 0.3)';"
+    onblur="this.style.borderColor='rgba(255, 255, 255, 0.5)'; this.style.boxShadow='0 4px 10px rgba(255, 255, 255, 0.3)';"
+
+  />
+  <!-- Div untuk menampilkan hasil pencarian -->
+  <div
+    id="search-results"
+    style="
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 10px;
+      background: black; /* Background lebih gelap */
+      color: #ccc; /* Warna teks lebih soft */
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      max-height: 200px;
+      overflow-y: auto;
+      display: none;
+    ">
+    <!-- Hasil pencarian akan muncul di sini -->
+  </div>
+</div>
+
+<!-- Script pencarian menggunakan Fuse.js -->
+<script src="https://cdn.jsdelivr.net/npm/fuse.js"></script>
+
+<script>
+  // Fungsi untuk melakukan pencarian
+  async function searchPosts(query) {
+    const response = await fetch('/index.json');
+    const data = await response.json();
+
+    const fuse = new Fuse(data, {
+      keys: ['title', 'content'],
+      threshold: 0.3,
+    });
+
+    const results = fuse.search(query);
+    const resultContainer = document.getElementById('search-results');
+    resultContainer.innerHTML = '';  // Kosongkan hasil sebelumnya
+
+    if (results.length > 0) {
+      resultContainer.style.display = 'block'; // Tampilkan hasil pencarian
+      results.forEach(result => {
+        const item = document.createElement('div');
+        item.innerHTML = `<a href="${result.item.permalink}" style="color: #93d13d; text-decoration: none;">${result.item.title}</a>`; /* Warna biru kehijauan */
+        resultContainer.appendChild(item);
+      });
+    } else {
+      resultContainer.style.display = 'none'; // Sembunyikan jika tidak ada hasil
+    }
+  }
+
+  // Menambahkan event listener pada input untuk pencarian real-time
+  document.getElementById('search-input').addEventListener('input', (e) => {
+    searchPosts(e.target.value);
+  });
+</script>
