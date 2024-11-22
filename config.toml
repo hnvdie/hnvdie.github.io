@@ -1,3 +1,5 @@
+ignoreLogs = ['warning-goldmark-raw-html']
+
 [module]
   [module.hugoVersion]
     extended=true
