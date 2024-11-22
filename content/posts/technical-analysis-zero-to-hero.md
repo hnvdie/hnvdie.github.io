@@ -1,5 +1,5 @@
 ---
-title: Panduan Lengkap Trading Setup dan Jalur Belajar Analisis Teknikal: Dari Zero to Hero
+title: Panduan Lengkap Jalur Belajar Analisis Teknikal From Zero to Hero
 date: 2024-11-22
 author: Rainhynn
 tags: ["analysis"]
