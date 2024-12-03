@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+        body {
+            background-color: black;
+            color:#c7c5c5;
+        }
+    </style>
+
+  <style>
+         
+        a {
+            color: #48a874;  
+            text-decoration: none;  
+        }
+
+         
+        a:hover {
+            color: darkgray;
+        }
+
+         
+        a:visited {
+            color: #48a874;  
+        }
+    </style>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+       style>
+        body {
+            font-family: 'Mono', sans-serif;  
+        }
+
+        .fa {
+            font-family: "Font Awesome 6 Free", sans-serif;  
+            font-weight: 30px;  
+        }
+    </style>
+
+   <meta name="description" content="BLE: How to MITM Attack a BLE Technology
+Sebelum kita membahas bagaimana melakukan serangan Man-in-the-Middle (MITM) pada perangkat yang menggunakan teknologi BLE, penting untuk memahami terlebih dahulu konsep dasar dari teknologi BLE itu sendiri.
+
+Apa Itu BLE?
+BLE (Bluetooth Low Energy) adalah teknologi komunikasi nirkabel yang dirancang untuk konsumsi daya rendah, sering digunakan pada perangkat seperti smartwatch, sensor kesehatan, atau perangkat IoT (Internet of Things). BLE bekerja dengan menggunakan protokol yang disebut GATT (Generic Attribute Profile), yang merupakan inti dari BLE untuk mengatur komunikasi antara perangkat.">  
+
+  <title>
+    
+      Serangan MITM pada teknologi BLE (Low enegry Bluetooth)
+    
+  </title>
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="//localhost:1313/css/main.b3f3f10b76da53cb419a1c5b31ac9aa19368c212bd657c216cb741770676d110e21001bc85bb2527dd4e537a4c34b5333eda55e587f77769df67bb48cca62337.css" integrity="sha512-s/PxC3baU8tBmhxbMayaoZNowhK9ZXwhbLdBdwZ20RDiEAG8hbslJ91OU3pMNLUzPtpV5Yf3d2nfZ7tIzKYjNw==" />
+  
+</head>
+<body a="black">
+
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">~ $ cd /home</a>
+
+
+<article>
+    <p class="post-meta">
+    </p>
+
+<h1>Serangan MITM pada teknologi BLE (Low enegry Bluetooth)<br><br>
+    <small datetime="2022-09-01 00:00:00 &#43;0000 UTC" style="font-size: 10px; display: inline-flex; align-items: center;">
+        <img src="https://avatars.githubusercontent.com/u/51517043?v=4" alt="GitHub Profile" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover; margin-right: 8px;">
+        2022-09-01 - Rainhynn
+    </small>
+</h1>
+
+    
+
+    <h1 id="ble-how-to-mitm-attack-a-ble-technology">BLE: How to MITM Attack a BLE Technology</h1>
+<p>Sebelum kita membahas bagaimana melakukan serangan <em>Man-in-the-Middle</em> (MITM) pada perangkat yang menggunakan teknologi BLE, penting untuk memahami terlebih dahulu konsep dasar dari teknologi BLE itu sendiri.</p>
+<hr>
+<h2 id="apa-itu-ble">Apa Itu BLE?</h2>
+<p>BLE (Bluetooth Low Energy) adalah teknologi komunikasi nirkabel yang dirancang untuk konsumsi daya rendah, sering digunakan pada perangkat seperti smartwatch, sensor kesehatan, atau perangkat IoT (Internet of Things). BLE bekerja dengan menggunakan protokol yang disebut <strong>GATT (Generic Attribute Profile)</strong>, yang merupakan inti dari BLE untuk mengatur komunikasi antara perangkat.</p>
+<hr>
+<h2 id="bagaimana-ble-bekerja">Bagaimana BLE Bekerja?</h2>
+<h3 id="gatt-generic-attribute-profile"><strong>GATT (Generic Attribute Profile)</strong></h3>
+<p><strong>GATT</strong> adalah protokol utama BLE yang bertugas mengelola lalu lintas data. GATT bekerja berdasarkan komponen-komponen berikut:</p>
+<h4 id="1-service-uuid">1. <strong>Service (UUID)</strong></h4>
+<p>Service adalah kontainer yang mengelompokkan <em>characteristic</em>.
+Contoh: Sebuah BLE memiliki layanan bernama <em>Photo Taking</em>. Dalam layanan ini, terdapat karakteristik seperti <em>click for take</em> yang mewakili fungsi tertentu. Setiap service diidentifikasi dengan <strong>UUID (Universally Unique Identifier)</strong>.</p>
+<h4 id="2-characteristic">2. <strong>Characteristic</strong></h4>
+<p>Karakteristik adalah unit data yang dikirim antara client dan server.</p>
+<ul>
+<li>Contoh: Karakteristik dapat berupa data detak jantung dari perangkat kesehatan.</li>
+<li>Properti karakteristik:
+<ul>
+<li><strong>Read</strong>: Membaca data dari server.</li>
+<li><strong>Write</strong>: Menulis data ke server.</li>
+<li><strong>Notify</strong>: Server memberi tahu client ketika nilai berubah.</li>
+<li><strong>Value</strong>: Data aktual yang dikandung karakteristik.</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-descriptor-opsional">3. <strong>Descriptor</strong> (Opsional)</h4>
+<p>Descriptor adalah metadata tambahan untuk karakteristik, seperti deskripsi teks.
+Contoh: Descriptor dengan UUID <code>0x2901</code> dapat memberikan informasi deskriptif seperti <em>&ldquo;Battery Level&rdquo;</em>.</p>
+<h4 id="4-attribute-handle">4. <strong>Attribute (Handle)</strong></h4>
+<p>Semua service, karakteristik, dan descriptor merupakan <strong>attribute</strong> yang diidentifikasi dengan <em>handle</em> unik.</p>
+<hr>
+<h2 id="contoh-struktur-gatt">Contoh Struktur GATT</h2>
+<p>Berikut adalah contoh struktur GATT:</p>
+<pre tabindex="0"><code>Service: Battery Service (UUID: 0x180F)
+ ├── Characteristic: Battery Level (UUID: 0x2A19)
+ │     ├── Properties: Read, Notify
+ │     └── Descriptor: User Description (UUID: 0x2901, Value: &#34;Battery Level&#34;)
+</code></pre><hr>
+<h2 id="struktur-kerangka-kerja-gatt">Struktur Kerangka Kerja GATT</h2>
+<h3 id="1-peran-dalam-gatt">1. <strong>Peran Dalam GATT</strong></h3>
+<ul>
+<li><strong>Server</strong>: Perangkat yang menyediakan data (contoh: sensor kesehatan).</li>
+<li><strong>Client</strong>: Perangkat yang meminta data dari server (contoh: smartphone).</li>
+</ul>
+<h3 id="2-operasi-utama-gatt">2. <strong>Operasi Utama GATT</strong></h3>
+<ul>
+<li><strong>Read</strong>: Client membaca data dari server.</li>
+<li><strong>Write</strong>: Client menulis atau mengirim data ke server.</li>
+<li><strong>Notify</strong>: Server memberi tahu client tanpa permintaan eksplisit.</li>
+<li><strong>Indicate</strong>: Sama seperti notify, tetapi memerlukan konfirmasi dari client.</li>
+</ul>
+<h3 id="3-protokol-gatt">3. <strong>Protokol GATT</strong></h3>
+<p>GATT bekerja dengan protokol ATT (Attribute Protocol), yang memungkinkan pertukaran data berupa atribut atau handle antara client dan server.</p>
+<hr>
+<h2 id="workflow-gatt-secara-sederhana">Workflow GATT Secara Sederhana</h2>
+<ol>
+<li>
+<p><strong>Connection</strong>:</p>
+<ul>
+<li>Server mempromosikan dirinya terlebih dahulu (advertising).</li>
+<li>Client meminta untuk terhubung, dan server mengirimkan konfirmasi pairing.</li>
+</ul>
+</li>
+<li>
+<p><strong>Service Discovery</strong>:</p>
+<ul>
+<li>Client menjelajahi layanan yang tersedia di server.</li>
+<li>Command seperti <code>Read By Group Type</code> digunakan untuk menemukan service berdasarkan UUID.</li>
+</ul>
+</li>
+<li>
+<p><strong>Operasi Pada Characteristic</strong>:</p>
+<ul>
+<li><strong>Read</strong>: Client membaca nilai dari server.</li>
+<li><strong>Write</strong>: Client mengirim data ke server.</li>
+<li><strong>Notify</strong>: Server memberi tahu client jika nilai berubah.</li>
+<li><strong>Indicate</strong>: Mirip dengan notify, tetapi memerlukan konfirmasi dari client.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="apa-selanjutnya">Apa Selanjutnya?</h2>
+<p>Setelah memahami cara kerja BLE dan GATT, langkah berikutnya adalah mempelajari cara mengeksploitasi kelemahan di dalamnya untuk melakukan serangan MITM. Pastikan memahami bahwa ini hanya untuk tujuan pembelajaran atau pengujian keamanan, bukan untuk tujuan jahat.</p>
+<hr>
+<h2 id="mitm-attack">MITM attack</h2>
+<p>MITM memungkinkan penyerang menyadap, memodifikasi, atau menyuntikkan data di antara perangkat client dan server tanpa mereka sadari.
+sederhananya attacker memposisikan dirinya di antara server dan client untuk melakukan sebuah serangan.</p>
+<h2 id="proof-of-concept-poc-mitm-in-ble">Proof Of Concept (POC) MITM in Ble</h2>
+<h3 id="alat-yang-dibutuhkan">alat yang dibutuhkan:</h3>
+<ol>
+<li>
+<p><strong>Hardware:</strong></p>
+<ul>
+<li>Bluetooth Adapter: Gunakan dongle BLE seperti nRF52840 atau CSR 4.0.</li>
+<li>Sniffer BLE: Untuk menangkap paket, gunakan perangkat seperti HackRF, Ubertooth One, atau Adafruit Bluefruit.</li>
+</ul>
+</li>
+<li>
+<p><strong>Software:</strong></p>
+<ul>
+<li>Python dengan modul bleak atau pybluez.</li>
+<li>Wireshark (untuk analisis data).</li>
+</ul>
+</li>
+</ol>
+
+</article>
+<hr>
+
+<p>© 2021-2024 HnvDie</p>
+<p>Powered By Hugo ᯓᡣ𐭩</p>
+
+
+
+            </div>
+        </main>
+    </body></html>
