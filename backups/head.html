@@ -1,0 +1,90 @@
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+        body {
+            background-color: black;
+            color:#c7c5c5;
+        }
+    </style>
+
+  <style>
+        /* Warna default tautan */
+        a {
+            color: #48a874; /* Bisa diubah sesuai keinginan */
+            text-decoration: none; /* Hilangkan garis bawah jika ingin */
+        }
+
+        /* Warna tautan saat di-hover */
+        a:hover {
+            color: darkgray;
+        }
+
+        /* Warna tautan yang sudah diklik */
+        a:visited {
+            color: #48a874; /* Warna abu-abu */
+        }
+    </style>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+       style>
+        body {
+            font-family: 'Mono', sans-serif; /* Gunakan font Inter untuk teks utama */
+        }
+
+        .fa {
+            font-family: "Font Awesome 6 Free", sans-serif; /* Pastikan ini tetap Font Awesome */
+            font-weight: 30px; /* Solid style untuk ikon */
+        }
+    </style>
+
+  {{ if .IsPage }} <meta name="description" content="{{ .Summary }}">  {{ end }}
+
+  <title>
+    {{ if not .IsHome }}
+      {{ .Title }}
+    {{ else }}
+      {{ $.Site.Title }}
+    {{ end }}
+  </title>
+
+  
+  <link rel="shortcut icon" type="image/x-icon" href="{{ $.Site.Params.favicon | relURL }}" />
+  {{ $options := (dict "outputStyle" "compressed" "enableSourceMap" (not hugo.IsProduction)) }}
+  {{ $sass := resources.Get "css/main.scss" }}
+  {{ $style := $sass | css.Sass $options | resources.Fingerprint "sha512" }}
+  <link rel="stylesheet" href="{{ $style.Permalink | relURL }}" integrity="{{ $style.Data.Integrity }}" />
+  {{ if .Params.mathjax }} {{ partial "mathjax.html" . }} {{ end }}
+
+
+
+{{- with .Summary }}
+    <meta name="description" content="{{ . }}">
+    <meta property="og:description" content="{{ . }}">
+{{- else }}
+    <meta name="description" content="Default description for the site.">
+{{- end }}
+
+{{- with .Params.thumb }}
+    <meta property="og:image" content="{{ . }}">
+    <meta name="twitter:image" content="{{ . }}">
+{{- else }}
+    <meta property="og:image" content="/path/to/default-image.jpg">
+    <meta name="twitter:image" content="/path/to/default-image.jpg">
+{{- end }}
+
+<meta property="og:type" content="article">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ .Title }}">
+<meta name="twitter:description" content="{{ .Summary }}">
+
+
+</head>
+
+
+

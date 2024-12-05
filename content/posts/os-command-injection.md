@@ -1,6 +1,7 @@
 ---
 title: tentang vulnerability os-command injection 
 date: 2022-09-01
+thumb: /images/cuteheker.jpeg
 tags: ["pentest"]
 ---
 {{< raw >}}

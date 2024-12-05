@@ -2,6 +2,7 @@
 title: summary of reconnaissance for web application bug hunting 🕷 
 date: 2022-08-26
 description: panduan dasar untuk melakukan information gathering terhadap web application sebagai awalan untuk melakukan bug hunting
+thumb: https://images.unsplash.com/photo-1562813733-b31f71025d54?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80
 tags: ['Pentest']
 ---
 

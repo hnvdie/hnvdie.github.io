@@ -1,6 +1,7 @@
 ---
 title: Roadmap to Become an Expert Hacker (Inspired by Mr. Robot)
 date: 2024-12-05
+thumb: https://i.ibb.co.com/KWLzw2C/images-3.jpg
 tags: ['Pentest']
 ---
 
