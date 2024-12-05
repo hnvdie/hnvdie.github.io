@@ -1,6 +1,7 @@
 ---
 title: Bypass IP restriction at sfile.mobi - writeup
 date: 2022-08-27
+thumb: https://www.indiedb.com/groups/tanks/images/girls-und-panzer-gif
 tags: [writeups]
 ---
 

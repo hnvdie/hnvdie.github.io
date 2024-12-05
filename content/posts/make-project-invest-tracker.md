@@ -1,6 +1,7 @@
 ---
 title: Membuat Program Pengingat Investasi Crypto Sederhana Dengan Python
 date: 2024-11-22
+thumb: /images/ghostecho.jpg
 tags: ["projects"]
 ---
 
