@@ -1,3 +1,4 @@
+ignoreLogs = ['warning-goldmark-raw-html']
 #ignoreLogs = ['warning-goldmark-raw-html']
 
 [module]
