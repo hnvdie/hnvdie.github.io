@@ -6,8 +6,15 @@
     <description>Recent content in Posts on </description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 22 Nov 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 05 Dec 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Roadmap to Become an Expert Hacker (Inspired by Mr. Robot)</title>
+      <link>/posts/how-to-become-a-hacker/</link>
+      <pubDate>Thu, 05 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>/posts/how-to-become-a-hacker/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://i.ibb.co.com/KWLzw2C/images-3.jpg&#34; alt=&#34;showcase&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;Mr. Robot showcases a variety of hacking techniques and skills that can serve as a roadmap for aspiring ethical hackers. Below is a concise guide to hacking methods and essential skills based on the series.&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;core-skills-to-master&#34;&gt;Core Skills to Master&lt;/h2&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://i.ibb.co.com/gDsZxv1/undefined-Imgur.gif&#34; alt=&#34;bilek&#34;&gt;&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;&lt;strong&gt;Social Engineering:&lt;/strong&gt;&#xA;Manipulate human behavior to extract sensitive information.&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;&lt;strong&gt;Network Analysis:&lt;/strong&gt; Use tools like Wireshark to monitor traffic and detect vulnerabilities.&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;&lt;strong&gt;Cryptography:&lt;/strong&gt; Encrypt and decrypt data, understand hashing algorithms, and break weak cryptographic implementations.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Membuat Program Pengingat Investasi Crypto Sederhana Dengan Python</title>
       <link>/posts/make-project-invest-tracker/</link>
