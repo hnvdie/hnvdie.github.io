@@ -1,11 +1,11 @@
-<div id="board2" style="width: 400px"></div>
 <link rel="stylesheet" href="/chess/chessboard.css">
+<div id="board" style="width: 400px"></div>
+
 <script src="/chess/chess.js"></script>
 <script src="/chess/chessboard.js"></script>
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    var board = Chessboard('board2', {
-      position: '{{ .Get "fen" }}'
-    });
+  const board = Chessboard('board', {
+    position: 'start',
+    pieceTheme: '/chess/img/chesspieces/wikipedia/{piece}.png'
   });
 </script>
