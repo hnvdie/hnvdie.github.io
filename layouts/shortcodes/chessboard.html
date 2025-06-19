@@ -1,34 +1,56 @@
-<!-- Shortcode: {{< chessboard "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR" >}} -->
-<!-- FEN di atas = 1. e4 c5 -->
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/css/chessboard.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/js/chessboard.min.js"></script>
-
-<style>
-  .board-container {
-    width: 100%;
-    max-width: 400px;
-    margin: auto;
-    background-color: #1e1e1e; /* dark mode background */
-    padding: 10px;
-    border-radius: 10px;
-  }
-
-  .chessboard {
-    width: 100% !important;
-  }
-</style>
-
-<div class="board-container">
-  <div id="chessboard-{{ .Get 0 | md5 }}"></div>
+<div id="board" style="width: 100%; max-width: 400px; margin: 0 auto;"></div>
+<div style="text-align: center; margin-top: 10px;">
+  <button onclick="stepBackward()">⏪</button>
+  <button onclick="prevMove()">◀️</button>
+  <button onclick="nextMove()">▶️</button>
+  <button onclick="stepForward()">⏩</button>
 </div>
 
+<script src="/chess/chess.js"></script>
+<script src="/chess/chessboard.js"></script>
+<link rel="stylesheet" href="/chess/chessboard.css">
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    Chessboard('chessboard-{{ .Get 0 | md5 }}', {
-      position: '{{ .Get 0 }}',
-      pieceTheme: 'https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/img/chesspieces/wikipedia/{piece}.png',
-      draggable: false
-    })
-  })
+  const moves = "{{ .Get 0 }}".replace(/\s+/g, ' ').trim();
+  const chess = new Chess();
+  const moveArray = moves.split(' ').filter(m => !/^\d+\./.test(m)); // buang angka langkah
+  let currentIndex = 0;
+  const board = Chessboard('board', {
+    draggable: false,
+    position: 'start',
+    pieceTheme: '/chess/img/chesspieces/wikipedia/{piece}.png'
+  });
+
+  function updateBoard() {
+    const temp = new Chess();
+    for (let i = 0; i < currentIndex; i++) {
+      temp.move(moveArray[i]);
+    }
+    board.position(temp.fen());
+  }
+
+  function nextMove() {
+    if (currentIndex < moveArray.length) {
+      currentIndex++;
+      updateBoard();
+    }
+  }
+
+  function prevMove() {
+    if (currentIndex > 0) {
+      currentIndex--;
+      updateBoard();
+    }
+  }
+
+  function stepForward() {
+    currentIndex = moveArray.length;
+    updateBoard();
+  }
+
+  function stepBackward() {
+    currentIndex = 0;
+    updateBoard();
+  }
+
+  updateBoard(); // init
 </script>

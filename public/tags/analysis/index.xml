@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Analysis on </title>
-    <link>//localhost:1313/tags/analysis/</link>
+    <link>/tags/analysis/</link>
     <description>Recent content in Analysis on </description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Fri, 22 Nov 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="//localhost:1313/tags/analysis/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="/tags/analysis/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Panduan Lengkap Jalur Belajar Analisis Teknikal From Zero to Hero</title>
-      <link>//localhost:1313/posts/technical-analysis-zero-to-hero/</link>
+      <link>/posts/technical-analysis-zero-to-hero/</link>
       <pubDate>Fri, 22 Nov 2024 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/posts/technical-analysis-zero-to-hero/</guid>
+      <guid>/posts/technical-analysis-zero-to-hero/</guid>
       <description>&lt;p&gt;Trading adalah seni dan ilmu yang membutuhkan pemahaman mendalam terhadap berbagai alat dan indikator yang dapat membantu kita membuat keputusan yang lebih cerdas di pasar. Bagi pemula yang bingung dari mana memulai, artikel ini akan memberikan jalur pembelajaran yang sistematis dan terstruktur, mulai dari konsep dasar hingga teknik lanjutan. Setiap konsep dan alat yang akan dibahas memiliki peran penting dalam membentuk analisis teknikal yang kuat.&lt;/p&gt;&#xA;&lt;h3 id=&#34;1-candlestick-patterns&#34;&gt;1. Candlestick Patterns&lt;/h3&gt;&#xA;&lt;p&gt;Candlestick patterns adalah fondasi dari analisis teknikal yang mengungkapkan psikologi pasar melalui formasi harga dalam grafik. Menguasai pola candlestick seperti Doji, Hammer, Engulfing, dan Morning/Evening Star akan memberikan wawasan penting tentang kemungkinan pembalikan harga atau kelanjutan tren. Belajar membaca candlestick akan menjadi langkah pertama yang krusial dalam memahami sentimen pasar.&lt;/p&gt;</description>
     </item>
   </channel>

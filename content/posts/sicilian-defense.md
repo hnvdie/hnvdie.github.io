@@ -1,4 +1,4 @@
-b---
+---
 title: "Panduan Opening Catur: Sicilian Defense + 3 Variasi Populer"
 date: 2025-06-19
 draft: false
@@ -20,6 +20,7 @@ description: "Belajar opening catur Sicilian Defense lengkap dengan embed dari L
 1. e4 c5
 ```
 
+{{< chessboard "1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6" >}}
 {{< chessboard "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR" >}}
 
 Hitam menyerang pusat dengan pion sayap, bukan pion tengah seperti e5. Tujuannya mengganggu dominasi Putih dan membuka jalan bagi kuda dan gajah.
