@@ -1,21 +1,89 @@
+<!--
 <style>
-.lichess {
-  text-align: center;
-}
-.lichess > iframe {
-  border: 4px solid black;
-}
+  .lichess {
+    background-color: #black; /* Sesuaikan dengan bg iframe Lichess */
+    padding: 1em;
+    outline: none;
+    text-align: center;
+  }
+
+  .lichess > iframe {
+    border: none;
+    outline: none;
+    box-shadow: none;
+  }
 </style>
 
 {{- $s := .Get "src" -}}
-{{- $w := .Get "width" -}}
-{{- $h := .Get "height" -}}
-{{- $t := .Get "title" -}}
+{{- $w := .Get "width" | default "600px" -}}
+{{- $h := .Get "height" | default "400px" -}}
+{{- $t := .Get "title" | default "Lichess game" -}}
 
 <div class="lichess">
   <iframe src="{{- $s -}}"
-    {{- with $t -}}title="{{ . }}"{{- end -}}
-    {{- with $w -}}width="{{ . }}"{{- end -}}
-    {{- with $h -}}height="{{ . }}"{{- end -}}>
+          title="{{ $t }}"
+          width="{{ $w }}"
+          height="{{ $h }}"
+          allowfullscreen>
   </iframe>
 </div>
+
+<style>
+  .lichess {
+    text-align: center;
+    margin: 1em 0;
+  }
+  .lichess > iframe {
+    border: 4px solid black;
+    border-radius: 8px;
+  }
+</style>
+-->
+
+{{- $id := .Get 0 -}}
+{{- $width := default "100%" (.Get "width") -}}
+{{- $height := default "500px" (.Get "height") -}}
+{{- $theme := default "green" (.Get "theme") -}}
+{{- $pieceSet := default "maestro" (.Get "pieceSet") -}}
+{{- $bg := default "dark" (.Get "bg") -}}
+
+<div class="lichess-container">
+  <iframe
+    src="https://lichess.org/study/embed/{{ $id }}?theme={{ $theme }}&pieceSet={{ $pieceSet }}&bg={{ $bg }}"
+    width="{{ $width }}"
+    height="{{ $height }}"
+    title="Lichess Embed"
+    allowfullscreen
+    loading="lazy"
+  ></iframe>
+</div>
+
+<style>
+.lichess-container {
+  text-align: center;
+  margin: 1rem auto;
+}
+
+.lichess-container iframe {
+  border: none;
+  outline: none;
+  box-shadow: none;
+  border-radius: 8px;
+}
+</style>
+
+<style>
+.lichess-container {
+  text-align: center;
+  margin: 1rem auto;
+  overflow: hidden; /* penting */
+  border-radius: 8px; /* opsional biar rounded */
+  max-width: 100%;
+}
+
+.lichess-container iframe {
+  border: none;
+  outline: none;
+  display: block;
+}
+</style>

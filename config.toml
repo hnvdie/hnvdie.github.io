@@ -33,7 +33,7 @@ ignoreLogs = ['warning-goldmark-raw-html']
 
 [params]
   [params.theme_config]
-    appearance = "black"
+    appearance = "white"
     back_home_text = "~ $ cd /home"
     date_format = "2006-01-02"
     isListGroupByDate = false

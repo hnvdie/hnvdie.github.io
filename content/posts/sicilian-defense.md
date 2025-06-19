@@ -20,10 +20,7 @@ description: "Belajar opening catur Sicilian Defense lengkap dengan embed dari L
 1. e4 c5
 ```
 
-
-{{< lichess >}}
-
-
+{{< lichess "yCcYyeAR/EuT5FuHx" >}}
 Hitam menyerang pusat dengan pion sayap, bukan pion tengah seperti e5. Tujuannya mengganggu dominasi Putih dan membuka jalan bagi kuda dan gajah.
 
 ---
