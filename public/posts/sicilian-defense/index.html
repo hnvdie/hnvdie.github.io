@@ -46,10 +46,6 @@ Langkah:
 1. e4 c5
 
 
-  ⏪
-  ◀️
-  ▶️
-  ⏩
 
 
 
@@ -59,17 +55,14 @@ Langkah:
 
 
 
-  ⏪
-  ◀️
-  ▶️
-  ⏩
 
 
 
 
 
 
-">
+
+Hitam menyerang pusat dengan pion sayap, bukan pion tengah seperti e5. Tujuannya mengganggu dominasi Putih dan membuka jalan bagi kuda dan gajah.">
   
 
   <title>
@@ -100,10 +93,6 @@ Langkah:
 1. e4 c5
 
 
-  ⏪
-  ◀️
-  ▶️
-  ⏩
 
 
 
@@ -113,17 +102,14 @@ Langkah:
 
 
 
-  ⏪
-  ◀️
-  ▶️
-  ⏩
 
 
 
 
 
 
-">
+
+Hitam menyerang pusat dengan pion sayap, bukan pion tengah seperti e5. Tujuannya mengganggu dominasi Putih dan membuka jalan bagi kuda dan gajah.">
     <meta property="og:description" content="♟️ Opening Catur: Sicilian Defense (Pertahanan Sisilia)
 
 Salah satu opening paling agresif dan sering dipakai Grandmaster dunia. Cocok buat kamu yang suka gaya main counter-attack!
@@ -133,10 +119,6 @@ Langkah:
 1. e4 c5
 
 
-  ⏪
-  ◀️
-  ▶️
-  ⏩
 
 
 
@@ -146,17 +128,14 @@ Langkah:
 
 
 
-  ⏪
-  ◀️
-  ▶️
-  ⏩
 
 
 
 
 
 
-">
+
+Hitam menyerang pusat dengan pion sayap, bukan pion tengah seperti e5. Tujuannya mengganggu dominasi Putih dan membuka jalan bagi kuda dan gajah.">
     <meta property="og:image" content="/path/to/default-image.jpg">
     <meta name="twitter:image" content="/path/to/default-image.jpg">
 
@@ -173,10 +152,6 @@ Langkah:
 1. e4 c5
 
 
-  ⏪
-  ◀️
-  ▶️
-  ⏩
 
 
 
@@ -186,17 +161,14 @@ Langkah:
 
 
 
-  ⏪
-  ◀️
-  ▶️
-  ⏩
 
 
 
 
 
 
-">
+
+Hitam menyerang pusat dengan pion sayap, bukan pion tengah seperti e5. Tujuannya mengganggu dominasi Putih dan membuka jalan bagi kuda dan gajah.">
 </head>
 <body a="black">
 
@@ -225,118 +197,34 @@ Langkah:
 <h3 id="-dasar-opening">📌 Dasar Opening</h3>
 <p><strong>Langkah:</strong></p>
 <pre tabindex="0"><code>1. e4 c5
-</code></pre><p><div id="board" style="width: 100%; max-width: 400px; margin: 0 auto;"></div>
-<div style="text-align: center; margin-top: 10px;">
-  <button onclick="stepBackward()">⏪</button>
-  <button onclick="prevMove()">◀️</button>
-  <button onclick="nextMove()">▶️</button>
-  <button onclick="stepForward()">⏩</button>
-</div>
-
-<script src="/chess/chess.js"></script>
+</code></pre><p><div id="board2" style="width: 400px"></div>
 <script src="/chess/chessboard.js"></script>
 <link rel="stylesheet" href="/chess/chessboard.css">
+<script src="/chess/chess.js"></script>
 <script>
-  const moves = "1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6".replace(/\s+/g, ' ').trim();
-  const chess = new Chess();
-  const moveArray = moves.split(' ').filter(m => !/^\d+\./.test(m)); 
-  let currentIndex = 0;
-  const board = Chessboard('board', {
-    draggable: false,
-    position: 'start',
-    pieceTheme: '/chess/img/chesspieces/wikipedia/{piece}.png'
+  var board = Chessboard('board2', {
+    position: 'r1bqkbnr\/pppppppp\/n7\/8\/8\/N7\/PPPPPPPP\/R1BQKBNR w KQkq - 0 1'
   });
-
-  function updateBoard() {
-    const temp = new Chess();
-    for (let i = 0; i < currentIndex; i++) {
-      temp.move(moveArray[i]);
-    }
-    board.position(temp.fen());
-  }
-
-  function nextMove() {
-    if (currentIndex < moveArray.length) {
-      currentIndex++;
-      updateBoard();
-    }
-  }
-
-  function prevMove() {
-    if (currentIndex > 0) {
-      currentIndex--;
-      updateBoard();
-    }
-  }
-
-  function stepForward() {
-    currentIndex = moveArray.length;
-    updateBoard();
-  }
-
-  function stepBackward() {
-    currentIndex = 0;
-    updateBoard();
-  }
-
-  updateBoard(); 
 </script>
 
-<div id="board" style="width: 100%; max-width: 400px; margin: 0 auto;"></div>
-<div style="text-align: center; margin-top: 10px;">
-  <button onclick="stepBackward()">⏪</button>
-  <button onclick="prevMove()">◀️</button>
-  <button onclick="nextMove()">▶️</button>
-  <button onclick="stepForward()">⏩</button>
-</div>
-
-<script src="/chess/chess.js"></script>
+<div id="board2" style="width: 400px"></div>
 <script src="/chess/chessboard.js"></script>
 <link rel="stylesheet" href="/chess/chessboard.css">
+<script src="/chess/chess.js"></script>
 <script>
-  const moves = "rnbqkbnr\/pp1ppppp\/8\/2p5\/4P3\/8\/PPPP1PPP\/RNBQKBNR".replace(/\s+/g, ' ').trim();
-  const chess = new Chess();
-  const moveArray = moves.split(' ').filter(m => !/^\d+\./.test(m)); 
-  let currentIndex = 0;
-  const board = Chessboard('board', {
-    draggable: false,
-    position: 'start',
-    pieceTheme: '/chess/img/chesspieces/wikipedia/{piece}.png'
+  var board = Chessboard('board2', {
+    position: ''
   });
+</script>
 
-  function updateBoard() {
-    const temp = new Chess();
-    for (let i = 0; i < currentIndex; i++) {
-      temp.move(moveArray[i]);
-    }
-    board.position(temp.fen());
-  }
-
-  function nextMove() {
-    if (currentIndex < moveArray.length) {
-      currentIndex++;
-      updateBoard();
-    }
-  }
-
-  function prevMove() {
-    if (currentIndex > 0) {
-      currentIndex--;
-      updateBoard();
-    }
-  }
-
-  function stepForward() {
-    currentIndex = moveArray.length;
-    updateBoard();
-  }
-
-  function stepBackward() {
-    currentIndex = 0;
-    updateBoard();
-  }
-
-  updateBoard(); 
+<div id="board2" style="width: 400px"></div>
+<script src="/chess/chessboard.js"></script>
+<link rel="stylesheet" href="/chess/chessboard.css">
+<script src="/chess/chess.js"></script>
+<script>
+  var board = Chessboard('board2', {
+    position: ''
+  });
 </script>
 </p>
 <p>Hitam menyerang pusat dengan pion sayap, bukan pion tengah seperti e5. Tujuannya mengganggu dominasi Putih dan membuka jalan bagi kuda dan gajah.</p>

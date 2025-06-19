@@ -1,56 +1,9 @@
-<div id="board" style="width: 100%; max-width: 400px; margin: 0 auto;"></div>
-<div style="text-align: center; margin-top: 10px;">
-  <button onclick="stepBackward()">⏪</button>
-  <button onclick="prevMove()">◀️</button>
-  <button onclick="nextMove()">▶️</button>
-  <button onclick="stepForward()">⏩</button>
-</div>
-
-<script src="/chess/chess.js"></script>
+<div id="board2" style="width: 400px"></div>
 <script src="/chess/chessboard.js"></script>
 <link rel="stylesheet" href="/chess/chessboard.css">
+<script src="/chess/chess.js"></script>
 <script>
-  const moves = "{{ .Get 0 }}".replace(/\s+/g, ' ').trim();
-  const chess = new Chess();
-  const moveArray = moves.split(' ').filter(m => !/^\d+\./.test(m)); // buang angka langkah
-  let currentIndex = 0;
-  const board = Chessboard('board', {
-    draggable: false,
-    position: 'start',
-    pieceTheme: '/chess/img/chesspieces/wikipedia/{piece}.png'
+  var board = Chessboard('board2', {
+    position: '{{ .Get "fen" }}'
   });
-
-  function updateBoard() {
-    const temp = new Chess();
-    for (let i = 0; i < currentIndex; i++) {
-      temp.move(moveArray[i]);
-    }
-    board.position(temp.fen());
-  }
-
-  function nextMove() {
-    if (currentIndex < moveArray.length) {
-      currentIndex++;
-      updateBoard();
-    }
-  }
-
-  function prevMove() {
-    if (currentIndex > 0) {
-      currentIndex--;
-      updateBoard();
-    }
-  }
-
-  function stepForward() {
-    currentIndex = moveArray.length;
-    updateBoard();
-  }
-
-  function stepBackward() {
-    currentIndex = 0;
-    updateBoard();
-  }
-
-  updateBoard(); // init
 </script>
