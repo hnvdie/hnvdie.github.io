@@ -1,9 +1,11 @@
 <div id="board2" style="width: 400px"></div>
-<script src="/chess/chessboard.js"></script>
 <link rel="stylesheet" href="/chess/chessboard.css">
 <script src="/chess/chess.js"></script>
+<script src="/chess/chessboard.js"></script>
 <script>
-  var board = Chessboard('board2', {
-    position: '{{ .Get "fen" }}'
+  document.addEventListener("DOMContentLoaded", function() {
+    var board = Chessboard('board2', {
+      position: '{{ .Get "fen" }}'
+    });
   });
 </script>
