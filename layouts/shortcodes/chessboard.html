@@ -1,0 +1,34 @@
+<!-- Shortcode: {{< chessboard "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR" >}} -->
+<!-- FEN di atas = 1. e4 c5 -->
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/css/chessboard.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/js/chessboard.min.js"></script>
+
+<style>
+  .board-container {
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+    background-color: #1e1e1e; /* dark mode background */
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .chessboard {
+    width: 100% !important;
+  }
+</style>
+
+<div class="board-container">
+  <div id="chessboard-{{ .Get 0 | md5 }}"></div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    Chessboard('chessboard-{{ .Get 0 | md5 }}', {
+      position: '{{ .Get 0 }}',
+      pieceTheme: 'https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/img/chesspieces/wikipedia/{piece}.png',
+      draggable: false
+    })
+  })
+</script>
