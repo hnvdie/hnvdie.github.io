@@ -135,6 +135,8 @@ Dengan 5...g6, Hitam memilih Dragon Variation, dinamai dari bentuk pionnya yang 
 5. Nc3 e6
 ```
 
+{{< lichess "yCcYyeAR/nunHb8Cn" >}}
+
 Formasi pion d6-e6 membuat posisi solid. Hitam fleksibel mengembangkan bidak tanpa buru-buru serang.
 
 **🎮 Visualisasi Langkah:**
