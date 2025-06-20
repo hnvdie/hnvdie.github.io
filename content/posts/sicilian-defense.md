@@ -2,7 +2,7 @@
 title: "Panduan Opening Catur: Sicilian Defense + 3 Variasi Populer"
 date: 2025-06-19
 draft: false
-tags: ["catur", "opening", "sicilian defense", "strategi"]
+tags: ["chess"]
 description: "Belajar opening catur Sicilian Defense lengkap dengan embed dari Lichess dan penjelasan tiap langkahnya."
 ---
 
