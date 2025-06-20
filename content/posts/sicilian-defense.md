@@ -135,13 +135,27 @@ Dengan 5...g6, Hitam memilih Dragon Variation, dinamai dari bentuk pionnya yang 
 5. Nc3 e6
 ```
 
-{{< lichess "yCcYyeAR/nunHb8Cn" >}}
+{{< lichess "yCcYyeAR/WkUtzA2L" >}}
 
-Formasi pion d6-e6 membuat posisi solid. Hitam fleksibel mengembangkan bidak tanpa buru-buru serang.
 
-**🎮 Visualisasi Langkah:**
+Pada langkah kelima, langkah ...e6 dari Hitam membentuk formasi pion d6-e6, yang sering disebut sebagai "struktur Scheveningen" — dikenal karena kestabilannya.
 
-<iframe src="https://lichess.org/embed/playlist/v61aMGnH/white?theme=auto&bg=auto" width="600" height="397" frameborder="0"></iframe>
+Formasi ini memberikan beberapa keuntungan strategis bagi Hitam:
+
+Solid dan fleksibel: Kombinasi pion d6 dan e6 menjaga pusat dan meminimalkan kelemahan di awal permainan.
+
+Menahan serangan cepat Putih: Dengan posisi yang kompak, Hitam tidak terlalu rentan terhadap serangan awal seperti Greek Gift atau serangan minor di sayap raja.
+
+Pengembangan bidak fleksibel: Hitam bisa memilih untuk mengembangkan gajah gelap ke e7 atau bahkan ke b4, tergantung situasi. Kuda juga bisa manuver ke rute c6-a5-c4 jika dibutuhkan.
+
+Tidak buru-buru menyerang: Hitam tidak langsung melancarkan serangan balik, melainkan menyiapkan posisi yang kuat sebelum memilih arah permainan — bisa bertahan, menyerang pusat, atau bermain di sayap.
+
+
+Singkatnya, struktur ini adalah pilihan strategis bagi Hitam untuk mendapatkan posisi solid tanpa terlalu membuka diri terhadap taktik cepat dari lawan.
+
+
+
+{{< lichess "yCcYyeAR/NNca5jLe" >}}
 
 ---
 
