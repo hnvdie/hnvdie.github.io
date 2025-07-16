@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Writeups on </title>
-    <link>//localhost:1313/tags/writeups/</link>
+    <link>/tags/writeups/</link>
     <description>Recent content in Writeups on </description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Sat, 27 Aug 2022 00:00:00 +0000</lastBuildDate>
-    <atom:link href="//localhost:1313/tags/writeups/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="/tags/writeups/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Bypass IP restriction at sfile.mobi - writeup</title>
-      <link>//localhost:1313/posts/bypass-ip-restriction-at-sfile.mobi/</link>
+      <link>/posts/bypass-ip-restriction-at-sfile.mobi/</link>
       <pubDate>Sat, 27 Aug 2022 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/posts/bypass-ip-restriction-at-sfile.mobi/</guid>
+      <guid>/posts/bypass-ip-restriction-at-sfile.mobi/</guid>
       <description>&lt;p&gt;&#xA;&lt;a href=&#34;https://www.indiedb.com/groups/tanks/images/girls-und-panzer-gif&#34; title=&#34;Girls und Panzer GIF - Indie DB&#34; target=&#34;_blank&#34;&gt;&lt;img src=&#34;https://media.indiedb.com/cache/images/groups/1/3/2074/thumb_620x2000/maus_gif.gif&#34; alt=&#34;Girls und Panzer GIF&#34; /&gt;&lt;/a&gt;&#xA;&#xA;&#xA;write up sederhana tentang bagaimana saya bisa menemukan bug IP restriction bypass di situs sfile.mobi.&lt;/p&gt;&#xA;&lt;p&gt;dan mendapatkan reward yang lumayan, hanya karena laporan bug sepele ini.&lt;/p&gt;&#xA;&lt;h3 id=&#34;fyi-for-you-information&#34;&gt;FYI (For you information)&lt;/h3&gt;&#xA;&lt;p&gt;jadi sebelumnya saya menemukan data leakage dari salah satu website yang tidak bisa saya sebutkan. karena ini privasi web diluar sfile.mobi. yang mana&#xA;data tersebut berisi informasi seperti username, password dan email. dikarenakan situs yang terdapat data leakage tersebut adalah situs yang memiliki latar belakang seperti sfile.mobi juga. yaitu service &lt;strong&gt;free file sharing service&lt;/strong&gt;. jadinya saya mempunyai ide yang cukup cemerlang.&lt;/p&gt;</description>
     </item>
   </channel>

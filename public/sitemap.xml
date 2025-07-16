@@ -2,49 +2,55 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>//localhost:1313/tags/chess/</loc>
+    <loc>/posts/reverse-engineering-01/</loc>
+    <lastmod>2025-07-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/posts/</loc>
+    <lastmod>2025-07-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/pwn/</loc>
+    <lastmod>2025-07-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/</loc>
+    <lastmod>2025-07-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/chess/</loc>
     <lastmod>2025-06-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/posts/sicilian-defense/</loc>
+    <loc>/posts/sicilian-defense/</loc>
     <lastmod>2025-06-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/posts/</loc>
-    <lastmod>2025-06-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/</loc>
-    <lastmod>2025-06-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/pentest/</loc>
+    <loc>/tags/pentest/</loc>
     <lastmod>2024-12-05T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/posts/how-to-become-a-hacker/</loc>
+    <loc>/posts/how-to-become-a-hacker/</loc>
     <lastmod>2024-12-05T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/tags/analysis/</loc>
+    <loc>/tags/analysis/</loc>
     <lastmod>2024-11-22T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/posts/make-project-invest-tracker/</loc>
+    <loc>/posts/make-project-invest-tracker/</loc>
     <lastmod>2024-11-22T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/posts/technical-analysis-zero-to-hero/</loc>
+    <loc>/posts/technical-analysis-zero-to-hero/</loc>
     <lastmod>2024-11-22T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/tags/projects/</loc>
+    <loc>/tags/projects/</loc>
     <lastmod>2024-11-22T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/posts/os-command-injection/</loc>
+    <loc>/posts/os-command-injection/</loc>
     <lastmod>2022-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/posts/bypass-ip-restriction-at-sfile.mobi/</loc>
+    <loc>/posts/bypass-ip-restriction-at-sfile.mobi/</loc>
     <lastmod>2022-08-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/tags/writeups/</loc>
+    <loc>/tags/writeups/</loc>
     <lastmod>2022-08-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/posts/reconnaissance-summary/</loc>
+    <loc>/posts/reconnaissance-summary/</loc>
     <lastmod>2022-08-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/</loc>
+    <loc>/</loc>
     <lastmod>2022-08-25T21:30:04+08:00</lastmod>
   </url>
 </urlset>

@@ -1,10 +1,9 @@
 ---
-title: Apa itu komputer: CPU, memory, disk, register dalam reverse engineering (RE)
+title: Apa itu CPU, memory, disk, register dalam reverse engineering (RE)
 date: 2025-07-16
 thumb: https://www.indiedb.com/groups/tanks/images/girls-und-panzer-gif
 tags: [pwn]
 ---
-
 
 Penjelasan sederhana tentang komponen komputer yang penting untuk dipahami dalam **reverse engineering**:
 

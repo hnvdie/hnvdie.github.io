@@ -2,45 +2,52 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on </title>
-    <link>//localhost:1313/tags/</link>
+    <link>/tags/</link>
     <description>Recent content in Tags on </description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 19 Jun 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="//localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 16 Jul 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Pwn</title>
+      <link>/tags/pwn/</link>
+      <pubDate>Wed, 16 Jul 2025 00:00:00 +0000</pubDate>
+      <guid>/tags/pwn/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Chess</title>
-      <link>//localhost:1313/tags/chess/</link>
+      <link>/tags/chess/</link>
       <pubDate>Thu, 19 Jun 2025 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/tags/chess/</guid>
+      <guid>/tags/chess/</guid>
       <description></description>
     </item>
     <item>
       <title>Pentest</title>
-      <link>//localhost:1313/tags/pentest/</link>
+      <link>/tags/pentest/</link>
       <pubDate>Thu, 05 Dec 2024 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/tags/pentest/</guid>
+      <guid>/tags/pentest/</guid>
       <description></description>
     </item>
     <item>
       <title>Analysis</title>
-      <link>//localhost:1313/tags/analysis/</link>
+      <link>/tags/analysis/</link>
       <pubDate>Fri, 22 Nov 2024 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/tags/analysis/</guid>
+      <guid>/tags/analysis/</guid>
       <description></description>
     </item>
     <item>
       <title>Projects</title>
-      <link>//localhost:1313/tags/projects/</link>
+      <link>/tags/projects/</link>
       <pubDate>Fri, 22 Nov 2024 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/tags/projects/</guid>
+      <guid>/tags/projects/</guid>
       <description></description>
     </item>
     <item>
       <title>Writeups</title>
-      <link>//localhost:1313/tags/writeups/</link>
+      <link>/tags/writeups/</link>
       <pubDate>Sat, 27 Aug 2022 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/tags/writeups/</guid>
+      <guid>/tags/writeups/</guid>
       <description></description>
     </item>
   </channel>

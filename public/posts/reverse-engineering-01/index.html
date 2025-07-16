@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  
+  <style>
+    body {
+      background-color: #2e2e2e;
+      color: #c7c5c5;;
+      
+      font-family: 'Mono', sans-serif;  
+    }
+
+
+    a {
+      color: #48a874;  
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: darkgray;  
+    }
+
+    a:visited {
+      color: #48a874;  
+    }
+
+    .fa {
+      font-family: "Font Awesome 6 Free", sans-serif;  
+      font-weight: 30px;
+    }
+  </style>
+
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+
+  
+  
+    <meta name="description" content="Penjelasan sederhana tentang komponen komputer yang penting untuk dipahami dalam reverse engineering:
+1. CPU (Central Processing Unit)
+
+Apa itu? &ldquo;Otak&rdquo; komputer yang menjalankan instruksi program.
+Fungsi dalam RE: Ketika melakukan reverse engineering, Anda menganalisis bagaimana CPU memproses instruksi dari program (misalnya, bagaimana ia menghitung, membandingkan data, atau melompat ke bagian kode tertentu).
+Contoh: Saat debugging, Anda melihat instruksi assembly yang dijalankan CPU.
+
+2. Memory (RAM - Random Access Memory)
+
+Apa itu? Tempat penyimpanan sementara untuk data dan instruksi yang sedang diproses.
+Fungsi dalam RE:
+
+Menyimpan kode program yang sedang berjalan.
+Menyimpan variabel/data yang digunakan program.
+Dalam RE, Anda memeriksa isi memory untuk menemukan password, kunci enkripsi, atau memodifikasi nilai variabel.
+
+
+Contoh: Tools seperti Cheat Engine memanipulasi nilai di memory untuk mengubah perilaku game/program.
+
+3. Disk (Storage: HDD/SSD)
+
+Apa itu? Penyimpanan permanen untuk program dan data (seperti file EXE, DLL, atau dokumen).
+Fungsi dalam RE:
+
+File di disk (misalnya, binary/executable) adalah target utama reverse engineering.
+Anda menganalisis bagaimana program disimpan di disk (struktur file, kode terkompilasi, dll.).
+
+
+Contoh: Tools seperti Ghidra atau IDA Pro membaca file EXE dari disk untuk dianalisis.
+
+4. Register
+
+Apa itu? Penyimpanan kecil super cepat di dalam CPU untuk memproses data secara langsung.
+Fungsi dalam RE:
+
+Register menyimpan nilai sementara saat CPU menjalankan instruksi (misalnya, hasil perhitungan atau alamat memory).
+Dalam assembly/RE, Anda sering melihat register seperti:
+
+EAX/RAX: Menyimpan hasil operasi.
+EIP/RIP: Menunjuk ke instruksi berikutnya yang akan dijalankan.
+
+
+
+
+Contoh: Saat debugging dengan x64dbg, Anda memantau perubahan register untuk memahami alur program.
+
+
+Analog Sederhana untuk Pemula
+Bayangkan komputer seperti tukang masak (CPU) yang:">
+  
+
+  <title>
+    
+      Apa itu CPU, memory, disk, register dalam reverse engineering (RE)
+    
+  </title>
+
+  
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.79e24f63ac05ef51117de1a7065e5243b91e09c98aab7a3cc4097fb39ce9d40148298c665a62632a4043c5aa8d2c0c8826a711f9d7d46f1af3e37ec3178a2d07.css" integrity="sha512-eeJPY6wF71ERfeGnBl5SQ7keCcmKq3o8xAl/s5zp1AFIKYxmWmJjKkBDxaqNLAyIJqcR&#43;dfUbxrz437DF4otBw==" />
+
+  
+  
+
+  
+    <meta name="description" content="Penjelasan sederhana tentang komponen komputer yang penting untuk dipahami dalam reverse engineering:
+1. CPU (Central Processing Unit)
+
+Apa itu? &ldquo;Otak&rdquo; komputer yang menjalankan instruksi program.
+Fungsi dalam RE: Ketika melakukan reverse engineering, Anda menganalisis bagaimana CPU memproses instruksi dari program (misalnya, bagaimana ia menghitung, membandingkan data, atau melompat ke bagian kode tertentu).
+Contoh: Saat debugging, Anda melihat instruksi assembly yang dijalankan CPU.
+
+2. Memory (RAM - Random Access Memory)
+
+Apa itu? Tempat penyimpanan sementara untuk data dan instruksi yang sedang diproses.
+Fungsi dalam RE:
+
+Menyimpan kode program yang sedang berjalan.
+Menyimpan variabel/data yang digunakan program.
+Dalam RE, Anda memeriksa isi memory untuk menemukan password, kunci enkripsi, atau memodifikasi nilai variabel.
+
+
+Contoh: Tools seperti Cheat Engine memanipulasi nilai di memory untuk mengubah perilaku game/program.
+
+3. Disk (Storage: HDD/SSD)
+
+Apa itu? Penyimpanan permanen untuk program dan data (seperti file EXE, DLL, atau dokumen).
+Fungsi dalam RE:
+
+File di disk (misalnya, binary/executable) adalah target utama reverse engineering.
+Anda menganalisis bagaimana program disimpan di disk (struktur file, kode terkompilasi, dll.).
+
+
+Contoh: Tools seperti Ghidra atau IDA Pro membaca file EXE dari disk untuk dianalisis.
+
+4. Register
+
+Apa itu? Penyimpanan kecil super cepat di dalam CPU untuk memproses data secara langsung.
+Fungsi dalam RE:
+
+Register menyimpan nilai sementara saat CPU menjalankan instruksi (misalnya, hasil perhitungan atau alamat memory).
+Dalam assembly/RE, Anda sering melihat register seperti:
+
+EAX/RAX: Menyimpan hasil operasi.
+EIP/RIP: Menunjuk ke instruksi berikutnya yang akan dijalankan.
+
+
+
+
+Contoh: Saat debugging dengan x64dbg, Anda memantau perubahan register untuk memahami alur program.
+
+
+Analog Sederhana untuk Pemula
+Bayangkan komputer seperti tukang masak (CPU) yang:">
+    <meta property="og:description" content="Penjelasan sederhana tentang komponen komputer yang penting untuk dipahami dalam reverse engineering:
+1. CPU (Central Processing Unit)
+
+Apa itu? &ldquo;Otak&rdquo; komputer yang menjalankan instruksi program.
+Fungsi dalam RE: Ketika melakukan reverse engineering, Anda menganalisis bagaimana CPU memproses instruksi dari program (misalnya, bagaimana ia menghitung, membandingkan data, atau melompat ke bagian kode tertentu).
+Contoh: Saat debugging, Anda melihat instruksi assembly yang dijalankan CPU.
+
+2. Memory (RAM - Random Access Memory)
+
+Apa itu? Tempat penyimpanan sementara untuk data dan instruksi yang sedang diproses.
+Fungsi dalam RE:
+
+Menyimpan kode program yang sedang berjalan.
+Menyimpan variabel/data yang digunakan program.
+Dalam RE, Anda memeriksa isi memory untuk menemukan password, kunci enkripsi, atau memodifikasi nilai variabel.
+
+
+Contoh: Tools seperti Cheat Engine memanipulasi nilai di memory untuk mengubah perilaku game/program.
+
+3. Disk (Storage: HDD/SSD)
+
+Apa itu? Penyimpanan permanen untuk program dan data (seperti file EXE, DLL, atau dokumen).
+Fungsi dalam RE:
+
+File di disk (misalnya, binary/executable) adalah target utama reverse engineering.
+Anda menganalisis bagaimana program disimpan di disk (struktur file, kode terkompilasi, dll.).
+
+
+Contoh: Tools seperti Ghidra atau IDA Pro membaca file EXE dari disk untuk dianalisis.
+
+4. Register
+
+Apa itu? Penyimpanan kecil super cepat di dalam CPU untuk memproses data secara langsung.
+Fungsi dalam RE:
+
+Register menyimpan nilai sementara saat CPU menjalankan instruksi (misalnya, hasil perhitungan atau alamat memory).
+Dalam assembly/RE, Anda sering melihat register seperti:
+
+EAX/RAX: Menyimpan hasil operasi.
+EIP/RIP: Menunjuk ke instruksi berikutnya yang akan dijalankan.
+
+
+
+
+Contoh: Saat debugging dengan x64dbg, Anda memantau perubahan register untuk memahami alur program.
+
+
+Analog Sederhana untuk Pemula
+Bayangkan komputer seperti tukang masak (CPU) yang:">
+    <meta property="og:image" content="https://www.indiedb.com/groups/tanks/images/girls-und-panzer-gif">
+    <meta name="twitter:image" content="https://www.indiedb.com/groups/tanks/images/girls-und-panzer-gif">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="/posts/reverse-engineering-01/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Apa itu CPU, memory, disk, register dalam reverse engineering (RE)">
+  <meta name="twitter:description" content="Penjelasan sederhana tentang komponen komputer yang penting untuk dipahami dalam reverse engineering:
+1. CPU (Central Processing Unit)
+
+Apa itu? &ldquo;Otak&rdquo; komputer yang menjalankan instruksi program.
+Fungsi dalam RE: Ketika melakukan reverse engineering, Anda menganalisis bagaimana CPU memproses instruksi dari program (misalnya, bagaimana ia menghitung, membandingkan data, atau melompat ke bagian kode tertentu).
+Contoh: Saat debugging, Anda melihat instruksi assembly yang dijalankan CPU.
+
+2. Memory (RAM - Random Access Memory)
+
+Apa itu? Tempat penyimpanan sementara untuk data dan instruksi yang sedang diproses.
+Fungsi dalam RE:
+
+Menyimpan kode program yang sedang berjalan.
+Menyimpan variabel/data yang digunakan program.
+Dalam RE, Anda memeriksa isi memory untuk menemukan password, kunci enkripsi, atau memodifikasi nilai variabel.
+
+
+Contoh: Tools seperti Cheat Engine memanipulasi nilai di memory untuk mengubah perilaku game/program.
+
+3. Disk (Storage: HDD/SSD)
+
+Apa itu? Penyimpanan permanen untuk program dan data (seperti file EXE, DLL, atau dokumen).
+Fungsi dalam RE:
+
+File di disk (misalnya, binary/executable) adalah target utama reverse engineering.
+Anda menganalisis bagaimana program disimpan di disk (struktur file, kode terkompilasi, dll.).
+
+
+Contoh: Tools seperti Ghidra atau IDA Pro membaca file EXE dari disk untuk dianalisis.
+
+4. Register
+
+Apa itu? Penyimpanan kecil super cepat di dalam CPU untuk memproses data secara langsung.
+Fungsi dalam RE:
+
+Register menyimpan nilai sementara saat CPU menjalankan instruksi (misalnya, hasil perhitungan atau alamat memory).
+Dalam assembly/RE, Anda sering melihat register seperti:
+
+EAX/RAX: Menyimpan hasil operasi.
+EIP/RIP: Menunjuk ke instruksi berikutnya yang akan dijalankan.
+
+
+
+
+Contoh: Saat debugging dengan x64dbg, Anda memantau perubahan register untuk memahami alur program.
+
+
+Analog Sederhana untuk Pemula
+Bayangkan komputer seperti tukang masak (CPU) yang:">
+</head>
+
+
+
+
+
+
+
+
+
+
+
+<body a="black">
+
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">~ $ cd /home</a>
+
+
+<article>
+    <p class="post-meta">
+    </p>
+
+<h1>Apa itu CPU, memory, disk, register dalam reverse engineering (RE)<br><br>
+    <small datetime="2025-07-16 00:00:00 &#43;0000 UTC" style="font-size: 10px; display: inline-flex; align-items: center;">
+        <img src="https://avatars.githubusercontent.com/u/51517043?v=4" alt="GitHub Profile" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover; margin-right: 8px;">
+        2025-07-16 - Rainhynn
+    </small>
+</h1>
+
+    
+
+    <p>Penjelasan sederhana tentang komponen komputer yang penting untuk dipahami dalam <strong>reverse engineering</strong>:</p>
+<h3 id="1-cpu-central-processing-unit">1. <strong>CPU (Central Processing Unit)</strong></h3>
+<ul>
+<li><strong>Apa itu?</strong> &ldquo;Otak&rdquo; komputer yang menjalankan instruksi program.</li>
+<li><strong>Fungsi dalam RE</strong>: Ketika melakukan reverse engineering, Anda menganalisis bagaimana CPU memproses instruksi dari program (misalnya, bagaimana ia menghitung, membandingkan data, atau melompat ke bagian kode tertentu).</li>
+<li><strong>Contoh</strong>: Saat debugging, Anda melihat instruksi assembly yang dijalankan CPU.</li>
+</ul>
+<h3 id="2-memory-ram---random-access-memory">2. <strong>Memory (RAM - Random Access Memory)</strong></h3>
+<ul>
+<li><strong>Apa itu?</strong> Tempat penyimpanan sementara untuk data dan instruksi yang sedang diproses.</li>
+<li><strong>Fungsi dalam RE</strong>:
+<ul>
+<li>Menyimpan <strong>kode program</strong> yang sedang berjalan.</li>
+<li>Menyimpan <strong>variabel/data</strong> yang digunakan program.</li>
+<li>Dalam RE, Anda memeriksa isi memory untuk menemukan password, kunci enkripsi, atau memodifikasi nilai variabel.</li>
+</ul>
+</li>
+<li><strong>Contoh</strong>: Tools seperti <strong>Cheat Engine</strong> memanipulasi nilai di memory untuk mengubah perilaku game/program.</li>
+</ul>
+<h3 id="3-disk-storage-hddssd">3. <strong>Disk (Storage: HDD/SSD)</strong></h3>
+<ul>
+<li><strong>Apa itu?</strong> Penyimpanan permanen untuk program dan data (seperti file EXE, DLL, atau dokumen).</li>
+<li><strong>Fungsi dalam RE</strong>:
+<ul>
+<li>File di disk (misalnya, binary/executable) adalah target utama reverse engineering.</li>
+<li>Anda menganalisis bagaimana program disimpan di disk (struktur file, kode terkompilasi, dll.).</li>
+</ul>
+</li>
+<li><strong>Contoh</strong>: Tools seperti <strong>Ghidra</strong> atau <strong>IDA Pro</strong> membaca file EXE dari disk untuk dianalisis.</li>
+</ul>
+<h3 id="4-register">4. <strong>Register</strong></h3>
+<ul>
+<li><strong>Apa itu?</strong> Penyimpanan kecil <strong>super cepat</strong> di dalam CPU untuk memproses data secara langsung.</li>
+<li><strong>Fungsi dalam RE</strong>:
+<ul>
+<li>Register menyimpan nilai sementara saat CPU menjalankan instruksi (misalnya, hasil perhitungan atau alamat memory).</li>
+<li>Dalam assembly/RE, Anda sering melihat register seperti:
+<ul>
+<li><strong>EAX/RAX</strong>: Menyimpan hasil operasi.</li>
+<li><strong>EIP/RIP</strong>: Menunjuk ke instruksi berikutnya yang akan dijalankan.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Contoh</strong>: Saat debugging dengan <strong>x64dbg</strong>, Anda memantau perubahan register untuk memahami alur program.</li>
+</ul>
+<hr>
+<h3 id="analog-sederhana-untuk-pemula"><strong>Analog Sederhana untuk Pemula</strong></h3>
+<p>Bayangkan komputer seperti <strong>tukang masak (CPU)</strong> yang:</p>
+<ol>
+<li>Mengambil resep dari buku masak (<strong>disk</strong>),</li>
+<li>Menyiapkan bahan di meja dapur (<strong>RAM</strong>),</li>
+<li>Mengolah bahan dengan tangan/alat kecil (<strong>register</strong>).</li>
+</ol>
+<p>Dalam <strong>reverse engineering</strong>, Anda adalah orang yang:</p>
+<ul>
+<li>Membongkar resep (program) untuk melihat bagaimana ia bekerja,</li>
+<li>Memodifikasi bahan (memory/register) untuk mengubah hasil masakan (perilaku program).</li>
+</ul>
+<hr>
+<h3 id="penting-untuk-reverse-engineering"><strong>Penting untuk Reverse Engineering</strong></h3>
+<ul>
+<li><strong>CPU + Register</strong>: Memahami <strong>assembly language</strong> (bahasa mesin) untuk melacak eksekusi program.</li>
+<li><strong>Memory</strong>: Mem-scan/memodifikasi nilai saat runtime (misalnya, bypassing license check).</li>
+<li><strong>Disk</strong>: Menganalisis file binary/executable untuk menemukan vulnerability atau algoritma.</li>
+</ul>
+<p>Mulailah dengan tools seperti <strong>Cheat Engine</strong> (memory editing) atau <strong>Ghidra</strong> (binary analysis) untuk mempraktikkan konsep ini!</p>
+
+</article>
+
+<hr>
+
+<p>© 2021-2025 HnvDie</p>
+<p>Powered By Hugo ᯓᡣ𐭩</p>
+
+
+
+            </div>
+        </main>
+    </body></html>
