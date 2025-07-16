@@ -2,45 +2,45 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on </title>
-    <link>/tags/</link>
+    <link>//localhost:1313/tags/</link>
     <description>Recent content in Tags on </description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Thu, 19 Jun 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="//localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Chess</title>
-      <link>/tags/chess/</link>
+      <link>//localhost:1313/tags/chess/</link>
       <pubDate>Thu, 19 Jun 2025 00:00:00 +0000</pubDate>
-      <guid>/tags/chess/</guid>
+      <guid>//localhost:1313/tags/chess/</guid>
       <description></description>
     </item>
     <item>
       <title>Pentest</title>
-      <link>/tags/pentest/</link>
+      <link>//localhost:1313/tags/pentest/</link>
       <pubDate>Thu, 05 Dec 2024 00:00:00 +0000</pubDate>
-      <guid>/tags/pentest/</guid>
+      <guid>//localhost:1313/tags/pentest/</guid>
       <description></description>
     </item>
     <item>
       <title>Analysis</title>
-      <link>/tags/analysis/</link>
+      <link>//localhost:1313/tags/analysis/</link>
       <pubDate>Fri, 22 Nov 2024 00:00:00 +0000</pubDate>
-      <guid>/tags/analysis/</guid>
+      <guid>//localhost:1313/tags/analysis/</guid>
       <description></description>
     </item>
     <item>
       <title>Projects</title>
-      <link>/tags/projects/</link>
+      <link>//localhost:1313/tags/projects/</link>
       <pubDate>Fri, 22 Nov 2024 00:00:00 +0000</pubDate>
-      <guid>/tags/projects/</guid>
+      <guid>//localhost:1313/tags/projects/</guid>
       <description></description>
     </item>
     <item>
       <title>Writeups</title>
-      <link>/tags/writeups/</link>
+      <link>//localhost:1313/tags/writeups/</link>
       <pubDate>Sat, 27 Aug 2022 00:00:00 +0000</pubDate>
-      <guid>/tags/writeups/</guid>
+      <guid>//localhost:1313/tags/writeups/</guid>
       <description></description>
     </item>
   </channel>
