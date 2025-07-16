@@ -47,48 +47,13 @@ Apa itu? &ldquo;Otak&rdquo; komputer yang menjalankan instruksi program.
 Fungsi dalam RE: Ketika melakukan reverse engineering, Anda menganalisis bagaimana CPU memproses instruksi dari program (misalnya, bagaimana ia menghitung, membandingkan data, atau melompat ke bagian kode tertentu).
 Contoh: Saat debugging, Anda melihat instruksi assembly yang dijalankan CPU.
 
-2. Memory (RAM - Random Access Memory)
+CPU itu seperti Koki di Dapur
+Bayangkan:
 
-Apa itu? Tempat penyimpanan sementara untuk data dan instruksi yang sedang diproses.
-Fungsi dalam RE:
+CPU = Koki yang melakukan semua perhitungan dan perintah.
+Program = Resep masakan yang harus diikuti koki.
 
-Menyimpan kode program yang sedang berjalan.
-Menyimpan variabel/data yang digunakan program.
-Dalam RE, Anda memeriksa isi memory untuk menemukan password, kunci enkripsi, atau memodifikasi nilai variabel.
-
-
-Contoh: Tools seperti Cheat Engine memanipulasi nilai di memory untuk mengubah perilaku game/program.
-
-3. Disk (Storage: HDD/SSD)
-
-Apa itu? Penyimpanan permanen untuk program dan data (seperti file EXE, DLL, atau dokumen).
-Fungsi dalam RE:
-
-File di disk (misalnya, binary/executable) adalah target utama reverse engineering.
-Anda menganalisis bagaimana program disimpan di disk (struktur file, kode terkompilasi, dll.).
-
-
-Contoh: Tools seperti Ghidra atau IDA Pro membaca file EXE dari disk untuk dianalisis.
-
-4. Register
-
-Apa itu? Penyimpanan kecil super cepat di dalam CPU untuk memproses data secara langsung.
-Fungsi dalam RE:
-
-Register menyimpan nilai sementara saat CPU menjalankan instruksi (misalnya, hasil perhitungan atau alamat memory).
-Dalam assembly/RE, Anda sering melihat register seperti:
-
-EAX/RAX: Menyimpan hasil operasi.
-EIP/RIP: Menunjuk ke instruksi berikutnya yang akan dijalankan.
-
-
-
-
-Contoh: Saat debugging dengan x64dbg, Anda memantau perubahan register untuk memahami alur program.
-
-
-Analog Sederhana untuk Pemula
-Bayangkan komputer seperti tukang masak (CPU) yang:">
+Ketika kamu menjalankan program (misalnya ls di terminal), CPU membaca instruksinya langkah demi langkah dan menjalankannya.">
   
 
   <title>
@@ -117,48 +82,13 @@ Apa itu? &ldquo;Otak&rdquo; komputer yang menjalankan instruksi program.
 Fungsi dalam RE: Ketika melakukan reverse engineering, Anda menganalisis bagaimana CPU memproses instruksi dari program (misalnya, bagaimana ia menghitung, membandingkan data, atau melompat ke bagian kode tertentu).
 Contoh: Saat debugging, Anda melihat instruksi assembly yang dijalankan CPU.
 
-2. Memory (RAM - Random Access Memory)
+CPU itu seperti Koki di Dapur
+Bayangkan:
 
-Apa itu? Tempat penyimpanan sementara untuk data dan instruksi yang sedang diproses.
-Fungsi dalam RE:
+CPU = Koki yang melakukan semua perhitungan dan perintah.
+Program = Resep masakan yang harus diikuti koki.
 
-Menyimpan kode program yang sedang berjalan.
-Menyimpan variabel/data yang digunakan program.
-Dalam RE, Anda memeriksa isi memory untuk menemukan password, kunci enkripsi, atau memodifikasi nilai variabel.
-
-
-Contoh: Tools seperti Cheat Engine memanipulasi nilai di memory untuk mengubah perilaku game/program.
-
-3. Disk (Storage: HDD/SSD)
-
-Apa itu? Penyimpanan permanen untuk program dan data (seperti file EXE, DLL, atau dokumen).
-Fungsi dalam RE:
-
-File di disk (misalnya, binary/executable) adalah target utama reverse engineering.
-Anda menganalisis bagaimana program disimpan di disk (struktur file, kode terkompilasi, dll.).
-
-
-Contoh: Tools seperti Ghidra atau IDA Pro membaca file EXE dari disk untuk dianalisis.
-
-4. Register
-
-Apa itu? Penyimpanan kecil super cepat di dalam CPU untuk memproses data secara langsung.
-Fungsi dalam RE:
-
-Register menyimpan nilai sementara saat CPU menjalankan instruksi (misalnya, hasil perhitungan atau alamat memory).
-Dalam assembly/RE, Anda sering melihat register seperti:
-
-EAX/RAX: Menyimpan hasil operasi.
-EIP/RIP: Menunjuk ke instruksi berikutnya yang akan dijalankan.
-
-
-
-
-Contoh: Saat debugging dengan x64dbg, Anda memantau perubahan register untuk memahami alur program.
-
-
-Analog Sederhana untuk Pemula
-Bayangkan komputer seperti tukang masak (CPU) yang:">
+Ketika kamu menjalankan program (misalnya ls di terminal), CPU membaca instruksinya langkah demi langkah dan menjalankannya.">
     <meta property="og:description" content="Penjelasan sederhana tentang komponen komputer yang penting untuk dipahami dalam reverse engineering:
 1. CPU (Central Processing Unit)
 
@@ -166,48 +96,13 @@ Apa itu? &ldquo;Otak&rdquo; komputer yang menjalankan instruksi program.
 Fungsi dalam RE: Ketika melakukan reverse engineering, Anda menganalisis bagaimana CPU memproses instruksi dari program (misalnya, bagaimana ia menghitung, membandingkan data, atau melompat ke bagian kode tertentu).
 Contoh: Saat debugging, Anda melihat instruksi assembly yang dijalankan CPU.
 
-2. Memory (RAM - Random Access Memory)
+CPU itu seperti Koki di Dapur
+Bayangkan:
 
-Apa itu? Tempat penyimpanan sementara untuk data dan instruksi yang sedang diproses.
-Fungsi dalam RE:
+CPU = Koki yang melakukan semua perhitungan dan perintah.
+Program = Resep masakan yang harus diikuti koki.
 
-Menyimpan kode program yang sedang berjalan.
-Menyimpan variabel/data yang digunakan program.
-Dalam RE, Anda memeriksa isi memory untuk menemukan password, kunci enkripsi, atau memodifikasi nilai variabel.
-
-
-Contoh: Tools seperti Cheat Engine memanipulasi nilai di memory untuk mengubah perilaku game/program.
-
-3. Disk (Storage: HDD/SSD)
-
-Apa itu? Penyimpanan permanen untuk program dan data (seperti file EXE, DLL, atau dokumen).
-Fungsi dalam RE:
-
-File di disk (misalnya, binary/executable) adalah target utama reverse engineering.
-Anda menganalisis bagaimana program disimpan di disk (struktur file, kode terkompilasi, dll.).
-
-
-Contoh: Tools seperti Ghidra atau IDA Pro membaca file EXE dari disk untuk dianalisis.
-
-4. Register
-
-Apa itu? Penyimpanan kecil super cepat di dalam CPU untuk memproses data secara langsung.
-Fungsi dalam RE:
-
-Register menyimpan nilai sementara saat CPU menjalankan instruksi (misalnya, hasil perhitungan atau alamat memory).
-Dalam assembly/RE, Anda sering melihat register seperti:
-
-EAX/RAX: Menyimpan hasil operasi.
-EIP/RIP: Menunjuk ke instruksi berikutnya yang akan dijalankan.
-
-
-
-
-Contoh: Saat debugging dengan x64dbg, Anda memantau perubahan register untuk memahami alur program.
-
-
-Analog Sederhana untuk Pemula
-Bayangkan komputer seperti tukang masak (CPU) yang:">
+Ketika kamu menjalankan program (misalnya ls di terminal), CPU membaca instruksinya langkah demi langkah dan menjalankannya.">
     <meta property="og:image" content="https://www.indiedb.com/groups/tanks/images/girls-und-panzer-gif">
     <meta name="twitter:image" content="https://www.indiedb.com/groups/tanks/images/girls-und-panzer-gif">
 
@@ -222,48 +117,13 @@ Apa itu? &ldquo;Otak&rdquo; komputer yang menjalankan instruksi program.
 Fungsi dalam RE: Ketika melakukan reverse engineering, Anda menganalisis bagaimana CPU memproses instruksi dari program (misalnya, bagaimana ia menghitung, membandingkan data, atau melompat ke bagian kode tertentu).
 Contoh: Saat debugging, Anda melihat instruksi assembly yang dijalankan CPU.
 
-2. Memory (RAM - Random Access Memory)
+CPU itu seperti Koki di Dapur
+Bayangkan:
 
-Apa itu? Tempat penyimpanan sementara untuk data dan instruksi yang sedang diproses.
-Fungsi dalam RE:
+CPU = Koki yang melakukan semua perhitungan dan perintah.
+Program = Resep masakan yang harus diikuti koki.
 
-Menyimpan kode program yang sedang berjalan.
-Menyimpan variabel/data yang digunakan program.
-Dalam RE, Anda memeriksa isi memory untuk menemukan password, kunci enkripsi, atau memodifikasi nilai variabel.
-
-
-Contoh: Tools seperti Cheat Engine memanipulasi nilai di memory untuk mengubah perilaku game/program.
-
-3. Disk (Storage: HDD/SSD)
-
-Apa itu? Penyimpanan permanen untuk program dan data (seperti file EXE, DLL, atau dokumen).
-Fungsi dalam RE:
-
-File di disk (misalnya, binary/executable) adalah target utama reverse engineering.
-Anda menganalisis bagaimana program disimpan di disk (struktur file, kode terkompilasi, dll.).
-
-
-Contoh: Tools seperti Ghidra atau IDA Pro membaca file EXE dari disk untuk dianalisis.
-
-4. Register
-
-Apa itu? Penyimpanan kecil super cepat di dalam CPU untuk memproses data secara langsung.
-Fungsi dalam RE:
-
-Register menyimpan nilai sementara saat CPU menjalankan instruksi (misalnya, hasil perhitungan atau alamat memory).
-Dalam assembly/RE, Anda sering melihat register seperti:
-
-EAX/RAX: Menyimpan hasil operasi.
-EIP/RIP: Menunjuk ke instruksi berikutnya yang akan dijalankan.
-
-
-
-
-Contoh: Saat debugging dengan x64dbg, Anda memantau perubahan register untuk memahami alur program.
-
-
-Analog Sederhana untuk Pemula
-Bayangkan komputer seperti tukang masak (CPU) yang:">
+Ketika kamu menjalankan program (misalnya ls di terminal), CPU membaca instruksinya langkah demi langkah dan menjalankannya.">
 </head>
 
 
@@ -303,7 +163,64 @@ Bayangkan komputer seperti tukang masak (CPU) yang:">
 <li><strong>Fungsi dalam RE</strong>: Ketika melakukan reverse engineering, Anda menganalisis bagaimana CPU memproses instruksi dari program (misalnya, bagaimana ia menghitung, membandingkan data, atau melompat ke bagian kode tertentu).</li>
 <li><strong>Contoh</strong>: Saat debugging, Anda melihat instruksi assembly yang dijalankan CPU.</li>
 </ul>
-<h3 id="2-memory-ram---random-access-memory">2. <strong>Memory (RAM - Random Access Memory)</strong></h3>
+<h4 id="cpu-itu-seperti-koki-di-dapur"><strong>CPU itu seperti Koki di Dapur</strong></h4>
+<p>Bayangkan:</p>
+<ul>
+<li><strong>CPU</strong> = Koki yang melakukan semua perhitungan dan perintah.</li>
+<li><strong>Program</strong> = Resep masakan yang harus diikuti koki.</li>
+</ul>
+<p>Ketika kamu menjalankan program (misalnya <code>ls</code> di terminal), CPU membaca instruksinya langkah demi langkah dan menjalankannya.</p>
+<hr>
+<h4 id="contoh-nyata-di-linux"><strong>Contoh Nyata di Linux</strong></h4>
+<p>Kita akan pakai perintah <code>strace</code> untuk melihat <strong>instruksi sistem</strong> (system calls) yang dijalankan CPU saat sebuah program berjalan.</p>
+<h4 id="1-jalankan-perintah-sederhana"><strong>1. Jalankan Perintah Sederhana</strong></h4>
+<p>Buka terminal, lalu ketik:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>strace ls
+</span></span></code></pre></div><p>Ini akan menampilkan <strong>semua instruksi</strong> yang CPU kerjakan saat menjalankan <code>ls</code> (contoh output):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>execve(&#34;/usr/bin/ls&#34;, [&#34;ls&#34;], 0x7ffd... /* 23 vars */)  
+</span></span><span style="display:flex;"><span>write(1, &#34;file1.txt  file2.txt\n&#34;, 20)  
+</span></span><span style="display:flex;"><span>exit(0)
+</span></span></code></pre></div><h4 id="apa-arti-output-ini"><strong>Apa Arti Output Ini?</strong></h4>
+<ul>
+<li><code>execve()</code>: CPU memuat program <code>ls</code> ke memory.</li>
+<li><code>write()</code>: CPU menampilkan output (<code>file1.txt file2.txt</code>) ke terminal.</li>
+<li><code>exit()</code>: CPU mengakhiri program.</li>
+</ul>
+<p><strong>Ini adalah &ldquo;bahasa CPU&rdquo; tingkat dasar!</strong></p>
+<hr>
+<h4 id="2-debugging-dengan"><strong>2. Debugging dengan <code>ltrace</code> (Lebih Sederhana)</strong></h4>
+<p>Jika <code>strace</code> terlalu rumit, coba <code>ltrace</code> untuk melihat <strong>fungsi library</strong> yang dipanggil:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ltrace ls
+</span></span></code></pre></div><p>Output:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>printf(&#34;file1.txt  file2.txt\n&#34;) = 20  
+</span></span><span style="display:flex;"><span>exit(0)
+</span></span></code></pre></div><p>Di sini kamu lihat CPU menjalankan <code>printf()</code> untuk menampilkan teks.</p>
+<hr>
+<h4 id="3-lihat-proses-cpu-dengan"><strong>3. Lihat Proses CPU dengan <code>top</code></strong></h4>
+<p>Jalankan:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>top
+</span></span></code></pre></div><p>Tekan <strong><code>q</code></strong> untuk keluar. Kamu akan melihat daftar program yang sedang CPU kerjakan, seperti:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>PID  USER    %CPU  COMMAND  
+</span></span><span style="display:flex;"><span>1234 user    5.0   firefox
+</span></span></code></pre></div><ul>
+<li><strong>%CPU</strong>: Persentase penggunaan CPU oleh program tersebut.</li>
+</ul>
+<hr>
+<h4 id="apa-hubungannya-dengan-reverse-engineering"><strong>Apa Hubungannya dengan Reverse Engineering?</strong></h4>
+<p>Ketika kamu reverse engineering, kamu ingin tahu:</p>
+<ul>
+<li><strong>Instruksi apa</strong> yang CPU jalankan (contoh: <code>strace</code>).</li>
+<li><strong>Bagaimana program berinteraksi</strong> dengan sistem (contoh: <code>ltrace</code>).</li>
+</ul>
+<p>Nanti kalau sudah terbiasa, baru masuk ke <strong>assembly</strong> (bahasa mesin CPU).</p>
+<hr>
+<h4 id="summary-untuk-pemula"><strong>Summary untuk Pemula</strong></h4>
+<ol>
+<li>CPU = &ldquo;Koki&rdquo; yang menjalankan perintah.</li>
+<li>Gunakan <code>strace</code>/<code>ltrace</code> untuk melihat instruksi CPU.</li>
+<li>Gunakan <code>top</code> untuk melihat beban CPU.</li>
+</ol>
+<h2 id="2-memory-ram---random-access-memory">2. <strong>Memory (RAM - Random Access Memory)</strong></h2>
 <ul>
 <li><strong>Apa itu?</strong> Tempat penyimpanan sementara untuk data dan instruksi yang sedang diproses.</li>
 <li><strong>Fungsi dalam RE</strong>:
@@ -315,7 +232,90 @@ Bayangkan komputer seperti tukang masak (CPU) yang:">
 </li>
 <li><strong>Contoh</strong>: Tools seperti <strong>Cheat Engine</strong> memanipulasi nilai di memory untuk mengubah perilaku game/program.</li>
 </ul>
-<h3 id="3-disk-storage-hddssd">3. <strong>Disk (Storage: HDD/SSD)</strong></h3>
+<h4 id="1-analogi-sederhana"><strong>1. Analogi Sederhana</strong></h4>
+<ul>
+<li><strong>CPU</strong> = Koki yang memasak.</li>
+<li><strong>RAM</strong> = Meja tempat koki menaruh bahan &amp; alat yang <strong>sedang dipakai</strong>.</li>
+<li><strong>Hard Disk</strong> = Lemari penyimpanan (untuk bahan yang tidak sedang dipakai).</li>
+</ul>
+<hr>
+<h4 id="2-contoh-nyata-di-linux"><strong>2. Contoh Nyata di Linux</strong></h4>
+<h4 id="a-melihat-penggunaan-ram"><strong>a. Melihat Penggunaan RAM</strong></h4>
+<p>Jalankan di terminal:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>free -h
+</span></span></code></pre></div><p>Output:</p>
+<pre tabindex="0"><code>              total    used    free  
+Mem:           16G     5.2G    10G  
+Swap:          2G      0B      2G  
+</code></pre><ul>
+<li><strong>Mem</strong>: RAM fisik (16GB total, 5.2GB dipakai).</li>
+<li><strong>Swap</strong>: RAM cadangan di hard disk.</li>
+</ul>
+<h4 id="b-lihat-program-yang-pakai-ram"><strong>b. Lihat Program yang Pakai RAM</strong></h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>top -o %MEM  <span style="color:#0f0"># Urutkan berdasarkan penggunaan RAM</span>
+</span></span></code></pre></div><p>Contoh output:</p>
+<pre tabindex="0"><code>PID  USER    %MEM  COMMAND  
+1234 user    15%   chrome  
+5678 user    8%    vscode  
+</code></pre><p>Artinya:</p>
+<ul>
+<li>Google Chrome pakai <strong>15% RAM</strong>.</li>
+<li>VS Code pakai <strong>8% RAM</strong>.</li>
+</ul>
+<hr>
+<h4 id="3-reverse-engineering--ram"><strong>3. Reverse Engineering &amp; RAM</strong></h4>
+<p>Dalam RE, RAM adalah tempat kita:</p>
+<ul>
+<li><strong>Mencari password</strong> (misalnya, game menyimpan nyawa player di RAM).</li>
+<li><strong>Memodifikasi nilai</strong> (misalnya, mengganti &ldquo;skor=100&rdquo; jadi &ldquo;skor=9999&rdquo;).</li>
+</ul>
+<h4 id="contoh-dengan-"><strong>Contoh dengan <code>Cheat Engine</code> (Windows)</strong>:</h4>
+<ol>
+<li>Buka game (misalnya <em>Plants vs Zombies</em>).</li>
+<li>Cari nilai &ldquo;sun&rdquo; (misalnya 50) di RAM.</li>
+<li>Ubah jadi 9999 → Nilai di game langsung berubah!</li>
+</ol>
+<p><strong>Di Linux</strong>, kita bisa pakai <code>scanmem</code> (versi sederhana Cheat Engine):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt install scanmem  <span style="color:#0f0"># Install dulu</span>
+</span></span><span style="display:flex;"><span>scanmem /proc/[PID_game]  <span style="color:#0f0"># Ganti [PID_game] dengan ID proses game</span>
+</span></span></code></pre></div><hr>
+<h4 id="4-coba-modifikasi-ram-sederhana"><strong>4. Coba Modifikasi RAM Sederhana</strong></h4>
+<p>Buat program C bernama <code>contoh_ram.c</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;stdio.h&gt;</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span><span style="color:#ee82ee">int</span> <span style="color:#ff0">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#ee82ee">int</span> nilai = <span style="color:#f60">10</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">printf</span>(<span style="color:#87ceeb">&#34;Nilai awal: %d</span><span style="color:#87ceeb">\n</span><span style="color:#87ceeb">&#34;</span>, nilai);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">printf</span>(<span style="color:#87ceeb">&#34;PID: %d</span><span style="color:#87ceeb">\n</span><span style="color:#87ceeb">&#34;</span>, <span style="color:#ff0">getpid</span>());  <span style="color:#0f0">// Cetak ID proses
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#f00">while</span> (<span style="color:#f60">1</span>) { }  <span style="color:#0f0">// Program jalan terus
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>}
+</span></span></code></pre></div><p><strong>Langkah-langkah</strong>:</p>
+<ol>
+<li>
+<p>Kompilasi &amp; jalankan:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gcc contoh_ram.c -o contoh_ram
+</span></span><span style="display:flex;"><span>./contoh_ram
+</span></span></code></pre></div><p>Output:</p>
+<pre tabindex="0"><code>Nilai awal: 10  
+PID: 12345  # Catat PID ini  
+</code></pre></li>
+<li>
+<p><strong>Cari &amp; Ubah Nilai di RAM</strong> (di terminal lain):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo scanmem <span style="color:#f60">12345</span>  <span style="color:#0f0"># Ganti 12345 dengan PID program</span>
+</span></span></code></pre></div><p>Di <code>scanmem</code>:</p>
+<pre tabindex="0"><code>&gt; 10               # Cari nilai &#34;10&#34; di RAM  
+&gt; list             # Lihat alamat memory yang menyimpan 10  
+&gt; [alamat] 9999    # Ganti nilai di alamat itu jadi 9999  
+</code></pre></li>
+<li>
+<p>Lihat terminal program <code>contoh_ram</code> → Nilai berubah!</p>
+</li>
+</ol>
+<hr>
+<h4 id="5-visualisasi-ram-dalam-program"><strong>5. Visualisasi RAM dalam Program</strong></h4>
+<pre tabindex="0"><code>Alamat RAM    Nilai  
+0x7ffc1234    10    # Awalnya  
+0x7ffc1234    9999  # Setelah dimodifikasi
+</code></pre><h2 id="3-disk-storage-hddssd">3. <strong>Disk (Storage: HDD/SSD)</strong></h2>
 <ul>
 <li><strong>Apa itu?</strong> Penyimpanan permanen untuk program dan data (seperti file EXE, DLL, atau dokumen).</li>
 <li><strong>Fungsi dalam RE</strong>:
@@ -326,7 +326,126 @@ Bayangkan komputer seperti tukang masak (CPU) yang:">
 </li>
 <li><strong>Contoh</strong>: Tools seperti <strong>Ghidra</strong> atau <strong>IDA Pro</strong> membaca file EXE dari disk untuk dianalisis.</li>
 </ul>
-<h3 id="4-register">4. <strong>Register</strong></h3>
+<h4 id="1-disk-vs-ram-perbedaan-krusial"><strong>1. Disk vs RAM: Perbedaan Krusial</strong></h4>
+<table>
+  <thead>
+      <tr>
+          <th><strong>RAM</strong></th>
+          <th><strong>Disk (HDD/SSD)</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Penyimpanan sementara (volatile)</td>
+          <td>Penyimpanan permanen (non-volatile)</td>
+      </tr>
+      <tr>
+          <td>Akses cepat (CPU langsung baca)</td>
+          <td>Akses lambat</td>
+      </tr>
+      <tr>
+          <td>Contoh: Variabel program</td>
+          <td>Contoh: File EXE, DLL, dokumen</td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Dalam RE</strong>:</p>
+<ul>
+<li>File di disk (seperti binary <code>ls</code> atau <code>chrome</code>) adalah target analisis.</li>
+<li>Kita bisa memodifikasi file di disk untuk mengubah perilaku program.</li>
+</ul>
+<hr>
+<h4 id="2-analisis-file-binary-dengan"><strong>2. Analisis File Binary dengan <code>radare2</code></strong></h4>
+<p><strong>Contoh Praktis</strong>: Kita akan analisis binary sederhana di Linux (bisa pakai <code>/bin/ls</code> atau buat program sendiri).</p>
+<h4 id="langkah-1-buat-program-sederhana"><strong>Langkah 1: Buat Program Sederhana</strong></h4>
+<p>Buat file <code>contoh_disk.c</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;stdio.h&gt;</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span><span style="color:#ee82ee">void</span> <span style="color:#ff0">greet</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">printf</span>(<span style="color:#87ceeb">&#34;Password: 12345</span><span style="color:#87ceeb">\n</span><span style="color:#87ceeb">&#34;</span>);  <span style="color:#0f0">// Target kita: temukan string ini di binary!
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>}
+</span></span><span style="display:flex;"><span><span style="color:#ee82ee">int</span> <span style="color:#ff0">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">greet</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">return</span> <span style="color:#f60">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Kompilasi:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gcc contoh_disk.c -o contoh_disk
+</span></span></code></pre></div><h4 id="langkah-2-buka-binary-dengan-radare2"><strong>Langkah 2: Buka Binary dengan radare2</strong></h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>r2 -AAA ./contoh_disk  <span style="color:#0f0"># Buka file dengan analisis penuh</span>
+</span></span></code></pre></div><h4 id="perintah-dasar-radare2"><strong>Perintah Dasar radare2</strong></h4>
+<ol>
+<li>
+<p><strong>Cari Fungsi (<code>main</code> dan <code>greet</code>)</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>[0x00401050]&gt; afl            <span style="color:#0f0"># List semua fungsi</span>
+</span></span><span style="display:flex;"><span>[0x00401050]&gt; s main         <span style="color:#0f0"># Pindah ke fungsi main</span>
+</span></span><span style="display:flex;"><span>[0x00401050]&gt; pdf            <span style="color:#0f0"># Disassemble fungsi</span>
+</span></span></code></pre></div><p>Output:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span>┌ 23: <span style="color:#ff0">int</span> <span style="color:#7fffd4">main</span> ()<span style="color:#0f0">;
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>│           0<span style="color:#ff0">x00401112</span>      <span style="color:#f60">55</span>             <span style="color:#7fffd4">push</span> <span style="color:#7fffd4">rbp</span>
+</span></span><span style="display:flex;"><span>│           0<span style="color:#ff0">x00401113</span>      <span style="color:#f60">4889</span><span style="color:#7fffd4">e5</span>         <span style="color:#7fffd4">mov</span> <span style="color:#7fffd4">rbp</span>, <span style="color:#7fffd4">rsp</span>
+</span></span><span style="display:flex;"><span>│           0<span style="color:#ff0">x00401116</span>      <span style="color:#7fffd4">e8d5ffffff</span>     <span style="color:#7fffd4">call</span> <span style="color:#7fffd4">greet</span>  <span style="color:#0f0">; Panggil fungsi greet
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>│           0<span style="color:#ff0">x0040111b</span>      <span style="color:#7fffd4">b800000000</span>     <span style="color:#7fffd4">mov</span> <span style="color:#7fffd4">eax</span>, <span style="color:#f60">0</span>
+</span></span><span style="display:flex;"><span>│           0<span style="color:#ff0">x00401120</span>      <span style="color:#f60">5</span><span style="color:#7fffd4">d</span>             <span style="color:#7fffd4">pop</span> <span style="color:#7fffd4">rbp</span>
+</span></span><span style="display:flex;"><span>└           0<span style="color:#ff0">x00401121</span>      <span style="color:#7fffd4">c3</span>             <span style="color:#7fffd4">ret</span>
+</span></span></code></pre></div></li>
+<li>
+<p><strong>Cari String &ldquo;Password&rdquo;</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>[0x00401050]&gt; iz             <span style="color:#0f0"># List semua string di binary</span>
+</span></span></code></pre></div><p>Output:</p>
+<pre tabindex="0"><code>vaddr=0x00402004 paddr=0x00002004 ordinal=000 sz=12 len=11 section=.rodata type=ascii string=Password: 12345
+</code></pre></li>
+<li>
+<p><strong>Lihat Isi Disk (Hex View)</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>[0x00401050]&gt; px @ 0x00402004  <span style="color:#0f0"># Lihat data di alamat string</span>
+</span></span></code></pre></div><p>Output (hexdump):</p>
+<pre tabindex="0"><code>0x00402004  50 61 73 73 77 6f 72 64 3a 20 31 32 33 34 35 00  Password: 12345.
+</code></pre></li>
+<li>
+<p><strong>Modifikasi Binary (Opsional)</strong><br>
+Ganti string &ldquo;12345&rdquo; jadi &ldquo;ABCDE&rdquo;:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>[0x00401050]&gt; wx ABCDE @ 0x0040200B  <span style="color:#0f0"># Overwrite di disk</span>
+</span></span><span style="display:flex;"><span>[0x00401050]&gt; q                     <span style="color:#0f0"># Keluar</span>
+</span></span></code></pre></div><p>Jalankan program:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>./contoh_disk
+</span></span></code></pre></div><p>Output:</p>
+<pre tabindex="0"><code>Password: ABCDE  # String berhasil diubah!
+</code></pre></li>
+</ol>
+<hr>
+<h4 id="3-visualisasi-struktur-file-di-disk"><strong>3. Visualisasi Struktur File di Disk</strong></h4>
+<pre tabindex="0"><code>Binary `contoh_disk` di Disk:
+┌─────────────────┐
+│  Header (ELF)   │  # Informasi metadata
+├─────────────────┤
+│  .text          │  # Kode mesin (fungsi main, greet)
+├─────────────────┤
+│  .rodata        │  # String &#34;Password: 12345&#34;
+├─────────────────┤
+│  ...            │  # Section lain
+└─────────────────┘
+</code></pre><ul>
+<li><strong>radare2</strong> membantu melihat/memodifikasi bagian ini.</li>
+</ul>
+<hr>
+<h4 id="4-contoh-nyata-analisis"><strong>4. Contoh Nyata: Analisis <code>/bin/ls</code></strong></h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>r2 -AAA /bin/ls
+</span></span></code></pre></div><ul>
+<li>Cari fungsi <code>main</code>:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>[0x00401050]&gt; afl~main  <span style="color:#0f0"># Cari fungsi main</span>
+</span></span><span style="display:flex;"><span>[0x00401050]&gt; s main    <span style="color:#0f0"># Pindah ke main</span>
+</span></span><span style="display:flex;"><span>[0x00401050]&gt; pdf       <span style="color:#0f0"># Disassemble</span>
+</span></span></code></pre></div></li>
+<li>Cari string (misalnya pesan error):
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>[0x00401050]&gt; iz~cannot  <span style="color:#0f0"># Cari string &#34;cannot&#34;</span>
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h4 id="5-fungsi-dalam-reverse-engineering"><strong>5. Fungsi dalam Reverse Engineering</strong></h4>
+<ul>
+<li><strong>Menganalisis malware</strong> (file binary mencurigakan).</li>
+<li><strong>Memodifikasi program</strong> (crack license, bypass auth).</li>
+<li><strong>Memahami struktur executable</strong> (ELF, PE).</li>
+</ul>
+<h2 id="4-register">4. <strong>Register</strong></h2>
 <ul>
 <li><strong>Apa itu?</strong> Penyimpanan kecil <strong>super cepat</strong> di dalam CPU untuk memproses data secara langsung.</li>
 <li><strong>Fungsi dalam RE</strong>:
@@ -342,6 +461,141 @@ Bayangkan komputer seperti tukang masak (CPU) yang:">
 </li>
 <li><strong>Contoh</strong>: Saat debugging dengan <strong>x64dbg</strong>, Anda memantau perubahan register untuk memahami alur program.</li>
 </ul>
+<p>Bayangkan register seperti <strong>meja kecil di depan koki</strong> (CPU):</p>
+<ul>
+<li>Hanya muat <strong>sedikit data</strong> (4-8 byte), tapi <strong>paling cepat</strong> diakses.</li>
+<li>Dipakai untuk <strong>operasi matematis, alamat memory, dll</strong>.</li>
+</ul>
+<hr>
+<h4 id="1-jenis-register-penting"><strong>1. Jenis Register Penting</strong></h4>
+<table>
+  <thead>
+      <tr>
+          <th><strong>Register</strong></th>
+          <th><strong>Fungsi</strong></th>
+          <th><strong>Contoh (x64)</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>RAX/EAX</strong></td>
+          <td>Menyimpan <strong>hasil operasi</strong> (return value)</td>
+          <td><code>mov eax, 5</code></td>
+      </tr>
+      <tr>
+          <td><strong>RIP/EIP</strong></td>
+          <td><strong>Instruction Pointer</strong> (alamat instruksi berikutnya)</td>
+          <td><code>0x401000</code></td>
+      </tr>
+      <tr>
+          <td><strong>RSP/ESP</strong></td>
+          <td><strong>Stack Pointer</strong> (alamat stack)</td>
+          <td><code>0x7fffffff</code></td>
+      </tr>
+      <tr>
+          <td><strong>RBX/EBX</strong></td>
+          <td>Penyimpanan sementara</td>
+          <td><code>mov ebx, eax</code></td>
+      </tr>
+  </tbody>
+</table>
+<blockquote>
+<p>Catatan:</p>
+<ul>
+<li><code>RAX</code> (64-bit), <code>EAX</code> (32-bit), <code>AX</code> (16-bit), <code>AH/AL</code> (8-bit).</li>
+<li><strong>EIP/RIP</strong> sangat penting untuk kontrol alur program (misal: eksploitasi buffer overflow).</li>
+</ul></blockquote>
+<hr>
+<h4 id="2-contoh-nyata-dengan"><strong>2. Contoh Nyata dengan <code>gdb</code></strong></h4>
+<p>Buat file <code>contoh_register.c</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;stdio.h&gt;</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span><span style="color:#ee82ee">int</span> <span style="color:#ff0">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#ee82ee">int</span> a = <span style="color:#f60">5</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ee82ee">int</span> b = <span style="color:#f60">10</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ee82ee">int</span> c = a + b;  <span style="color:#0f0">// Perhatikan register RAX/EAX!
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#f00">return</span> <span style="color:#f60">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="langkah-debugging"><strong>Langkah Debugging</strong></h4>
+<ol>
+<li>
+<p>Kompilasi dengan debug info:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gcc -g contoh_register.c -o contoh_register
+</span></span></code></pre></div></li>
+<li>
+<p>Buka dengan <code>gdb</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gdb ./contoh_register
+</span></span></code></pre></div></li>
+<li>
+<p><strong>Set Breakpoint</strong> dan lihat register:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>(gdb) break main          <span style="color:#0f0"># Set breakpoint di main</span>
+</span></span><span style="display:flex;"><span>(gdb) run                <span style="color:#0f0"># Jalankan program</span>
+</span></span><span style="display:flex;"><span>(gdb) disassemble        <span style="color:#0f0"># Lihat assembly</span>
+</span></span><span style="display:flex;"><span>(gdb) info registers     <span style="color:#0f0"># Lihat semua register</span>
+</span></span></code></pre></div></li>
+</ol>
+<h4 id="output-assembly"><strong>Output Assembly</strong></h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span><span style="color:#ff0">mov</span>    <span style="color:#7fffd4">DWORD</span> <span style="color:#7fffd4">PTR</span> [<span style="color:#7fffd4">rbp-0x4</span>], <span style="color:#f60">0x5</span>   <span style="color:#0f0">; a = 5
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#ff0">mov</span>    <span style="color:#7fffd4">DWORD</span> <span style="color:#7fffd4">PTR</span> [<span style="color:#7fffd4">rbp-0x8</span>], <span style="color:#f60">0xa</span>   <span style="color:#0f0">; b = 10
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#ff0">mov</span>    <span style="color:#7fffd4">eax</span>, <span style="color:#7fffd4">DWORD</span> <span style="color:#7fffd4">PTR</span> [<span style="color:#7fffd4">rbp-0x4</span>]    <span style="color:#0f0">; EAX = a
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#ff0">add</span>    <span style="color:#7fffd4">eax</span>, <span style="color:#7fffd4">DWORD</span> <span style="color:#7fffd4">PTR</span> [<span style="color:#7fffd4">rbp-0x8</span>]    <span style="color:#0f0">; EAX += b (EAX = 15)
+</span></span></span></code></pre></div><h4 id="monitor-register"><strong>Monitor Register</strong></h4>
+<ul>
+<li>Sebelum <code>add</code>, cek <code>eax</code>:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>(gdb) p <span style="color:#eedd82">$eax</span>   <span style="color:#0f0"># Output: 5</span>
+</span></span></code></pre></div></li>
+<li>Setelah <code>add</code>, cek lagi:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>(gdb) p <span style="color:#eedd82">$eax</span>   <span style="color:#0f0"># Output: 15</span>
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h4 id="3-reverse-engineering-dengan-register"><strong>3. Reverse Engineering dengan Register</strong></h4>
+<ul>
+<li><strong>Memodifikasi RIP/EIP</strong>: Mengubah alur eksekusi program (misal: loncat ke fungsi rahasia).</li>
+<li><strong>Membaca RAX/EAX</strong>: Mendapatkan hasil perhitungan (misal: hasil dekripsi password).</li>
+</ul>
+<p><strong>Contoh Game Hacking</strong>:</p>
+<ol>
+<li>Cari alamat nilai &ldquo;nyawa player&rdquo; di RAM.</li>
+<li>Trace instruksi yang mengubah nilai itu (misal: <code>sub eax, 1</code>).</li>
+<li>Ganti jadi <code>add eax, 100</code> untuk cheat unlimited health!</li>
+</ol>
+<hr>
+<h4 id="4-visualisasi-register"><strong>4. Visualisasi Register</strong></h4>
+<pre tabindex="0"><code>CPU
+┌─────────────┐
+│  RAX = 15   │ ← Hasil a + b
+│  RIP = 0x40 │ ← Alamat instruksi berikutnya
+│  RSP = 0x7f │ ← Alamat stack
+└─────────────┘
+</code></pre><hr>
+<h4 id="5-tools-untuk-analisis-register"><strong>5. Tools untuk Analisis Register</strong></h4>
+<ul>
+<li><strong>Linux</strong>: <code>gdb</code> (dengan <code>info registers</code>).</li>
+<li><strong>Windows</strong>: <code>x64dbg</code>/<code>OllyDbg</code> (tampilan GUI lebih mudah).</li>
+<li><strong>Radare2</strong>:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>r2 -d ./contoh_register
+</span></span><span style="display:flex;"><span>[0x00401050]&gt; dr   <span style="color:#0f0"># Lihat register</span>
+</span></span><span style="display:flex;"><span>[0x00401050]&gt; ds   <span style="color:#0f0"># Step instruksi</span>
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h4 id="kesimpulan"><strong>Kesimpulan</strong></h4>
+<ul>
+<li><strong>Register</strong> adalah &ldquo;tangan&rdquo; CPU untuk memanipulasi data.</li>
+<li><strong>EAX/RAX</strong> dan <strong>EIP/RIP</strong> paling sering dipantau saat RE.</li>
+<li><strong>Latihan</strong>:
+<ol>
+<li>Gunakan <code>gdb</code> untuk modifikasi nilai register (<code>set $eax=100</code>).</li>
+<li>Coba ubah <strong>RIP</strong> untuk loncat ke fungsi lain (advanced).</li>
+</ol>
+</li>
+</ul>
+<p><strong>Tips</strong>:</p>
+<ul>
+<li>Pelajari <strong>assembly dasar</strong> (mov, add, jmp) untuk memahami register.</li>
+<li>Jika bingung, ulangi contoh <code>gdb</code> di atas!</li>
+</ul>
+<p><strong>Next</strong>: Gabungkan konsep CPU, RAM, Disk, dan Register untuk analisis binary lengkap! 🚀</p>
 <hr>
 <h3 id="analog-sederhana-untuk-pemula"><strong>Analog Sederhana untuk Pemula</strong></h3>
 <p>Bayangkan komputer seperti <strong>tukang masak (CPU)</strong> yang:</p>
