@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  
+  <style>
+    body {
+      background-color: #2e2e2e;
+      color: #c7c5c5;;
+      
+      font-family: 'Mono', sans-serif;  
+    }
+
+
+    a {
+      color: #48a874;  
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: darkgray;  
+    }
+
+    a:visited {
+      color: #48a874;  
+    }
+
+    .fa {
+      font-family: "Font Awesome 6 Free", sans-serif;  
+      font-weight: 30px;
+    }
+  </style>
+
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+
+  
+  
+    <meta name="description" content="
+
+
+
+&ldquo;Gw mau belajar PWN / binary exploitation, tapi bingung mulai dari mana!&rdquo;
+Kalimat di atas adalah masalah klasik pemula. Banyak yang langsung nyemplung ke buffer overflow tanpa paham dasar, lalu frustasi dan menyerah.
+Artikel ini beda—kita akan breakdown langkah-langkah konkret, termasuk:
+✔ Apa yang harus dipelajari di setiap tahap?
+✔ Berapa dalam harus menguasainya?
+✔ Kapan bisa lanjut ke tahap selanjutnya?
+✔ Contoh kasus nyata untuk pemula.">
+  
+
+  <title>
+    
+      Belajar Binary Exploitation (PWN) dari Nol - Exploit Development
+    
+  </title>
+
+  
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.79e24f63ac05ef51117de1a7065e5243b91e09c98aab7a3cc4097fb39ce9d40148298c665a62632a4043c5aa8d2c0c8826a711f9d7d46f1af3e37ec3178a2d07.css" integrity="sha512-eeJPY6wF71ERfeGnBl5SQ7keCcmKq3o8xAl/s5zp1AFIKYxmWmJjKkBDxaqNLAyIJqcR&#43;dfUbxrz437DF4otBw==" />
+
+  
+  
+
+  
+    <meta name="description" content="
+
+
+
+&ldquo;Gw mau belajar PWN / binary exploitation, tapi bingung mulai dari mana!&rdquo;
+Kalimat di atas adalah masalah klasik pemula. Banyak yang langsung nyemplung ke buffer overflow tanpa paham dasar, lalu frustasi dan menyerah.
+Artikel ini beda—kita akan breakdown langkah-langkah konkret, termasuk:
+✔ Apa yang harus dipelajari di setiap tahap?
+✔ Berapa dalam harus menguasainya?
+✔ Kapan bisa lanjut ke tahap selanjutnya?
+✔ Contoh kasus nyata untuk pemula.">
+    <meta property="og:description" content="
+
+
+
+&ldquo;Gw mau belajar PWN / binary exploitation, tapi bingung mulai dari mana!&rdquo;
+Kalimat di atas adalah masalah klasik pemula. Banyak yang langsung nyemplung ke buffer overflow tanpa paham dasar, lalu frustasi dan menyerah.
+Artikel ini beda—kita akan breakdown langkah-langkah konkret, termasuk:
+✔ Apa yang harus dipelajari di setiap tahap?
+✔ Berapa dalam harus menguasainya?
+✔ Kapan bisa lanjut ke tahap selanjutnya?
+✔ Contoh kasus nyata untuk pemula.">
+    <meta property="og:image" content="/images/cuteheker.jpeg">
+    <meta name="twitter:image" content="/images/cuteheker.jpeg">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="/posts/about-pwn/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Belajar Binary Exploitation (PWN) dari Nol - Exploit Development">
+  <meta name="twitter:description" content="
+
+
+
+&ldquo;Gw mau belajar PWN / binary exploitation, tapi bingung mulai dari mana!&rdquo;
+Kalimat di atas adalah masalah klasik pemula. Banyak yang langsung nyemplung ke buffer overflow tanpa paham dasar, lalu frustasi dan menyerah.
+Artikel ini beda—kita akan breakdown langkah-langkah konkret, termasuk:
+✔ Apa yang harus dipelajari di setiap tahap?
+✔ Berapa dalam harus menguasainya?
+✔ Kapan bisa lanjut ke tahap selanjutnya?
+✔ Contoh kasus nyata untuk pemula.">
+</head>
+
+
+
+
+
+
+
+
+
+
+
+<body a="black">
+
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">~ $ cd /home</a>
+
+
+<article>
+    <p class="post-meta">
+    </p>
+
+<h1>Belajar Binary Exploitation (PWN) dari Nol - Exploit Development<br><br>
+    <small datetime="2025-08-11 00:00:00 &#43;0000 UTC" style="font-size: 10px; display: inline-flex; align-items: center;">
+        <img src="https://avatars.githubusercontent.com/u/51517043?v=4" alt="GitHub Profile" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover; margin-right: 8px;">
+        2025-08-11 - Rainhynn
+    </small>
+</h1>
+
+    
+
+    
+<img src="/images/cuteheker.jpeg">
+
+
+<!-- raw HTML omitted -->
+<p><strong>&ldquo;Gw mau belajar PWN / binary exploitation, tapi bingung mulai dari mana!&rdquo;</strong></p>
+<p>Kalimat di atas adalah masalah klasik pemula. Banyak yang langsung nyemplung ke buffer overflow tanpa paham dasar, lalu frustasi dan menyerah.</p>
+<p>Artikel ini <strong>beda</strong>—kita akan <strong>breakdown langkah-langkah konkret</strong>, termasuk:<br>
+✔ <strong>Apa yang harus dipelajari di setiap tahap?</strong><br>
+✔ <strong>Berapa dalam harus menguasainya?</strong><br>
+✔ <strong>Kapan bisa lanjut ke tahap selanjutnya?</strong><br>
+✔ <strong>Contoh kasus nyata untuk pemula.</strong></p>
+<p>Tujuannya: <strong>Kamu bisa langsung praktik eksploitasi, bukan sekadar teori!</strong></p>
+<hr>
+<h2 id="-stage-0--mental-model-sebelum-belajar-pwn"><strong>🔥 Stage 0 – Mental Model Sebelum Belajar PWN</strong></h2>
+<p><strong>&ldquo;Kenapa banyak orang gagal sebelum mencoba exploit pertama?&rdquo;</strong><br>
+Karena mereka:<br>
+❌ Langsung loncat ke <strong>heap exploit</strong> tanpa paham stack.<br>
+❌ Tidak tahu <strong>batasan belajar C/ASM</strong> (harus sejauh apa?).<br>
+❌ Tidak punya <strong>contoh eksploitasi sederhana</strong> untuk motivasi.</p>
+<p><strong>Solusinya:</strong></p>
+<ol>
+<li><strong>Jangan langsung belajar semuanya!</strong> PWN itu seperti belajar renang—mulai dari kolam dangkal (stack overflow) dulu.</li>
+<li><strong>Cukup pahami dasar yang relevan</strong> (tidak perlu jadi expert C/ASM dulu).</li>
+<li><strong>Praktik langsung</strong> dengan challenge mudah (lihat <strong>contoh kasus</strong> di bawah).</li>
+</ol>
+<hr>
+<h2 id="-stage-1--dasar-wajib-bukan-teori-sembarangan"><strong>📍 Stage 1 – Dasar Wajib (Bukan Teori Sembarangan!)</strong></h2>
+<p><strong>Tujuan:</strong> Bisa baca kode C &amp; pahami bagaimana program dijalankan di memori.</p>
+<h3 id="1-pemrograman-c-versi-pwn-bukan-sekadar-hello-world"><strong>1. Pemrograman C (Versi PWN, Bukan Sekadar Hello World!)</strong></h3>
+<p><strong>Yang wajib dipahami:</strong></p>
+<ul>
+<li>
+<p><strong>Pointer &amp; Memory</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#ee82ee">int</span> x = <span style="color:#f60">5</span>;  
+</span></span><span style="display:flex;"><span><span style="color:#ee82ee">int</span> *ptr = &amp;x;  <span style="color:#0f0">// ptr menyimpan alamat memori x
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#ff0">printf</span>(<span style="color:#87ceeb">&#34;%p&#34;</span>, ptr); <span style="color:#0f0">// Cetak alamat memori
+</span></span></span></code></pre></div><p><strong>Kenapa ini penting?</strong> Karena exploitasi sering manipulasi alamat memori!</p>
+</li>
+<li>
+<p><strong>Array &amp; Buffer Overflow Sederhana</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#ee82ee">char</span> buf[<span style="color:#f60">10</span>];
+</span></span><span style="display:flex;"><span><span style="color:#ff0">scanf</span>(<span style="color:#87ceeb">&#34;%s&#34;</span>, buf); <span style="color:#0f0">// Apa yang terjadi jika input &gt; 10 karakter?
+</span></span></span></code></pre></div><p><strong>Ini dasar buffer overflow!</strong></p>
+</li>
+<li>
+<p><strong>Fungsi &amp; Stack Frame</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#ee82ee">void</span> <span style="color:#ff0">vuln</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#ee82ee">char</span> buf[<span style="color:#f60">10</span>];
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">gets</span>(buf); <span style="color:#0f0">// Danger! Tidak ada batasan input
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>}
+</span></span></code></pre></div><p><strong>Ini akan dipakai di exploit pertama kamu!</strong></p>
+</li>
+</ul>
+<p>📌 <strong>Berhenti belajar C di sini jika tujuan awal cuma PWN dasar!</strong><br>
+✅ <strong>Udah cukup?</strong> Jika kamu paham contoh di atas, lanjut!<br>
+📚 <strong>Resource:</strong> <a href="https://www.learn-c.org/">C Programming for PWN (Mini Guide)</a></p>
+<hr>
+<h3 id="2-dasar-assembly-x64--hanya-yang-penting-untuk-pwn"><strong>2. Dasar Assembly (x64) – Hanya yang Penting untuk PWN!</strong></h3>
+<p><strong>Jangan belajar semuanya!</strong> Fokus ke:</p>
+<ul>
+<li>
+<p><strong>Register penting:</strong></p>
+<ul>
+<li><code>RIP</code> (Instruction Pointer) → Alamat eksekusi berikutnya.</li>
+<li><code>RSP</code> (Stack Pointer) → Alamat stack.</li>
+<li><code>RAX</code> (Return Value) → Nilai balik fungsi.</li>
+</ul>
+</li>
+<li>
+<p><strong>Instruksi dasar:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span><span style="color:#ff0">mov</span> <span style="color:#7fffd4">rax</span>, <span style="color:#7fffd4">rbx</span>  <span style="color:#0f0">; Salin nilai RBX ke RAX
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#ff0">push</span> <span style="color:#7fffd4">rax</span>      <span style="color:#0f0">; Simpan RAX ke stack
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#ff0">pop</span> <span style="color:#7fffd4">rbx</span>       <span style="color:#0f0">; Ambil nilai dari stack ke RBX
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#ff0">call</span> <span style="color:#7fffd4">func</span>     <span style="color:#0f0">; Panggil fungsi
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#ff0">ret</span>           <span style="color:#0f0">; Kembali dari fungsi
+</span></span></span></code></pre></div></li>
+</ul>
+<p><strong>Kenapa ini cukup?</strong> Karena kebanyakan eksploitasi hanya butuh baca disassembly, bukan nulis ASM dari nol.</p>
+<p>📌 <strong>Udah paham?</strong> Jika bisa baca kode ASM sederhana, lanjut!</p>
+<hr>
+<h3 id="3-memory-layout-program-praktis"><strong>3. Memory Layout Program (Praktis!)</strong></h3>
+<p><strong>Lihat langsung di GDB:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gdb ./program
+</span></span><span style="display:flex;"><span>(gdb) info proc mappings  <span style="color:#0f0"># Liat layout memori program</span>
+</span></span></code></pre></div><p>Contoh output:</p>
+<pre tabindex="0"><code>0x400000 0x401000 r-x (Text Segment, kode program)
+0x7fffffff0000 0x7fffffff1000 rw- (Stack)
+</code></pre><p><strong>Poin penting:</strong></p>
+<ul>
+<li><strong>Stack</strong> → Lokal variabel, return address (target exploitasi).</li>
+<li><strong>Heap</strong> → Memory dinamis (malloc/free).</li>
+<li><strong>Text</strong> → Kode program (biasanya read-only).</li>
+</ul>
+<p>✅ <strong>Kamu siap lanjut jika:</strong></p>
+<ul>
+<li>Bisa baca kode C sederhana.</li>
+<li>Paham konsep stack &amp; buffer overflow.</li>
+<li>Baca ASM dasar (mov, push, call).</li>
+</ul>
+<hr>
+<h2 id="-stage-2--tools--exploit-pertama-langsung-praktik"><strong>📍 Stage 2 – Tools &amp; Exploit Pertama (Langsung Praktik!)</strong></h2>
+<p><strong>Tujuan:</strong> Langsung coba exploit pertama dalam 1 jam!</p>
+<h3 id="1-setup-tools-wajib"><strong>1. Setup Tools Wajib</strong></h3>
+<ul>
+<li><strong>GDB + pwndbg</strong> → Debugging.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt install gdb
+</span></span><span style="display:flex;"><span>git clone https://github.com/pwndbg/pwndbg &amp;&amp; cd pwndbg &amp;&amp; ./setup.sh
+</span></span></code></pre></div></li>
+<li><strong>pwntools</strong> → Library Python untuk exploit.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip install pwntools
+</span></span></code></pre></div></li>
+</ul>
+<h3 id="2-contoh-exploit-pertama-buffer-overflow-sederhana"><strong>2. Contoh Exploit Pertama (Buffer Overflow Sederhana)</strong></h3>
+<p><strong>Program vulnerable (<code>vuln.c</code>):</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;stdio.h&gt;</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span><span style="color:#ee82ee">void</span> <span style="color:#ff0">vuln</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#ee82ee">char</span> buf[<span style="color:#f60">10</span>];
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">gets</span>(buf); <span style="color:#0f0">// Tidak ada batasan input!
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>}
+</span></span><span style="display:flex;"><span><span style="color:#ee82ee">int</span> <span style="color:#ff0">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">vuln</span>();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>Compile:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gcc vuln.c -o vuln -fno-stack-protector -no-pie
+</span></span></code></pre></div><p><strong>Exploit (<code>exploit.py</code>):</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f00">from</span> pwn <span style="color:#f00">import</span> *
+</span></span><span style="display:flex;"><span>p = process(<span style="color:#87ceeb">&#34;./vuln&#34;</span>)
+</span></span><span style="display:flex;"><span>payload = <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;A&#34;</span> * <span style="color:#f60">20</span> + p64(<span style="color:#f60">0xdeadbeef</span>)  <span style="color:#0f0"># Overwrite return address</span>
+</span></span><span style="display:flex;"><span>p.sendline(payload)
+</span></span><span style="display:flex;"><span>p.interactive()
+</span></span></code></pre></div><p><strong>Apa yang terjadi?</strong></p>
+<ol>
+<li>Input <code>&quot;A&quot;*20</code> memenuhi buffer + EBP.</li>
+<li><code>p64(0xdeadbeef)</code> timpa return address.</li>
+<li>Program crash karena mencoba eksekusi di <code>0xdeadbeef</code>.</li>
+</ol>
+<p>📌 <strong>Ini adalah exploit pertama kamu!</strong></p>
+<hr>
+<h2 id="-stage-3--roadmap-lanjutan-setelah-bisa-exploit-sederhana"><strong>📍 Stage 3 – Roadmap Lanjutan (Setelah Bisa Exploit Sederhana)</strong></h2>
+<p>Setelah paham Stage 1 &amp; 2, baru pelajari:</p>
+<h3 id="1-format-string-bug"><strong>1. Format String Bug</strong></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#ff0">printf</span>(user_input); <span style="color:#0f0">// Jika user bisa kontrol input
+</span></span></span></code></pre></div><p><strong>Eksploitasi:</strong></p>
+<ul>
+<li>Baca memori (<code>%x</code>).</li>
+<li>Tulis ke memori (<code>%n</code>).</li>
+</ul>
+<h3 id="2-return-oriented-programming-rop"><strong>2. Return-Oriented Programming (ROP)</strong></h3>
+<ul>
+<li><strong>Konsep:</strong> Gabungkan potongan kode (<code>gadget</code>) untuk bypass NX.</li>
+<li><strong>Contoh:</strong> <code>pop rdi; ret</code> untuk set argument fungsi.</li>
+</ul>
+<h3 id="3-heap-exploitation"><strong>3. Heap Exploitation</strong></h3>
+<ul>
+<li><strong>Pelajari setelah stack lancar!</strong></li>
+<li>Contoh: Use-After-Free (UAF), tcache poisoning.</li>
+</ul>
+<hr>
+<h2 id="-tips-anti-frustasi"><strong>💡 Tips Anti-Frustasi</strong></h2>
+<p>✔ <strong>Jangan belajar semuanya sekaligus!</strong> Fokus 1 vulnerability dulu (stack overflow).<br>
+✔ <strong>Lihat writeup jika stuck</strong> (LiveOverflow, Pwn College).<br>
+✔ <strong>Gunakan cheat sheet</strong> (ctf101.org).</p>
+<p>🚀 <strong>Sekarang kamu punya peta belajar yang jelas! Mulai hari ini dan happy hacking!</strong></p>
+<p><strong>Contoh challenge pemula:</strong></p>
+<ul>
+<li><a href="https://picoctf.org/">picoCTF</a> (cari &ldquo;buffer overflow&rdquo;).</li>
+<li><a href="https://exploit-exercises.com/protostar/">Protostar (Stack)</a>.</li>
+</ul>
+
+</article>
+
+<hr>
+
+<p>© 2021-2025 HnvDie</p>
+<p>Powered By Hugo ᯓᡣ𐭩</p>
+
+
+
+            </div>
+        </main>
+    </body></html>

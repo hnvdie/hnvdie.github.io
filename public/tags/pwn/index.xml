@@ -6,8 +6,15 @@
     <description>Recent content in Pwn on </description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 16 Jul 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 11 Aug 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="/tags/pwn/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Belajar Binary Exploitation (PWN) dari Nol - Exploit Development</title>
+      <link>/posts/about-pwn/</link>
+      <pubDate>Mon, 11 Aug 2025 00:00:00 +0000</pubDate>
+      <guid>/posts/about-pwn/</guid>
+      <description>&lt;img src=&#34;/images/cuteheker.jpeg&#34;&gt;&#xA;&#xA;&#xA;&lt;!-- raw HTML omitted --&gt;&#xA;&lt;p&gt;&lt;strong&gt;&amp;ldquo;Gw mau belajar PWN / binary exploitation, tapi bingung mulai dari mana!&amp;rdquo;&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;Kalimat di atas adalah masalah klasik pemula. Banyak yang langsung nyemplung ke buffer overflow tanpa paham dasar, lalu frustasi dan menyerah.&lt;/p&gt;&#xA;&lt;p&gt;Artikel ini &lt;strong&gt;beda&lt;/strong&gt;—kita akan &lt;strong&gt;breakdown langkah-langkah konkret&lt;/strong&gt;, termasuk:&lt;br&gt;&#xA;✔ &lt;strong&gt;Apa yang harus dipelajari di setiap tahap?&lt;/strong&gt;&lt;br&gt;&#xA;✔ &lt;strong&gt;Berapa dalam harus menguasainya?&lt;/strong&gt;&lt;br&gt;&#xA;✔ &lt;strong&gt;Kapan bisa lanjut ke tahap selanjutnya?&lt;/strong&gt;&lt;br&gt;&#xA;✔ &lt;strong&gt;Contoh kasus nyata untuk pemula.&lt;/strong&gt;&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Apa itu CPU, memory, disk, register dalam reverse engineering (RE)</title>
       <link>/posts/reverse-engineering-01/</link>
