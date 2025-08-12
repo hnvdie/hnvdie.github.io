@@ -4,8 +4,10 @@ date: 2025-08-11
 thumb: /images/cuteheker.jpeg
 tags: ["Pwn"]
 ---
+
+
 {{< raw >}}
-<img src="/images/cuteheker.jpeg">
+<img src="https://ibb.co.com/FqgzqDDZ"><img src="https://i.ibb.co.com/x8J68779/images-1.jpg">
 {{< /raw >}}
 
 <br>
