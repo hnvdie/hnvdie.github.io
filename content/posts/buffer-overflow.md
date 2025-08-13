@@ -19,7 +19,8 @@ Untuk menguasai binary exploitation modern, diperlukan pemahaman mendalam tentan
 2. **Arsitektur Komputer** (register, stack, heap, memory management)
 3. **Fundamental Binary Exploitation** (buffer overflow, ROP, format string)
 
-Bagi yang belum familiar dengan Assembly dan arsitektur komputer, sangat disarankan untuk mempelajari modul **"Intro to Assembly Language"** terlebih dahulu. Sedangkan untuk praktik dasar buffer overflow di Linux, modul **"Stack-Based Buffer Overflows on Linux x86"** menyediakan landasan yang baik.
+Bagi yang belum familiar dengan Assembly dan arsitektur komputer, sangat disarankan untuk mempelajari Artikel **[Bahasa Assembly](https://hnvdie.github.io/posts/assembly-language/).** terlebih dahulu. Sedangkan untuk praktik dasar buffer overflow di Linux, modul **"Tentang Binary Exploitation dan Buffer Overflow"** menyediakan landasan yang baik.
+
 
 ---
 
