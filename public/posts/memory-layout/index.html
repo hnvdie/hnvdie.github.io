@@ -60,7 +60,7 @@ Stack adalah struktur data LIFO (Last In, First Out) yang digunakan untuk menyim
   
   
   
-  <link rel="stylesheet" href="/css/main.79e24f63ac05ef51117de1a7065e5243b91e09c98aab7a3cc4097fb39ce9d40148298c665a62632a4043c5aa8d2c0c8826a711f9d7d46f1af3e37ec3178a2d07.css" integrity="sha512-eeJPY6wF71ERfeGnBl5SQ7keCcmKq3o8xAl/s5zp1AFIKYxmWmJjKkBDxaqNLAyIJqcR&#43;dfUbxrz437DF4otBw==" />
+  <link rel="stylesheet" href="/css/main.4b550348a06e41cd2fba1e1b4d6c5f337b2e882272420967996967c3baf38431563db8a42628c2eaecddc97c9cc0103749db58a82a4cfb5c1361495dd9dd57b0.css" integrity="sha512-S1UDSKBuQc0vuh4bTWxfM3suiCJyQglnmWlnw7rzhDFWPbikJijC6uzdyXycwBA3SdtYqCpM&#43;1wTYUld2d1XsA==" />
 
   
   
@@ -178,10 +178,10 @@ RSP → posisi terendah frame sekarang
 <hr>
 <h2 id="2-contoh-nyata-dengan"><strong>2. Contoh Nyata dengan <code>pwndbg</code></strong></h2>
 <p>Misal kita memiliki kode assembly:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span><span style="color:#ff0">push</span>   <span style="color:#7fffd4">rbp</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff0">mov</span>    <span style="color:#7fffd4">rbp</span>, <span style="color:#7fffd4">rsp</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff0">sub</span>    <span style="color:#7fffd4">rsp</span>, <span style="color:#f60">0x20</span>
-</span></span></code></pre></div><h3 id="nilai-register-sebelum--sesudah"><strong>Nilai Register Sebelum &amp; Sesudah <code>sub rsp, 0x20</code></strong></h3>
+<pre tabindex="0"><code>push   rbp
+mov    rbp, rsp
+sub    rsp, 0x20
+</code></pre><h3 id="nilai-register-sebelum--sesudah"><strong>Nilai Register Sebelum &amp; Sesudah <code>sub rsp, 0x20</code></strong></h3>
 <table>
   <thead>
       <tr>
@@ -236,9 +236,9 @@ RSP → posisi terendah frame sekarang
 Lower Address
 </code></pre><h3 id="mekanisme-return-dari-fungsi"><strong>Mekanisme Return dari Fungsi</strong></h3>
 <p>Saat fungsi selesai, instruksi <code>leave</code> dan <code>ret</code> bekerja:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span><span style="color:#ff0">leave</span>      <span style="color:#0f0">; setara dengan: mov rsp, rbp; pop rbp
-</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#ff0">ret</span>        <span style="color:#0f0">; pop return address dan jump ke sana
-</span></span></span></code></pre></div><ul>
+<pre tabindex="0"><code>leave      ; setara dengan: mov rsp, rbp; pop rbp
+ret        ; pop return address dan jump ke sana
+</code></pre><ul>
 <li><strong><code>leave</code></strong> mengembalikan <code>RSP</code> dan <code>RBP</code> ke keadaan semula.</li>
 <li><strong><code>ret</code></strong> kembali ke caller menggunakan return address.</li>
 </ul>

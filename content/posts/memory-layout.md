@@ -76,7 +76,7 @@ RSP → posisi terendah frame sekarang
 
 ## **2. Contoh Nyata dengan `pwndbg`**
 Misal kita memiliki kode assembly:
-```asm
+```
 push   rbp
 mov    rbp, rsp
 sub    rsp, 0x20
@@ -129,7 +129,7 @@ Lower Address
 
 ### **Mekanisme Return dari Fungsi**
 Saat fungsi selesai, instruksi `leave` dan `ret` bekerja:
-```asm
+```
 leave      ; setara dengan: mov rsp, rbp; pop rbp
 ret        ; pop return address dan jump ke sana
 ```

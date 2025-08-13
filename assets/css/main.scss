@@ -1,79 +1,14 @@
-// -------------- THEME SWITCHER -------------- //
-@mixin theme($--bg-color, $--primary-text-color, $--secondary-text-color, $--link-color, $--visited-link-color, $--highlight) {
-  background-color: $--bg-color;
-
-  color: $--primary-text-color;
-
-  a {
-    color: $--link-color;
-    text-decoration: none;
-    &:visited { color: $--visited-link-color; }
-    &:hover { text-decoration: underline; }
-  }
-
-  details {
-    border: thin solid $--primary-text-color;
-    padding: 1rem;
-  }
-
-  details summary {
-    color: $--primary-text-color;
-    text-decoration: none;
-  }
-
-  code:not(pre > code) {
-    background-color: $--primary-text-color;
-    color: $--bg-color;
-  }
-
-  *:target {
-    background: $--highlight;
-    color: $--primary-text-color;
-   }
-
-   table, th, td {
-     border: thin solid $--primary-text-color;
-
-   }
-  .toc {
-    border: thin solid $--primary-text-color;
-    padding: 1rem;
-  }
-
-  figcaption { color: $--secondary-text-color; }
-}
-
-
-@mixin dark-appearance {
-  @include theme(#212121, #fafafa, #000000, #0071bc, #a359e9, #FFFF00);
-}
-
-@mixin light-appearance {
-  @include theme(#ffffff, #212121, #666666, #1e70bf, #921292, #FFFF00);
-}
-
-body[a="dark"] { @include dark-appearance; }
-body[a="light"] { @include light-appearance; }
-
-@media (prefers-color-scheme: dark) {
-  body[a="auto"] { @include dark-appearance; }
-}
-
-@media (prefers-color-scheme: light) {
-  body[a="auto"] { @include light-appearance; }
-}
-
-// -------------------------------------------- //
 
 html { height: 100%; }
 
 body {
   font-family: monospace;
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.4;
   margin: 0;
   min-height: 100%;
   overflow-wrap: break-word;
+  background-color: #171717;
 }
 
 .post-meta { text-align: right; }
@@ -105,8 +40,9 @@ hr {
 }
 
 pre {
-  background: transparent;
+  background: #1F1F1F;
   padding: 1em;
+  border-radius: 0.7em;
   overflow-x: auto; /* Fix pre content overflowing parent without scroll bar */
 }
 
