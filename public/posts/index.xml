@@ -9,6 +9,13 @@
     <lastBuildDate>Mon, 11 Aug 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Belajar Bahasa Assembly (x86/x64, Termasuk 32bit)</title>
+      <link>/posts/assembly-language/</link>
+      <pubDate>Mon, 11 Aug 2025 00:00:00 +0000</pubDate>
+      <guid>/posts/assembly-language/</guid>
+      <description>&lt;h3 id=&#34;1-apa-itu-bahasa-assembly&#34;&gt;1. Apa itu Bahasa Assembly?&lt;/h3&gt;&#xA;&lt;p&gt;Bahasa Assembly adalah bahasa pemrograman tingkat rendah yang berhubungan langsung dengan instruksi CPU.&lt;/p&gt;&#xA;&lt;p&gt;Bahasa ini tidak abstrak seperti Python atau C; setiap instruksi berhubungan langsung dengan operasi hardware.&lt;/p&gt;&#xA;&lt;p&gt;Setiap baris kode Assembly diterjemahkan oleh assembler menjadi opcode biner yang dipahami CPU.&lt;/p&gt;&#xA;&lt;p&gt;Kenapa belajar Assembly?&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Memahami cara kerja komputer di level paling dasar.&lt;/li&gt;&#xA;&lt;li&gt;Berguna untuk reverse engineering, optimisasi performa, dan pemrograman embedded.&lt;/li&gt;&#xA;&lt;li&gt;Membantu memahami sistem operasi, compiler, dan arsitektur CPU.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;&#xA;&lt;h3 id=&#34;2-arsitektur-x86-vs-x64&#34;&gt;2. Arsitektur x86 vs x64&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;x86&lt;/strong&gt; → Arsitektur 32-bit (register umum: EAX, EBX, ECX, EDX, ESI, EDI, ESP, EBP).&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;x64&lt;/strong&gt; → Arsitektur 64-bit (register umum lebih banyak: RAX, RBX, RCX, RDX, RSI, RDI, RSP, RBP, + R8-R15).&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;32-bit vs 64-bit&lt;/strong&gt; → Perbedaan utamanya:&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Ukuran register (32-bit vs 64-bit)&lt;/li&gt;&#xA;&lt;li&gt;Panjang pointer (alamat memori)&lt;/li&gt;&#xA;&lt;li&gt;Instruksi tambahan di x64&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;&#xA;&lt;h3 id=&#34;3-memahami-register-cpu&#34;&gt;3. Memahami Register CPU&lt;/h3&gt;&#xA;&lt;p&gt;Register adalah ruang penyimpanan kecil di dalam CPU untuk operasi cepat.&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>Tentang Binary Exploitation dan Buffer Overflow - pwn01</title>
       <link>/posts/buffer-overflow/</link>
       <pubDate>Mon, 11 Aug 2025 00:00:00 +0000</pubDate>

@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  
+  <style>
+    body {
+      background-color: #2e2e2e;
+      color: #c7c5c5;;
+      
+      font-family: 'Mono', sans-serif;  
+    }
+
+
+    a {
+      color: #48a874;  
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: darkgray;  
+    }
+
+    a:visited {
+      color: #48a874;  
+    }
+
+    .fa {
+      font-family: "Font Awesome 6 Free", sans-serif;  
+      font-weight: 30px;
+    }
+  </style>
+
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+
+  
+  
+    <meta name="description" content="1. Apa itu Bahasa Assembly?
+Bahasa Assembly adalah bahasa pemrograman tingkat rendah yang berhubungan langsung dengan instruksi CPU.
+Bahasa ini tidak abstrak seperti Python atau C; setiap instruksi berhubungan langsung dengan operasi hardware.
+Setiap baris kode Assembly diterjemahkan oleh assembler menjadi opcode biner yang dipahami CPU.
+Kenapa belajar Assembly?
+
+Memahami cara kerja komputer di level paling dasar.
+Berguna untuk reverse engineering, optimisasi performa, dan pemrograman embedded.
+Membantu memahami sistem operasi, compiler, dan arsitektur CPU.
+
+
+2. Arsitektur x86 vs x64
+
+x86 → Arsitektur 32-bit (register umum: EAX, EBX, ECX, EDX, ESI, EDI, ESP, EBP).
+x64 → Arsitektur 64-bit (register umum lebih banyak: RAX, RBX, RCX, RDX, RSI, RDI, RSP, RBP, &#43; R8-R15).
+32-bit vs 64-bit → Perbedaan utamanya:
+
+Ukuran register (32-bit vs 64-bit)
+Panjang pointer (alamat memori)
+Instruksi tambahan di x64
+
+
+
+
+3. Memahami Register CPU
+Register adalah ruang penyimpanan kecil di dalam CPU untuk operasi cepat.">
+  
+
+  <title>
+    
+      Belajar Bahasa Assembly (x86/x64, Termasuk 32bit)
+    
+  </title>
+
+  
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.79e24f63ac05ef51117de1a7065e5243b91e09c98aab7a3cc4097fb39ce9d40148298c665a62632a4043c5aa8d2c0c8826a711f9d7d46f1af3e37ec3178a2d07.css" integrity="sha512-eeJPY6wF71ERfeGnBl5SQ7keCcmKq3o8xAl/s5zp1AFIKYxmWmJjKkBDxaqNLAyIJqcR&#43;dfUbxrz437DF4otBw==" />
+
+  
+  
+
+  
+    <meta name="description" content="1. Apa itu Bahasa Assembly?
+Bahasa Assembly adalah bahasa pemrograman tingkat rendah yang berhubungan langsung dengan instruksi CPU.
+Bahasa ini tidak abstrak seperti Python atau C; setiap instruksi berhubungan langsung dengan operasi hardware.
+Setiap baris kode Assembly diterjemahkan oleh assembler menjadi opcode biner yang dipahami CPU.
+Kenapa belajar Assembly?
+
+Memahami cara kerja komputer di level paling dasar.
+Berguna untuk reverse engineering, optimisasi performa, dan pemrograman embedded.
+Membantu memahami sistem operasi, compiler, dan arsitektur CPU.
+
+
+2. Arsitektur x86 vs x64
+
+x86 → Arsitektur 32-bit (register umum: EAX, EBX, ECX, EDX, ESI, EDI, ESP, EBP).
+x64 → Arsitektur 64-bit (register umum lebih banyak: RAX, RBX, RCX, RDX, RSI, RDI, RSP, RBP, &#43; R8-R15).
+32-bit vs 64-bit → Perbedaan utamanya:
+
+Ukuran register (32-bit vs 64-bit)
+Panjang pointer (alamat memori)
+Instruksi tambahan di x64
+
+
+
+
+3. Memahami Register CPU
+Register adalah ruang penyimpanan kecil di dalam CPU untuk operasi cepat.">
+    <meta property="og:description" content="1. Apa itu Bahasa Assembly?
+Bahasa Assembly adalah bahasa pemrograman tingkat rendah yang berhubungan langsung dengan instruksi CPU.
+Bahasa ini tidak abstrak seperti Python atau C; setiap instruksi berhubungan langsung dengan operasi hardware.
+Setiap baris kode Assembly diterjemahkan oleh assembler menjadi opcode biner yang dipahami CPU.
+Kenapa belajar Assembly?
+
+Memahami cara kerja komputer di level paling dasar.
+Berguna untuk reverse engineering, optimisasi performa, dan pemrograman embedded.
+Membantu memahami sistem operasi, compiler, dan arsitektur CPU.
+
+
+2. Arsitektur x86 vs x64
+
+x86 → Arsitektur 32-bit (register umum: EAX, EBX, ECX, EDX, ESI, EDI, ESP, EBP).
+x64 → Arsitektur 64-bit (register umum lebih banyak: RAX, RBX, RCX, RDX, RSI, RDI, RSP, RBP, &#43; R8-R15).
+32-bit vs 64-bit → Perbedaan utamanya:
+
+Ukuran register (32-bit vs 64-bit)
+Panjang pointer (alamat memori)
+Instruksi tambahan di x64
+
+
+
+
+3. Memahami Register CPU
+Register adalah ruang penyimpanan kecil di dalam CPU untuk operasi cepat.">
+    <meta property="og:image" content="/images/cuteheker.jpeg">
+    <meta name="twitter:image" content="/images/cuteheker.jpeg">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="/posts/assembly-language/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Belajar Bahasa Assembly (x86/x64, Termasuk 32bit)">
+  <meta name="twitter:description" content="1. Apa itu Bahasa Assembly?
+Bahasa Assembly adalah bahasa pemrograman tingkat rendah yang berhubungan langsung dengan instruksi CPU.
+Bahasa ini tidak abstrak seperti Python atau C; setiap instruksi berhubungan langsung dengan operasi hardware.
+Setiap baris kode Assembly diterjemahkan oleh assembler menjadi opcode biner yang dipahami CPU.
+Kenapa belajar Assembly?
+
+Memahami cara kerja komputer di level paling dasar.
+Berguna untuk reverse engineering, optimisasi performa, dan pemrograman embedded.
+Membantu memahami sistem operasi, compiler, dan arsitektur CPU.
+
+
+2. Arsitektur x86 vs x64
+
+x86 → Arsitektur 32-bit (register umum: EAX, EBX, ECX, EDX, ESI, EDI, ESP, EBP).
+x64 → Arsitektur 64-bit (register umum lebih banyak: RAX, RBX, RCX, RDX, RSI, RDI, RSP, RBP, &#43; R8-R15).
+32-bit vs 64-bit → Perbedaan utamanya:
+
+Ukuran register (32-bit vs 64-bit)
+Panjang pointer (alamat memori)
+Instruksi tambahan di x64
+
+
+
+
+3. Memahami Register CPU
+Register adalah ruang penyimpanan kecil di dalam CPU untuk operasi cepat.">
+</head>
+
+
+
+
+
+
+
+
+
+
+
+<body a="black">
+
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">~ $ cd /home</a>
+
+
+<article>
+    <p class="post-meta">
+    </p>
+
+<h1>Belajar Bahasa Assembly (x86/x64, Termasuk 32bit)<br><br>
+    <small datetime="2025-08-11 00:00:00 &#43;0000 UTC" style="font-size: 10px; display: inline-flex; align-items: center;">
+        <img src="https://avatars.githubusercontent.com/u/51517043?v=4" alt="GitHub Profile" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover; margin-right: 8px;">
+        2025-08-11 - Rainhynn
+    </small>
+</h1>
+
+    
+
+    <h3 id="1-apa-itu-bahasa-assembly">1. Apa itu Bahasa Assembly?</h3>
+<p>Bahasa Assembly adalah bahasa pemrograman tingkat rendah yang berhubungan langsung dengan instruksi CPU.</p>
+<p>Bahasa ini tidak abstrak seperti Python atau C; setiap instruksi berhubungan langsung dengan operasi hardware.</p>
+<p>Setiap baris kode Assembly diterjemahkan oleh assembler menjadi opcode biner yang dipahami CPU.</p>
+<p>Kenapa belajar Assembly?</p>
+<ul>
+<li>Memahami cara kerja komputer di level paling dasar.</li>
+<li>Berguna untuk reverse engineering, optimisasi performa, dan pemrograman embedded.</li>
+<li>Membantu memahami sistem operasi, compiler, dan arsitektur CPU.</li>
+</ul>
+<hr>
+<h3 id="2-arsitektur-x86-vs-x64">2. Arsitektur x86 vs x64</h3>
+<ul>
+<li><strong>x86</strong> → Arsitektur 32-bit (register umum: EAX, EBX, ECX, EDX, ESI, EDI, ESP, EBP).</li>
+<li><strong>x64</strong> → Arsitektur 64-bit (register umum lebih banyak: RAX, RBX, RCX, RDX, RSI, RDI, RSP, RBP, + R8-R15).</li>
+<li><strong>32-bit vs 64-bit</strong> → Perbedaan utamanya:
+<ul>
+<li>Ukuran register (32-bit vs 64-bit)</li>
+<li>Panjang pointer (alamat memori)</li>
+<li>Instruksi tambahan di x64</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="3-memahami-register-cpu">3. Memahami Register CPU</h3>
+<p>Register adalah ruang penyimpanan kecil di dalam CPU untuk operasi cepat.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Register</th>
+          <th>Ukuran</th>
+          <th>Fungsi Utama</th>
+          <th>Catatan</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>EAX / RAX</td>
+          <td>32 / 64-bit</td>
+          <td>Accumulator (operasi aritmatika)</td>
+          <td>AL = 8-bit rendah</td>
+      </tr>
+      <tr>
+          <td>EBX / RBX</td>
+          <td>32 / 64-bit</td>
+          <td>Base register</td>
+          <td>BL = 8-bit rendah</td>
+      </tr>
+      <tr>
+          <td>ECX / RCX</td>
+          <td>32 / 64-bit</td>
+          <td>Counter untuk loop</td>
+          <td>CL = 8-bit rendah</td>
+      </tr>
+      <tr>
+          <td>EDX / RDX</td>
+          <td>32 / 64-bit</td>
+          <td>Data register (I/O, multiplikasi)</td>
+          <td>DL = 8-bit rendah</td>
+      </tr>
+      <tr>
+          <td>ESI / RSI</td>
+          <td>32 / 64-bit</td>
+          <td>Source Index (string/memory ops)</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>EDI / RDI</td>
+          <td>32 / 64-bit</td>
+          <td>Destination Index</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>ESP / RSP</td>
+          <td>32 / 64-bit</td>
+          <td>Stack Pointer</td>
+          <td>Menunjuk puncak stack</td>
+      </tr>
+      <tr>
+          <td>EBP / RBP</td>
+          <td>32 / 64-bit</td>
+          <td>Base Pointer</td>
+          <td>Menunjuk frame stack fungsi</td>
+      </tr>
+  </tbody>
+</table>
+<p>Tips mengingat:
+EAX untuk hasil operasi, EBX buat backup, ECX untuk hitungan, EDX untuk data tambahan.</p>
+<hr>
+<h3 id="4-struktur-program-assembly-dasar">4. Struktur Program Assembly Dasar</h3>
+<p>Kita akan pakai NASM (Netwide Assembler) sebagai contoh.</p>
+<p>Contoh program &ldquo;Hello World&rdquo; 32-bit di Linux:</p>
+<pre tabindex="0"><code class="language-assembly" data-lang="assembly">section .data
+    msg db &#34;Hello, World!&#34;, 0xA ; string + newline
+    len equ $ - msg             ; panjang string
+
+section .text
+    global _start
+
+_start:
+    ; syscall write(fd=1, buf=msg, count=len)
+    mov eax, 4      ; nomor syscall (write)
+    mov ebx, 1      ; file descriptor (stdout)
+    mov ecx, msg    ; alamat buffer
+    mov edx, len    ; panjang buffer
+    int 0x80        ; interrupt ke kernel
+
+    ; syscall exit(status=0)
+    mov eax, 1
+    xor ebx, ebx    ; status 0
+    int 0x80
+</code></pre><p>Penjelasan baris demi baris:</p>
+<ol>
+<li><code>section .data</code> → Bagian data statis (string, angka).</li>
+<li><code>msg db &quot;Hello, World!&quot;, 0xA</code> → Definisikan string + newline (0xA).</li>
+<li><code>len equ $ - msg</code> → Hitung panjang string secara otomatis.</li>
+<li><code>section .text</code> → Bagian kode program.</li>
+<li><code>global _start</code> → Entry point program.</li>
+<li><code>mov eax, 4</code> → Syscall nomor 4 = write.</li>
+<li><code>mov ebx, 1</code> → File descriptor 1 = stdout.</li>
+<li><code>mov ecx, msg</code> → Alamat buffer string.</li>
+<li><code>mov edx, len</code> → Panjang string.</li>
+<li><code>int 0x80</code> → Panggil kernel.</li>
+<li><code>mov eax, 1</code> → Syscall exit.</li>
+<li><code>xor ebx, ebx</code> → Set ebx = 0.</li>
+<li><code>int 0x80</code> → Keluar program.</li>
+</ol>
+<hr>
+<h3 id="5-instruksi-dasar">5. Instruksi Dasar</h3>
+<h4 id="51-mov">5.1 mov</h4>
+<p>Menyalin data dari sumber ke tujuan.</p>
+<pre tabindex="0"><code class="language-assembly" data-lang="assembly">mov eax, 5     ; eax = 5
+mov ebx, eax   ; ebx = eax
+</code></pre><h4 id="52-add-sub-inc-dec">5.2 add, sub, inc, dec</h4>
+<pre tabindex="0"><code class="language-assembly" data-lang="assembly">add eax, 10    ; eax = eax + 10
+sub ebx, 2     ; ebx = ebx - 2
+inc ecx        ; ecx = ecx + 1
+dec edx        ; edx = edx - 1
+</code></pre><h4 id="53-mul-dan-div">5.3 mul dan div</h4>
+<pre tabindex="0"><code class="language-assembly" data-lang="assembly">mov eax, 5
+mov ebx, 3
+mul ebx        ; EAX = EAX * EBX
+</code></pre><h4 id="54-push--pop">5.4 push &amp; pop</h4>
+<p>Digunakan untuk stack.</p>
+<pre tabindex="0"><code class="language-assembly" data-lang="assembly">push eax
+pop ebx
+</code></pre><hr>
+<h3 id="6-menggunakan-stack--fungsi">6. Menggunakan Stack &amp; Fungsi</h3>
+<p>Contoh memanggil fungsi:</p>
+<pre tabindex="0"><code class="language-assembly" data-lang="assembly">section .text
+global _start
+
+_start:
+    push 5
+    push 3
+    call tambah
+    add esp, 8  ; bersihkan argumen
+    mov ebx, eax
+    mov eax, 1
+    int 0x80
+
+tambah:
+    mov eax, [esp+4] ; argumen pertama
+    add eax, [esp+8] ; argumen kedua
+    ret
+</code></pre><hr>
+<h3 id="7-mode-32-bit-vs-64-bit-dalam-praktik">7. Mode 32-bit vs 64-bit dalam Praktik</h3>
+<p>Di 64-bit Linux, sistem call menggunakan register berbeda (bukan int 0x80):</p>
+<pre tabindex="0"><code class="language-assembly" data-lang="assembly">mov rax, 1      ; nomor syscall write
+mov rdi, 1      ; fd
+mov rsi, msg    ; buffer
+mov rdx, len    ; panjang
+syscall
+</code></pre><hr>
+<h3 id="8-tips-memahami-assembly-lebih-cepat">8. Tips Memahami Assembly Lebih Cepat</h3>
+<ul>
+<li>Gunakan disassembler seperti <code>objdump -d</code> untuk melihat assembly dari program C.</li>
+<li>Latihan konversi kode C → Assembly.</li>
+<li>Eksperimen di emulator seperti DOSBox atau QEMU.</li>
+</ul>
+<hr>
+<h3 id="9-loop-dan-control-flow-lanjutan">9. Loop dan Control Flow Lanjutan</h3>
+<p>Di Assembly, loop biasanya memanfaatkan register sebagai counter dan jump instructions.</p>
+<h4 id="91-loop-dengan-loop">9.1 Loop dengan loop</h4>
+<pre tabindex="0"><code class="language-assembly" data-lang="assembly">section .text
+global _start
+
+_start:
+    mov ecx, 5       ; jumlah perulangan
+print_loop:
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, msg
+    mov edx, len
+    int 0x80
+
+    loop print_loop  ; ECX -= 1, lompat kalau != 0
+
+    mov eax, 1
+    xor ebx, ebx
+    int 0x80
+
+section .data
+msg db &#34;Halo!&#34;, 0xA
+len equ $ - msg
+</code></pre><h4 id="92-conditional-jumps">9.2 Conditional Jumps</h4>
+<p>Instruksi seperti:</p>
+<ul>
+<li><code>je</code> → lompat jika equal (ZF=1)</li>
+<li><code>jne</code> → lompat jika tidak equal</li>
+<li><code>jg / jge / jl / jle</code> → lompat berdasarkan perbandingan signed</li>
+<li><code>ja / jb</code> → untuk unsigned</li>
+</ul>
+<p>Contoh:</p>
+<pre tabindex="0"><code class="language-assembly" data-lang="assembly">cmp eax, ebx
+je sama
+jmp selesai
+
+sama:
+    ; kode jika sama
+
+selesai:
+</code></pre><hr>
+<h3 id="10-manipulasi-bit">10. Manipulasi Bit</h3>
+<p>Manipulasi bit sering digunakan di optimisasi dan low-level hardware control.</p>
+<p>Instruksi umum:</p>
+<pre tabindex="0"><code class="language-assembly" data-lang="assembly">and eax, 0xFF     ; ambil byte rendah
+or eax, 0x100     ; set bit ke-8
+xor eax, eax      ; reset ke 0
+shl eax, 1        ; geser kiri (x2)
+shr eax, 1        ; geser kanan (÷2)
+</code></pre><p>Contoh cek bit ke-n:</p>
+<pre tabindex="0"><code class="language-assembly" data-lang="assembly">mov eax, value
+bt eax, 5      ; cek bit ke-5
+jc bit_set     ; lompat kalau bit 5 = 1
+</code></pre><hr>
+<h3 id="11-interrupt-handler--system-calls">11. Interrupt Handler &amp; System Calls</h3>
+<h4 id="111-int-0x80-linux-32-bit">11.1 int 0x80 (Linux 32-bit)</h4>
+<p>Kita sudah lihat di part 1, intinya:</p>
+<ul>
+<li><code>eax</code> → nomor syscall</li>
+<li><code>ebx, ecx, edx</code> → argumen</li>
+</ul>
+<h4 id="112-syscall-linux-64-bit">11.2 syscall (Linux 64-bit)</h4>
+<p>Di 64-bit:</p>
+<ul>
+<li><code>rax</code> → nomor syscall</li>
+<li><code>rdi, rsi, rdx, r10, r8, r9</code> → argumen</li>
+</ul>
+<p>Contoh write di 64-bit:</p>
+<pre tabindex="0"><code class="language-assembly" data-lang="assembly">mov rax, 1      ; write
+mov rdi, 1      ; stdout
+mov rsi, msg
+mov rdx, len
+syscall
+</code></pre><hr>
+<h3 id="12-simd-sse--avx">12. SIMD: SSE &amp; AVX</h3>
+<p>SIMD (Single Instruction Multiple Data) memungkinkan memproses banyak data sekaligus.
+SSE menggunakan register XMM (128-bit), AVX menggunakan YMM (256-bit).</p>
+<p>Contoh menambahkan 4 angka float sekaligus dengan SSE:</p>
+<pre tabindex="0"><code class="language-assembly" data-lang="assembly">movaps xmm0, [a]   ; load 4 float dari array a
+movaps xmm1, [b]   ; load 4 float dari array b
+addps xmm0, xmm1   ; xmm0 = xmm0 + xmm1
+movaps [result], xmm0
+</code></pre><hr>
+<h3 id="13-debugging-assembly-dengan-gdb">13. Debugging Assembly dengan GDB</h3>
+<h4 id="131-compile-tanpa-optimisasi">13.1 Compile tanpa optimisasi</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nasm -f elf32 program.asm -o program.o
+</span></span><span style="display:flex;"><span>ld -m elf_i386 program.o -o program
+</span></span></code></pre></div><h4 id="132-jalankan-gdb">13.2 Jalankan GDB</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gdb ./program
+</span></span></code></pre></div><h4 id="133-perintah-penting">13.3 Perintah Penting</h4>
+<ul>
+<li><code>layout asm</code> → tampilkan assembly</li>
+<li><code>break _start</code> → pasang breakpoint</li>
+<li><code>stepi</code> → jalankan 1 instruksi</li>
+<li><code>info registers</code> → lihat isi register</li>
+<li><code>x/10xb $ecx</code> → lihat isi memori</li>
+</ul>
+<p>Contoh:</p>
+<pre tabindex="0"><code class="language-gdb" data-lang="gdb">(gdb) break _start
+(gdb) run
+(gdb) info registers
+(gdb) stepi
+</code></pre><p>Kita bisa lihat bagaimana eax, ecx, edx berubah setiap instruksi berjalan.</p>
+<hr>
+<h3 id="14-optimisasi-kode-assembly">14. Optimisasi Kode Assembly</h3>
+<h4 id="141-menghindari-instruksi-lambat">14.1 Menghindari Instruksi Lambat</h4>
+<p>Gunakan lea (Load Effective Address) untuk kalkulasi sederhana tanpa memori:</p>
+<pre tabindex="0"><code class="language-assembly" data-lang="assembly">lea eax, [ebx + ecx*4]
+</code></pre><p>lebih cepat daripada mov + add berulang.</p>
+<h4 id="142-loop-unrolling">14.2 Loop Unrolling</h4>
+<p>Alih-alih loop n kali, kita proses beberapa item per iterasi untuk mengurangi overhead jump.</p>
+<hr>
+<h3 id="15-tips-mahir-assembly">15. Tips Mahir Assembly</h3>
+<ol>
+<li>Selalu cek manual CPU (Intel/AMD) untuk detail instruksi.</li>
+<li>Latihan dengan C → disassembly untuk memahami mapping instruksi.</li>
+<li>Gunakan simulator online seperti <a href="https://www.tutorialspoint.com/compile_assembly_online.php">https://www.tutorialspoint.com/compile_assembly_online.php</a>.</li>
+</ol>
+
+</article>
+
+<hr>
+
+<p>© 2021-2025 HnvDie</p>
+<p>Powered By Hugo ᯓᡣ𐭩</p>
+
+
+
+            </div>
+        </main>
+    </body></html>
