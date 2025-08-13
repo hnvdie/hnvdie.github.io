@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  
+  <style>
+    body {
+      background-color: #2e2e2e;
+      color: #c7c5c5;;
+      
+      font-family: 'Mono', sans-serif;  
+    }
+
+
+    a {
+      color: #48a874;  
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: darkgray;  
+    }
+
+    a:visited {
+      color: #48a874;  
+    }
+
+    .fa {
+      font-family: "Font Awesome 6 Free", sans-serif;  
+      font-weight: 30px;
+    }
+  </style>
+
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+
+  
+  
+    <meta name="description" content="Dalam binary exploitation, memahami struktur stack frame dan memory layout adalah fundamental. Artikel ini akan menjelaskan secara step-by-step bagaimana stack bekerja, cara membaca memory dengan pwndbg, dan visualisasi yang mudah dipahami. Kita mulai dari layout memory, penggunaan pwndbg, parsing stack, hingga cara membacanya untuk keperluan binary exploitation.
+
+1. Layout Memory dan Stack Frame
+
+Stack adalah struktur data LIFO (Last In, First Out) yang digunakan untuk menyimpan data sementara, seperti variabel lokal, return address, dan saved base pointer. Berikut tahapan pembentukan stack frame:">
+  
+
+  <title>
+    
+      Memahami Stack Frame dan Memory Layout - pwn02
+    
+  </title>
+
+  
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.79e24f63ac05ef51117de1a7065e5243b91e09c98aab7a3cc4097fb39ce9d40148298c665a62632a4043c5aa8d2c0c8826a711f9d7d46f1af3e37ec3178a2d07.css" integrity="sha512-eeJPY6wF71ERfeGnBl5SQ7keCcmKq3o8xAl/s5zp1AFIKYxmWmJjKkBDxaqNLAyIJqcR&#43;dfUbxrz437DF4otBw==" />
+
+  
+  
+
+  
+    <meta name="description" content="Dalam binary exploitation, memahami struktur stack frame dan memory layout adalah fundamental. Artikel ini akan menjelaskan secara step-by-step bagaimana stack bekerja, cara membaca memory dengan pwndbg, dan visualisasi yang mudah dipahami. Kita mulai dari layout memory, penggunaan pwndbg, parsing stack, hingga cara membacanya untuk keperluan binary exploitation.
+
+1. Layout Memory dan Stack Frame
+
+Stack adalah struktur data LIFO (Last In, First Out) yang digunakan untuk menyimpan data sementara, seperti variabel lokal, return address, dan saved base pointer. Berikut tahapan pembentukan stack frame:">
+    <meta property="og:description" content="Dalam binary exploitation, memahami struktur stack frame dan memory layout adalah fundamental. Artikel ini akan menjelaskan secara step-by-step bagaimana stack bekerja, cara membaca memory dengan pwndbg, dan visualisasi yang mudah dipahami. Kita mulai dari layout memory, penggunaan pwndbg, parsing stack, hingga cara membacanya untuk keperluan binary exploitation.
+
+1. Layout Memory dan Stack Frame
+
+Stack adalah struktur data LIFO (Last In, First Out) yang digunakan untuk menyimpan data sementara, seperti variabel lokal, return address, dan saved base pointer. Berikut tahapan pembentukan stack frame:">
+    <meta property="og:image" content="/images/cuteheker.jpeg">
+    <meta name="twitter:image" content="/images/cuteheker.jpeg">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="/posts/memory-layout/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Memahami Stack Frame dan Memory Layout - pwn02">
+  <meta name="twitter:description" content="Dalam binary exploitation, memahami struktur stack frame dan memory layout adalah fundamental. Artikel ini akan menjelaskan secara step-by-step bagaimana stack bekerja, cara membaca memory dengan pwndbg, dan visualisasi yang mudah dipahami. Kita mulai dari layout memory, penggunaan pwndbg, parsing stack, hingga cara membacanya untuk keperluan binary exploitation.
+
+1. Layout Memory dan Stack Frame
+
+Stack adalah struktur data LIFO (Last In, First Out) yang digunakan untuk menyimpan data sementara, seperti variabel lokal, return address, dan saved base pointer. Berikut tahapan pembentukan stack frame:">
+</head>
+
+
+
+
+
+
+
+
+
+
+
+<body a="black">
+
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">~ $ cd /home</a>
+
+
+<article>
+    <p class="post-meta">
+    </p>
+
+<h1>Memahami Stack Frame dan Memory Layout - pwn02<br><br>
+    <small datetime="2025-08-13 00:00:00 &#43;0000 UTC" style="font-size: 10px; display: inline-flex; align-items: center;">
+        <img src="https://avatars.githubusercontent.com/u/51517043?v=4" alt="GitHub Profile" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover; margin-right: 8px;">
+        2025-08-13 - Rainhynn
+    </small>
+</h1>
+
+    
+
+    <p>Dalam binary exploitation, memahami struktur stack frame dan memory layout adalah fundamental. Artikel ini akan menjelaskan secara step-by-step bagaimana stack bekerja, cara membaca memory dengan <code>pwndbg</code>, dan visualisasi yang mudah dipahami. Kita mulai dari layout memory, penggunaan <code>pwndbg</code>, parsing stack, hingga cara membacanya untuk keperluan binary exploitation.</p>
+<hr>
+<h2 id="1-layout-memory-dan-stack-frame"><strong>1. Layout Memory dan Stack Frame</strong></h2>
+<p><img src="/images/memory-layout0.webp" alt="Main Frame"></p>
+<p>Stack adalah struktur data LIFO (Last In, First Out) yang digunakan untuk menyimpan data sementara, seperti variabel lokal, return address, dan saved base pointer. Berikut tahapan pembentukan stack frame:</p>
+<h3 id="1-sebelum-masuk-fungsi-baru-call-main"><strong>1️⃣ Sebelum Masuk Fungsi (Baru Call Main)</strong></h3>
+<p><img src="/images/memory-layout1.webp" alt="Flow"></p>
+<p>Saat fungsi dipanggil (misal <code>call main</code>), beberapa hal terjadi:</p>
+<ul>
+<li><strong>Return Address</strong> disimpan di stack (untuk kembali setelah fungsi selesai).</li>
+<li><strong>RBP lama</strong> (base pointer fungsi sebelumnya) akan disimpan.</li>
+</ul>
+<pre tabindex="0"><code>[ High Address ]
+| Argumen fungsi lama            |
+| Return Address                  | ← call simpan ini
+| RBP lama (Base Pointer Old)     | ← punya fungsi sebelumnya
+[ Low Address ]  
+</code></pre><ul>
+<li><strong>RSP</strong> (Stack Pointer) menunjuk ke <strong>RBP lama</strong>.</li>
+<li>Belum ada stack frame baru.</li>
+</ul>
+<p><img src="/images/memory-layout2.webp" alt="Flow"></p>
+<hr>
+<h3 id="2-setelah"><strong>2️⃣ Setelah <code>push rbp; mov rbp, rsp</code></strong></h3>
+<p>Instruksi ini membentuk stack frame baru:</p>
+<ol>
+<li><code>push rbp</code> → Simpan RBP lama ke stack.</li>
+<li><code>mov rbp, rsp</code> → RBP baru = RSP saat ini.</li>
+</ol>
+<pre tabindex="0"><code>[ High Address ]
+| Argumen fungsi lama             |
+| Return Address                   |
+| RBP lama (Base Pointer Old)      | ← disimpan oleh `push rbp`
+RBP → posisi ini
+[ Low Address ]
+</code></pre><ul>
+<li><strong>RBP</strong> sekarang menunjuk ke lokasi ini (base frame baru).</li>
+<li><strong>RSP = RBP</strong> (belum ada variabel lokal).</li>
+</ul>
+<hr>
+<h3 id="3-setelah-alokasi-variabel-lokal-"><strong>3️⃣ Setelah Alokasi Variabel Lokal (<code>sub rsp, X</code>)</strong></h3>
+<p>Untuk variabel lokal (misal <code>int x;</code>), stack dialokasikan dengan <code>sub rsp, 0x20</code> (misal 32 byte).</p>
+<pre tabindex="0"><code>[ High Address ]
+| Argumen fungsi lama             |
+| Return Address                   |
+| RBP lama (Base Pointer Old)      | ← dari `push rbp`
+RBP → posisi ini
+| Variabel lokal (int x; int b; …) |
+| Data sementara                   |
+RSP → posisi terendah frame sekarang
+[ Low Address ]
+</code></pre><ul>
+<li><strong>RSP</strong> turun untuk memberi ruang variabel lokal.</li>
+<li><strong>RBP</strong> tetap di tempat, memudahkan akses argumen &amp; variabel.</li>
+</ul>
+<hr>
+<h2 id="2-contoh-nyata-dengan"><strong>2. Contoh Nyata dengan <code>pwndbg</code></strong></h2>
+<p>Misal kita memiliki kode assembly:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span><span style="color:#ff0">push</span>   <span style="color:#7fffd4">rbp</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff0">mov</span>    <span style="color:#7fffd4">rbp</span>, <span style="color:#7fffd4">rsp</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff0">sub</span>    <span style="color:#7fffd4">rsp</span>, <span style="color:#f60">0x20</span>
+</span></span></code></pre></div><h3 id="nilai-register-sebelum--sesudah"><strong>Nilai Register Sebelum &amp; Sesudah <code>sub rsp, 0x20</code></strong></h3>
+<table>
+  <thead>
+      <tr>
+          <th>Register</th>
+          <th>Sebelum (<code>mov rbp, rsp</code>)</th>
+          <th>Sesudah (<code>sub rsp, 0x20</code>)</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>RBP</strong></td>
+          <td><code>0x7fffffffda00</code></td>
+          <td><code>0x7fffffffda00</code> (tetap)</td>
+      </tr>
+      <tr>
+          <td><strong>RSP</strong></td>
+          <td><code>0x7fffffffda00</code></td>
+          <td><code>0x7fffffffd9e0</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Perhitungan:</strong></p>
+<pre tabindex="0"><code>RSP baru = RSP lama - 0x20  
+         = 0x7fffffffda00 - 0x20  
+         = 0x7fffffffd9e0
+</code></pre><hr>
+<h2 id="3-chain-stack-frame-linked-list-rbp"><strong>3. Chain Stack Frame (Linked List RBP)</strong></h2>
+<p>Dalam debugging, kita sering melihat struktur seperti:</p>
+<pre tabindex="0"><code>RBP =&gt; 0x7fffffffda00 → 0x7fffffffdaa0 → 0x7fffffffdb00 → ...
+</code></pre><p>Ini adalah <strong>linked list stack frame</strong>:</p>
+<ul>
+<li>Setiap <code>RBP</code> menyimpan <strong>RBP fungsi sebelumnya</strong>.</li>
+<li>Berguna untuk <strong>stack unwinding</strong> (kembali ke fungsi pemanggil).</li>
+</ul>
+<h3 id="visualisasi-stack-frame"><strong>Visualisasi Stack Frame</strong></h3>
+<pre tabindex="0"><code>Higher Address
+┌─────────────────┐
+│ ...             │
+├─────────────────┤
+│ RBP = 0x7fffffffdb00 │ ← Frame sebelum `main` (libc)
+├─────────────────┤
+│ ...             │
+├─────────────────┤
+│ RBP = 0x7fffffffdaa0 │ ← Frame pemanggil `main` (misal `_start`)
+├─────────────────┤
+│ ...             │
+├─────────────────┤
+│ RBP = 0x7fffffffda00 │ ← Frame `main` (saat ini)
+├─────────────────┤
+│ Local Variables │ (RSP = 0x7fffffffd9e0)
+└─────────────────┘
+Lower Address
+</code></pre><h3 id="mekanisme-return-dari-fungsi"><strong>Mekanisme Return dari Fungsi</strong></h3>
+<p>Saat fungsi selesai, instruksi <code>leave</code> dan <code>ret</code> bekerja:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span><span style="color:#ff0">leave</span>      <span style="color:#0f0">; setara dengan: mov rsp, rbp; pop rbp
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#ff0">ret</span>        <span style="color:#0f0">; pop return address dan jump ke sana
+</span></span></span></code></pre></div><ul>
+<li><strong><code>leave</code></strong> mengembalikan <code>RSP</code> dan <code>RBP</code> ke keadaan semula.</li>
+<li><strong><code>ret</code></strong> kembali ke caller menggunakan return address.</li>
+</ul>
+<hr>
+<h2 id="4-tips-cepat-mengingat-stack-frame"><strong>4. Tips Cepat Mengingat Stack Frame</strong></h2>
+<ul>
+<li><strong><code>push rbp</code></strong> → Simpan patokan lama (RBP fungsi sebelumnya).</li>
+<li><strong><code>mov rbp, rsp</code></strong> → Pasang patokan baru (RBP = RSP saat ini).</li>
+<li><strong><code>sub rsp, X</code></strong> → Alokasi ruang untuk variabel lokal.</li>
+</ul>
+<blockquote>
+<p>💡 <strong>Patokan = Base Pointer (RBP)</strong><br>
+<strong>Posisi Sekarang = Stack Pointer (RSP)</strong></p></blockquote>
+<hr>
+<h2 id="5-aplikasi-dalam-binary-exploitation"><strong>5. Aplikasi dalam Binary Exploitation</strong></h2>
+<p>Dengan memahami stack frame, kita bisa:</p>
+<ol>
+<li><strong>Buffer Overflow</strong> → Timpa return address untuk kontrol alur program.</li>
+<li><strong>ROP Chaining</strong> → Manfaatkan saved RBP dan return address untuk eksekusi kode.</li>
+<li><strong>Memory Leak</strong> → Baca nilai stack untuk bypass ASLR.</li>
+</ol>
+<hr>
+<h2 id="kesimpulan"><strong>Kesimpulan</strong></h2>
+<ul>
+<li><strong>Stack frame</strong> adalah struktur fundamental dalam eksekusi program.</li>
+<li><strong>RBP</strong> = Base Pointer (patokan stack frame saat ini).</li>
+<li><strong>RSP</strong> = Stack Pointer (posisi terakhir di stack).</li>
+<li><strong>Chain RBP</strong> membentuk linked list untuk kembali ke fungsi sebelumnya.</li>
+<li><strong>Pemahaman stack</strong> penting untuk binary exploitation.</li>
+</ul>
+
+</article>
+
+<hr>
+
+<p>© 2021-2025 HnvDie</p>
+<p>Powered By Hugo ᯓᡣ𐭩</p>
+
+
+
+            </div>
+        </main>
+    </body></html>

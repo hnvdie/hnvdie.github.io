@@ -6,8 +6,15 @@
     <description>Recent content in Pwn on </description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 11 Aug 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 13 Aug 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="/tags/pwn/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Memahami Stack Frame dan Memory Layout - pwn02</title>
+      <link>/posts/memory-layout/</link>
+      <pubDate>Wed, 13 Aug 2025 00:00:00 +0000</pubDate>
+      <guid>/posts/memory-layout/</guid>
+      <description>&lt;p&gt;Dalam binary exploitation, memahami struktur stack frame dan memory layout adalah fundamental. Artikel ini akan menjelaskan secara step-by-step bagaimana stack bekerja, cara membaca memory dengan &lt;code&gt;pwndbg&lt;/code&gt;, dan visualisasi yang mudah dipahami. Kita mulai dari layout memory, penggunaan &lt;code&gt;pwndbg&lt;/code&gt;, parsing stack, hingga cara membacanya untuk keperluan binary exploitation.&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;1-layout-memory-dan-stack-frame&#34;&gt;&lt;strong&gt;1. Layout Memory dan Stack Frame&lt;/strong&gt;&lt;/h2&gt;&#xA;&lt;p&gt;&lt;img src=&#34;/images/memory-layout0.webp&#34; alt=&#34;Main Frame&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;Stack adalah struktur data LIFO (Last In, First Out) yang digunakan untuk menyimpan data sementara, seperti variabel lokal, return address, dan saved base pointer. Berikut tahapan pembentukan stack frame:&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Belajar Bahasa Assembly (x86/x64, Termasuk 32bit)</title>
       <link>/posts/assembly-language/</link>
