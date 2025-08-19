@@ -1,5 +1,5 @@
 ---
-title: Bypass Stack Canary Memahami Bit, Byte, dan Nilai 256 dalam bruteforce Exploit - Pwn03
+title: Bypass Stack Canary - Pwn03
 date: 2025-08-19
 Tags: ["Pwn"]
 ---
