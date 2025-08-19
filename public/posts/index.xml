@@ -6,8 +6,15 @@
     <description>Recent content in Posts on </description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 13 Aug 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 Aug 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Bypass Stack Canary - Memahami Bit, Byte, dan Nilai 256 dalam Brute-Force Exploit</title>
+      <link>/posts/bit-byte-256/</link>
+      <pubDate>Tue, 19 Aug 2025 00:00:00 +0000</pubDate>
+      <guid>/posts/bit-byte-256/</guid>
+      <description>&lt;h2 id=&#34;1-apa-itu-bit-dan-byte&#34;&gt;&lt;strong&gt;1. Apa Itu Bit dan Byte?&lt;/strong&gt;&lt;/h2&gt;&#xA;&lt;p&gt;Sebelum memahami &lt;strong&gt;stack canary&lt;/strong&gt;, kita perlu mengerti dasar-dasar &lt;strong&gt;bit&lt;/strong&gt; dan &lt;strong&gt;byte&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;1 Bit&lt;/strong&gt; = Nilai terkecil dalam komputasi (&lt;code&gt;0&lt;/code&gt; atau &lt;code&gt;1&lt;/code&gt;).&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;1 Byte&lt;/strong&gt; = Kumpulan &lt;strong&gt;8 bit&lt;/strong&gt; (contoh: &lt;code&gt;01011010&lt;/code&gt;).&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;1 Byte bisa menyimpan nilai dari &lt;code&gt;0&lt;/code&gt; sampai &lt;code&gt;255&lt;/code&gt;&lt;/strong&gt; (total &lt;strong&gt;256 kemungkinan&lt;/strong&gt;).&lt;/li&gt;&#xA;&lt;li&gt;Kenapa &lt;strong&gt;256&lt;/strong&gt;? Karena &lt;code&gt;2^8 = 256&lt;/code&gt; (8 bit = 256 kombinasi).&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;Contoh:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;code&gt;00000000&lt;/code&gt; (binary) = &lt;code&gt;0&lt;/code&gt; (decimal)&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;11111111&lt;/code&gt; (binary) = &lt;code&gt;255&lt;/code&gt; (decimal)&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;&lt;strong&gt;Kesimpulan:&lt;/strong&gt;&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Memahami Stack Frame dan Memory Layout - pwn02</title>
       <link>/posts/memory-layout/</link>
