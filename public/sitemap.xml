@@ -2,19 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>/posts/stack-canary-bf/</loc>
-    <lastmod>2025-08-19T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>/posts/bypass-stack-canary/</loc>
-    <lastmod>2025-08-19T00:00:00+00:00</lastmod>
+    <lastmod>2025-08-20T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/posts/</loc>
-    <lastmod>2025-08-19T00:00:00+00:00</lastmod>
+    <lastmod>2025-08-20T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tags/pwn/</loc>
-    <lastmod>2025-08-19T00:00:00+00:00</lastmod>
+    <lastmod>2025-08-20T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tags/</loc>
+    <lastmod>2025-08-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/posts/stack-canary-bf/</loc>
     <lastmod>2025-08-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/posts/memory-layout/</loc>
