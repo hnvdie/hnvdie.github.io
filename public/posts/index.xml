@@ -6,15 +6,8 @@
     <description>Recent content in Posts on </description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 20 Aug 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 Aug 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Bypassing Stack Canary with Format String Vulnerability - Pwn03.1</title>
-      <link>/posts/bypass-stack-canary/</link>
-      <pubDate>Wed, 20 Aug 2025 00:00:00 +0000</pubDate>
-      <guid>/posts/bypass-stack-canary/</guid>
-      <description>&lt;h2 id=&#34;1-pendahuluan&#34;&gt;1. Pendahuluan&lt;/h2&gt;&#xA;&lt;p&gt;Stack canary adalah mekanisme keamanan (juga disebut stack guard atau cookie) yang digunakan untuk mendeteksi buffer overflow attacks. Saat fungsi dipanggil, compiler menyisipkan nilai acak (canary) di stack tepat sebelum return address dan local variables sensitif. Saat fungsi return, canary dicek; jika berubah (karena overflow), program terminate untuk mencegah eksekusi kode arbitrary.&lt;/p&gt;&#xA;&lt;p&gt;Canary berguna karena membuat attacker sulit overwrite return address tanpa ketahuan. Namun, vulnerability seperti format string bisa leak canary (via %p atau %x) dan bahkan write arbitrary (via %n), memungkinkan bypass. Kita akan eksploit ini untuk leak canary, lalu overwrite return address sambil masukkan canary benar.&lt;/p&gt;</description>
-    </item>
     <item>
       <title>Bypass Stack Canary - Pwn03</title>
       <link>/posts/stack-canary-bf/</link>
